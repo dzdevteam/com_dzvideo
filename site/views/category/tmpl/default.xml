@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<layout title="COM_DZVIDEO_TITLE_LIST_VIDEO_CATEGORY" option="View">
+        <message>
+                 <![CDATA[COM_DZVIDEO_TITLE_LIST_VIDEO_CATEGORY]]>
+        </message>
+	</layout>
+    
+    <!-- Add fields to the request variables for the layout. -->
+	<fields name="request">
+		<fieldset name="request" >
+			<field name="id" type="category"
+				description="JGLOBAL_CHOOSE_CATEGORY_DESC"
+				extension="com_dzvideo.videos.catid"
+				label="JGLOBAL_CHOOSE_CATEGORY_LABEL"
+				required="true"
+			/>
+            
+            <field
+                name="filter_order"
+                type="list" default="a.created"
+                label="COM_DZVIDEO_REQUEST_LBL_FILTER_ORDER"
+                description="COM_DZVIDEO_REQUEST_DESC_FILTER_ORDER">
+                <option value="a.title">COM_DZVIDEO_OPTION_TITLE</option>
+                <option value="a.ordering">COM_DZVIDEO_OPTION_ORDERING</option>
+                <option value="a.created">COM_DZVIDEO_OPTION_CREATED</option>
+            </field>
+            
+            <field
+                name="filter_order_Dir"
+                type="list" default="DESC"
+                label="COM_DZVIDEO_REQUEST_LBL_FILTER_ORDER_DIR"
+                description="COM_DZVIDEO_REQUEST_DESC_FILTER_ORDER_DIR">
+                <option value="ASC">JGLOBAL_ORDER_ASCENDING</option>
+                <option value="DESC">JGLOBAL_ORDER_DESCENDING</option>
+            </field>
+            
+            <field name="maxLevel" type="list"
+				description="JGLOBAL_MAXLEVEL_DESC"
+				label="JGLOBAL_MAXLEVEL_LABEL"
+                default="-1"
+			>
+				<option value="">JGLOBAL_USE_GLOBAL</option>
+				<option value="-1">JALL</option>
+				<option value="0">JNONE</option>
+				<option value="1">J1</option>
+				<option value="2">J2</option>
+				<option value="3">J3</option>
+				<option value="4">J4</option>
+				<option value="5">J5</option>
+			</field>
+            
+            <field
+            name="video_width"
+            type="text" filter="int" class="validate-numeric"
+            label="COM_DZVIDEO_CONFIG_LBL_THUMB_WIDTH"
+            description="COM_DZVIDEO_CONFIG_DESC_THUMB_WIDTH"
+            default="425" />
+            <field
+            name="video_height"
+            type="text" filter="int" class="validate-numeric"
+            label="COM_DZVIDEO_CONFIG_LBL_THUMB_HEIGHT"
+            description="COM_DZVIDEO_CONFIG_DESC_THUMB_HEIGHT"
+            default="344" />
+		</fieldset>
+	</fields>
+ </metadata>
