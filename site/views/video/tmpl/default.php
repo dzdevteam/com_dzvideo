@@ -17,6 +17,7 @@ if (!$canEdit && JFactory::getUser()->authorise('core.edit.own', 'com_dzvideo' .
 	$canEdit = JFactory::getUser()->id == $this->item->created_by;
 }
 ?>
+
 <?php if ($this->item) : ?>
 
     <div class="item_fields">

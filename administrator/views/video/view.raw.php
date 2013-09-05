@@ -78,8 +78,9 @@ class DzvideoViewVideo extends JViewLegacy
             //$vid_duration: the duration of the video in seconds. Ex.: 192.
             $vid_duration = $content_attributes['duration'];
             //$duration_formatted: the duration of the video formatted in "mm:ss". Ex.:01:54
-            $duration_formatted = str_pad(floor($vid_duration/60), 2, "0", STR_PAD_LEFT) . ":" . str_pad($vid_duration%60, 2, "0", STR_PAD_LEFT);
             
+            $duration_formatted = utf8_str_pad(floor($vid_duration/60), 2, "0", STR_PAD_LEFT) . ":" . utf8_str_pad($vid_duration%60, 2, "0", STR_PAD_LEFT);
+          
             $result = json_decode(json_encode(array('title' => $title,'description' => $desc, 'author' => $author,'thumb_url' => $thumb_url,'vid_duration' => $duration_formatted)),true);
             foreach ($result as $key => $arr) {
                 $json_encode["$key"] = $arr[0];

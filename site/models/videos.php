@@ -25,6 +25,27 @@ class DzvideoModelVideos extends JModelList {
      * @since    1.6
      */
     public function __construct($config = array()) {
+        if (empty($config['filter_fields'])) {
+            $config['filter_fields'] = array(
+                'id', 'a.id',
+                'ordering', 'a.ordering',
+                'state', 'a.state',
+                'created', 'a.created',
+                'modified', 'a.modified',
+                'title', 'a.title',
+                'alias', 'a.alias',
+                'catid', 'a.catid',
+                'description', 'a.description',     
+                'thumbnail', 'a.thumbnail',
+                'image', 'a.image',
+                'author', 'a.author',
+                'embed', 'a.embed',
+                'params', 'a.params',
+                'metakey', 'a.metakey',
+                'metadesc', 'a.metadesc',
+                'metadata', 'a.metadata',
+            );
+        }
         parent::__construct($config);
     }
 
@@ -39,19 +60,48 @@ class DzvideoModelVideos extends JModelList {
 
         // Initialise variables.
         $app = JFactory::getApplication();
+        
+        $params = JComponentHelper::getParams('com_dzvideo');
+        $menuParams = new JRegistry;
+  
+        if ($menu = $app->getMenu()->getActive())
+		{
+            $menuParams->loadString($menu->params); 
+            $display_num = $menu->query['display_num'];
+		}
 
+		$mergedParams = clone $menuParams;
+		$mergedParams->merge($params);
+        $params       = $mergedParams;
+        
         // List state information
-        $limit = $app->getUserStateFromRequest('global.list.limit', 'limit', $app->getCfg('list_limit'));
-        $this->setState('list.limit', $limit);
+        $limit = $app->getUserStateFromRequest('global.list.limit', 'limit',$display_num,$app->getCfg('list_limit'));
+        $this->setState('list.limit', 3);         
 
-        $limitstart = JFactory::getApplication()->input->getInt('limitstart', 0);
+        $limitstart = $app->input->getInt('limitstart', 0);
         $this->setState('list.start', $limitstart);
-
+        
+        // Optional filter text
+		$this->setState('list.filter', $app->input->getString('filter-search'));
+        
+        $orderCol = $app->input->get('filter_order', 'ordering');
+		if (!in_array($orderCol, $this->filter_fields))
+		{
+			$orderCol = 'ordering';
+		}
+		$this->setState('list.ordering', $orderCol);
+        
+        $listOrder = $app->input->get('filter_order_Dir', 'ASC');
+		if (!in_array(strtoupper($listOrder), array('ASC', 'DESC', '')))
+		{
+			$listOrder = 'ASC';
+		}
+		$this->setState('list.direction', $listOrder);
         
 		if(empty($ordering)) {
 			$ordering = 'a.ordering';
 		}
-
+        
         // List state information.
         parent::populateState($ordering, $direction);
     }
@@ -73,13 +123,12 @@ class DzvideoModelVideos extends JModelList {
                         'list.select', 'a.*'
                 )
         );
-
-        $query->from('`#__dzvideo_videos` AS a');
-
         
-    // Join over the users for the checked out user.
-    $query->select('uc.name AS editor');
-    $query->join('LEFT', '#__users AS uc ON uc.id=a.checked_out');
+        $query->from('`#__dzvideo_videos` AS a');
+  
+        // Join over the users for the checked out user.
+        $query->select('uc.name AS editor');
+        $query->join('LEFT', '#__users AS uc ON uc.id=a.checked_out');
     
 		// Join over the created by field 'created_by'
 		$query->select('created_by.name AS created_by');
@@ -88,7 +137,6 @@ class DzvideoModelVideos extends JModelList {
 		$query->select('catid.title AS catid_title');
 		$query->join('LEFT', '#__categories AS catid ON catid.id = a.catid');
         
-
         // Filter by search in title
         $search = $this->getState('filter.search');
         if (!empty($search)) {
@@ -99,6 +147,11 @@ class DzvideoModelVideos extends JModelList {
                 
             }
         }
+        
+        $query->where("a.state = 1");
+        
+        // Add the list ordering clause.
+        $query->order($this->getState('list.ordering', 'a.ordering') . ' ' . $this->getState('list.direction', 'ASC'));
 
         return $query;
     }
@@ -114,7 +167,7 @@ class DzvideoModelVideos extends JModelList {
         
         $items = parent::getItems();
         
-    foreach ($items as &$item) {
+        foreach ($items as &$item) {
             $item->videolink    = JRoute::_(DZVideoHelperRoute::getVideoRoute(implode(array($item->id,':',$item->alias)), $item->catid));
             $item->catlink      = Jroute::_(DZVideoHelperRoute::getCategoryRoute($item->catid));
             $item->vcode        = $this->getdisplayyoutube($item->link);

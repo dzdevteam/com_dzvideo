@@ -18,51 +18,33 @@
         label="COM_DZVIDEO_FORM_LBL_VIDEO_MODIFIED"
         description="COM_DZVIDEO_FORM_DESC_VIDEO_MODIFIED"  /> 
 
-   <field name="title" type="text"
-            
+   <field name="title" type="text"            
         label="COM_DZVIDEO_FORM_LBL_VIDEO_TITLE"
         description="COM_DZVIDEO_FORM_DESC_VIDEO_TITLE" 
-            
-            
-             required="true" 
+        required="true" 
         filter="string" /> 
 
    <field name="alias" type="text"
-            
         label="COM_DZVIDEO_FORM_LBL_VIDEO_ALIAS"
         description="COM_DZVIDEO_FORM_DESC_VIDEO_ALIAS" 
-            
-            
-            
         filter="string" /> 
 
-   <field name="link" type="text"
-            
+   <field name="link" type="text"           
         label="COM_DZVIDEO_FORM_LBL_VIDEO_LINK"
-        description="COM_DZVIDEO_FORM_DESC_VIDEO_LINK" 
-            
-            
-            
+        description="COM_DZVIDEO_FORM_DESC_VIDEO_LINK"   
         filter="url" /> 
 
    <field name="description" type="textarea"
-            
+        cols ="250"
+        rows = "8"  
+        editor="alternative"
         label="COM_DZVIDEO_FORM_LBL_VIDEO_DESCRIPTION"
         description="COM_DZVIDEO_FORM_DESC_VIDEO_DESCRIPTION" 
-            
-            
-            
-        cols="100"
-        rows="8"
-        filter="safehtml" /> 
-
+        filter="raw" /> 
    <field name="thumbnail" type="text"
             
         label="COM_DZVIDEO_FORM_LBL_VIDEO_THUMBNAIL"
-        description="COM_DZVIDEO_FORM_DESC_VIDEO_THUMBNAIL" 
-            
-            
-            
+        description="COM_DZVIDEO_FORM_DESC_VIDEO_THUMBNAIL"    
         filter="url" /> 
 
    <field name="image" type="media"
@@ -76,19 +58,14 @@
             
         label="COM_DZVIDEO_FORM_LBL_VIDEO_AUTHOR"
         description="COM_DZVIDEO_FORM_DESC_VIDEO_AUTHOR" 
-            
-            
-            
         filter="url" /> 
 
-   <field name="catid" type="category"
-            
+   <field name="catid" type="category"            
         label="COM_DZVIDEO_FORM_LBL_VIDEO_CATID"
         description="COM_DZVIDEO_FORM_DESC_VIDEO_CATID" 
         extension="com_dzvideo.videos.catid"
         filter="raw" /> 
-        
-   
+
     <field name="tags" 
 			type="tag"
 			label="JTAG"
@@ -97,26 +74,23 @@
 			multiple="true"
 		/>
             
-   <field name="metakey" type="textarea"
-            
+   <field name="metakey" type="textarea"          
         label="COM_DZVIDEO_FORM_LBL_VIDEO_METAKEY"
         description="COM_DZVIDEO_FORM_DESC_VIDEO_METAKEY" 
         cols="100"
         rows="4"
         filter="string" /> 
 
-   <field name="metadesc" type="textarea"
-            
+   <field name="metadesc" type="textarea"          
         label="COM_DZVIDEO_FORM_LBL_VIDEO_METADESC"
         description="COM_DZVIDEO_FORM_DESC_VIDEO_METADESC" 
-        cols="100"
-        rows="4"
+        cols="200"
+        rows="10"
         filter="string" /> 
 
    <fields name="metadata">
         <fieldset name="jmetadata"
-            label="JGLOBAL_FIELDSET_METADATA_OPTIONS">
-            
+            label="JGLOBAL_FIELDSET_METADATA_OPTIONS">  
             <field name="robots"
                 type="list"
                 label="JFIELD_METADATA_ROBOTS_LABEL"
@@ -130,27 +104,24 @@
             </field>                            
         </fieldset>
     </fields> 
-
+   
+   <field name="length" type="readonly" class="readonly" filter="unset" /> 
    <field name="params" type="textarea"
-            
         label="COM_DZVIDEO_FORM_LBL_VIDEO_PARAMS"
         description="COM_DZVIDEO_FORM_DESC_VIDEO_PARAMS" 
         cols="100"
         rows="4"
         filter="raw" /> 
 
-   <field name="language" type="language"
-            
+   <field name="language" type="language"          
         label="COM_DZVIDEO_FORM_LBL_VIDEO_LANGUAGE"
         description="COM_DZVIDEO_FORM_DESC_VIDEO_LANGUAGE" 
         filter="string"
         client="false" /> 
 
-   <field name="embed" type="textarea"
-            
+   <field name="embed" type="textarea"            
         label="COM_DZVIDEO_FORM_LBL_VIDEO_EMBED"
         description="COM_DZVIDEO_FORM_DESC_VIDEO_EMBED" 
-              
         cols="100"
         rows="4"
         filter="html" /> 
@@ -166,7 +137,6 @@
         <option value="1">JPUBLISHED</option>
         <option value="0">JUNPUBLISHED</option>
     </field> 
-
     <field name="checked_out" type="hidden" filter="unset" />
     <field name="checked_out_time" type="hidden" filter="unset" /> 
 
@@ -185,7 +155,6 @@
             component="com_dzvideo"
             section="video"
         />
-
 	</fieldset>
 
 </form>

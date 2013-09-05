@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="component" version="3.0" method="upgrade">
     <name>com_dzvideo</name>
-    <creationDate>2013-08-20</creationDate>
+    <creationDate>2013-08-29</creationDate>
     <copyright>Copyright (C) 2013. All rights reserved.</copyright>
     <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
     <author>DZ Team</author>
@@ -42,7 +42,7 @@
             
 			<menu link="option=com_dzvideo&amp;view=videos" view="videos" img="components/com_dzvideo/assets/images/s_videos.png" alt="Dzvideo/Videos">COM_DZVIDEO_TITLE_VIDEOS</menu>
 
-			<menu link="option=com_categories&amp;extension=com_dzvideo.videos.catid" view="categories" img="components/com_dzvideo/assets/images/s_videos.png" alt="Dzvideo/Categories">COM_DZVIDEO_VIDEOS_CATID</menu>
+			<menu link="option=com_categories&amp;extension=com_dzvideo.videos.catid" view="categories" img="components/com_dzvideo/assets/images/s_videos.png" alt="Dzvideo/Categories">COM_DZVIDEO_TITLE_CATEGORIES</menu>
 
         </submenu>
         <files folder="administrator">
@@ -60,7 +60,6 @@
             <folder>views</folder>
         </files>
         <languages folder="administrator">
-            
 			<language tag="en-GB">language/en-GB.com_dzvideo.ini</language>
 			<language tag="en-GB">language/en-GB.com_dzvideo.sys.ini</language>
 			<language tag="vi-VN">language/vi-VN.com_dzvideo.ini</language>
@@ -68,3 +67,5 @@
         </languages>
     </administration>
 </extension>
+<!-- Component built by the Joomla Component Creator -->
+<!-- http://www.notwebdesign.com/joomla-component-creator/ -->

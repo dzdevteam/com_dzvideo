@@ -18,13 +18,16 @@ CREATE TABLE IF NOT EXISTS `#__dzvideo_videos` (
 `image` VARCHAR(255)  NOT NULL ,
 `author` VARCHAR(255)  NOT NULL ,
 `catid` INT(11)  NOT NULL ,
+`length` INT(11)  NOT NULL ,
 `metakey` TEXT NOT NULL ,
 `metadesc` TEXT NOT NULL ,
 `metadata` TEXT NOT NULL ,
 `params` TEXT NOT NULL ,
 `language` VARCHAR(255)  NOT NULL ,
 `embed` TEXT NOT NULL ,
-`tag` TEXT NOT NULL ,
-PRIMARY KEY (`id`)
+PRIMARY KEY (`id`),
+KEY `idx_catid` (`catid`),
+  KEY `idx_state` (`state`),
+  KEY `idx_checkout` (`checked_out`),
+  KEY `idz_language` (`language`)
 ) DEFAULT COLLATE=utf8_general_ci;
-

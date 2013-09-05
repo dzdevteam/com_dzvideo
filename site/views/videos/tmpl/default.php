@@ -9,14 +9,6 @@
 // no direct access
 defined('_JEXEC') or die;
 ?>
-<script type="text/javascript">
-    function deleteItem(item_id){
-        if(confirm("<?php echo JText::_('COM_DZVIDEO_DELETE_MESSAGE'); ?>")){
-            document.getElementById('form-video-delete-' + item_id).submit();
-        }
-    }
-</script>
-
 
 <div class="items">
     <ul class="items_list">
@@ -33,14 +25,13 @@ defined('_JEXEC') or die;
                                 <object width="425" height="344"><param value="<?php echo $item->link; ?>" name="movie">
                                 <param value="true" name="allowFullScreen">
                                 <embed width="425" height="344" allowfullscreen="true" type="application/x-shockwave-flash" src="http://www.youtube.com/v/<?php echo $item->vcode; ?>"></object>
-                                <?php var_dump($item); ?>
+                               
 							</li>
                             <li>
                             
                             </li>
 						<?php endif; ?>
-
-<?php endforeach; ?>
+        <?php endforeach; ?>
         <?php
         if (!$show):
             echo JText::_('COM_DZVIDEO_NO_ITEMS');
@@ -54,6 +45,3 @@ defined('_JEXEC') or die;
     </p>
     <?php echo $this->pagination->getPagesLinks(); ?>
 </div>
-<?php if(JFactory::getUser()->authorise('core.create','com_dzvideo')): ?><a href="<?php echo JRoute::_('index.php?option=com_dzvideo&task=video.edit&id=0'); ?>"><?php echo JText::_("COM_DZVIDEO_ADD_ITEM"); ?></a>
-	<?php endif; ?>
-

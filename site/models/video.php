@@ -12,6 +12,7 @@ defined('_JEXEC') or die;
 
 jimport('joomla.application.component.modelform');
 jimport('joomla.event.dispatcher');
+require_once JPATH_COMPONENT.'/helpers/route.php';
 
 /**
  * Dzvideo model.
@@ -52,6 +53,17 @@ class DzvideoModelVideo extends JModelForm
 	}
         
 
+    protected function getdisplayyoutube($link){
+
+        if (preg_match("/^(?:http(?:s)?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:(?:watch)?\?(?:.*&)?v(?:i)?=|(?:embed|v|vi|user)\/))([^\?&\"'>]+)/", $link, $matches)) {
+
+            $video_id = $matches[1];           
+
+        } 
+
+        return $video_id;
+
+    }
 	/**
 	 * Method to get an ojbect.
 	 *
@@ -86,11 +98,18 @@ class DzvideoModelVideo extends JModelForm
 				// Convert the JTable to a clean JObject.
 				$properties = $table->getProperties(1);
 				$this->_item = JArrayHelper::toObject($properties, 'JObject');
+                
+                $this->_item->videolink    = JRoute::_(DZVideoHelperRoute::getVideoRoute(implode(array($this->_item->id,':',$this->_item->alias)), $this->_item->catid));
+
+                $this->_item->catlink      = Jroute::_(DZVideoHelperRoute::getCategoryRoute($this->_item->catid));
+
+                $this->_item->vcode        = $this->getdisplayyoutube($this->_item->link);
 			} elseif ($error = $table->getError()) {
 				$this->setError($error);
 			}
 		}
-
+        
+        
 		return $this->_item;
 	}
     

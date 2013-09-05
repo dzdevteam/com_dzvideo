@@ -18,36 +18,39 @@ JHtml::_('behavior.keepalive');
 // Import CSS
 $document = JFactory::getDocument();
 $document->addStyleSheet('components/com_dzvideo/assets/css/dzvideo.css');
+
+JLoader::register('JFilterOutput',JPATH_PLUGINS.'/system/vinaora_vietalias/output.php');
+
 ?>
 <script type="text/javascript">
     js = jQuery.noConflict();
-    js(document).ready(function(){
-        js('#video-button').click(function() { 
-         var url = "index.php?option=com_dzvideo&view=video&format=raw";
-         js.ajax({
-            url: url,
-            type: "POST",
-            data: 'link='+js('#jform_link').val(),
-            dataType: 'html',
-            success: function(response) {
-                data = js.parseJSON(response);
-                if (parseInt(data.error) == 1) {
-                    js('#video-content').html('<?php echo JText::_("COM_DZVIDEO_VIDEO_NOT_FOUND"); ?>');    
-                } else {
-                    js('#jform_title').val(data.title);       
-                    js('#jform_description').val(data.description); 
-                    js('#jform_thumbnail').val(data.thumb_url); 
-                    js('#jform_author').val(data.author);  
-                    js('#jform_alias').val(''); 
-                    
-                    var RegExp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
-                    if(RegExp.test(data.thumb_url)){
-                        js('#thumb').html("<img src="+data.thumb_url+" height='90' width ='120'/>");   
-                    }
-                }
-            }
-        });
-      });    
+   
+    //add data to form fields            
+    function youtubeDataCallback(data) {
+      js('#jform_thumbnail').val(data.entry.media$group.media$thumbnail[0].url);
+      js('#jform_title').val(data.entry.title.$t);
+      js('#jform_author').val(data.entry.author[0].name.$t);
+      js('#jform_length').val(data.entry.media$group.yt$duration.seconds);
+      js('#jform_description').val(data.entry.media$group.media$description.$t.replace(/\n/g, '<br/>'));
+      js('#thumb').html("<img src="+js('#jform_thumbnail').val()+" height='90' width ='120'/>"); 
+    }
+    
+    js(document).ready(function() {
+               
+      //get data from youtube after button click
+      js('#video-button').click(function() {
+        
+        var videoid = js('#jform_link').val();
+        var m;
+        if (m = videoid.match(/^http:\/\/www\.youtube\.com\/.*[?&]v=([^&]+)/i) || videoid.match(/^http:\/\/youtu\.be\/([^?]+)/i)) {
+          videoid = m[1];
+        }
+        if (!videoid.match(/^[a-z0-9_-]{11}$/i)) {
+          js('#video-content').html('<?php echo JText::_("COM_DZVIDEO_VIDEO_NOT_FOUND"); ?>');
+          return;
+        }
+        js.getScript('http://gdata.youtube.com/feeds/api/videos/' + encodeURIComponent(videoid) + '?v=2&alt=json-in-script&callback=youtubeDataCallback');
+      });
     });
     
     Joomla.submitbutton = function(task)
@@ -56,9 +59,7 @@ $document->addStyleSheet('components/com_dzvideo/assets/css/dzvideo.css');
             Joomla.submitform(task, document.getElementById('video-form'));
         }
         else{
-            
-            if (task != 'video.cancel' && document.formvalidator.isValid(document.id('video-form'))) {
-                
+            if (task != 'video.cancel' && document.formvalidator.isValid(document.id('video-form'))) {                
                 Joomla.submitform(task, document.getElementById('video-form'));
             }
             else {
@@ -68,19 +69,22 @@ $document->addStyleSheet('components/com_dzvideo/assets/css/dzvideo.css');
     }
 </script>
 
+
 <form action="<?php echo JRoute::_('index.php?option=com_dzvideo&layout=edit&id=' . (int) $this->item->id); ?>" method="post" enctype="multipart/form-data" name="adminForm" id="video-form" class="form-validate">
     <div class="row-fluid">
         <div class="span10 form-horizontal">
             <?php echo JHtml::_('bootstrap.startTabSet', 'myTab', array('active' => 'general')); ?>
-
             <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'general', JText::_('COM_DZVIDEO_DETAILS', true)); ?>
-
             <div class="control-group">
 				<div class="control-label"><?php echo $this->form->getLabel('link'); ?></div>
 				<div class="controls"><?php echo $this->form->getInput('link'); ?></div>
                 <div id="video-button" class="control-label"><input type="button" name="button" id="button" value="<?php echo JText::_('COM_DZVIDEO_YOUTUBE_INFO', true) ?>" /></div>
                 <div id="video-content" class="controls"></div>
 			</div>
+            <div class="control-group">
+                <div class="control-label"><?php echo JTEXT::_('COM_DZVIDEO_LENGTH_LABEL'); ?></div>
+                <div class="controls"><?php echo $this->form->getInput('length'); ?></div>
+            </div>
             <div class="control-group">
 				<div class="control-label"><?php echo $this->form->getLabel('catid'); ?></div>
 				<div class="controls"><?php echo $this->form->getInput('catid'); ?></div>
@@ -116,7 +120,6 @@ $document->addStyleSheet('components/com_dzvideo/assets/css/dzvideo.css');
 				<div class="control-label"><?php echo $this->form->getLabel('embed'); ?></div>
 				<div class="controls"><?php echo $this->form->getInput('embed'); ?></div>
 			</div>
-
             <?php echo JHtml::_('bootstrap.endTab'); ?>
             <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'publishing', JText::_('COM_DZVIDEO_PUBLISHING', true)); ?>
             <div class="control-group">
