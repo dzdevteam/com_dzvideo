@@ -1,63 +1,77 @@
 <?php
 /**
- * @version     1.0.0
- * @package     com_dzvideo
- * @copyright   Copyright (C) 2013. All rights reserved.
+ * @package     Joomla.Site
+ * @subpackage  com_dzvideo
+ *
+ * @copyright   Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
- * @author      DZ Team <dev@dezign.vn> - dezign.vn
  */
 
-// No direct access
 defined('_JEXEC') or die;
 
-jimport('joomla.application.component.view');
-
 /**
- * View class for a list of Dzvideo.
+ * HTML View class for the Category Video component
+ *
+ * @package     Joomla.Site
+ * @subpackage  com_dzvideo
+ * @since       3.0
  */
 class DzvideoViewCategory extends JViewLegacy
 {
-	protected $items;
-	protected $pagination;
 	protected $state;
-    protected $params;
 
-	/**
-	 * Display the view
-	 */
+	protected $items;
+
+	protected $category;
+
+	protected $children;
+
+	protected $pagination;
+
 	public function display($tpl = null)
 	{
-        $app                = JFactory::getApplication();
-        
-        $this->state		= $this->get('State'); 
-        $this->items		= $this->get('Items'); 
-        $this->pagination	= $this->get('Pagination');
-               
-        $this->params       = $this->state->params;
-        
-        $params = JComponentHelper::getParams('com_dzvideo');
-        $menuParams = new JRegistry;
-        
-        if ($menu = $app->getMenu()->getActive())
+        $state		      = $this->get('State'); 
+		$items		      = $this->get('Items');
+        $pagination		  = $this->get('Pagination');
+        $category         = $this->get('Category');
+        $children         = $this->get('Children');
+
+		// Check for errors.
+		if (count($errors = $this->get('Errors')))
 		{
-			$menuParams->loadString($menu->params);
+			JError::raiseWarning(500, implode("\n", $errors));
+			return false;
 		}
 
-		$mergedParams = clone $menuParams;
-		$mergedParams->merge($this->params);
-        
-        $this->params = $mergedParams;
-        
+		if ($items === false)
+		{
+			return JError::raiseError(404, JText::_('JGLOBAL_CATEGORY_NOT_FOUND'));
+		}
 
-        // Check for errors.
-        if (count($errors = $this->get('Errors'))) {;
-            throw new Exception(implode("\n", $errors));
-        }
+		$params = &$state->params;
+
+		//Escape strings for HTML output
+		$this->pageclass_sfx = htmlspecialchars($params->get('pageclass_sfx'));
         
-        $this->_prepareDocument();
-        parent::display($tpl);
+        $this->maxLevel   = $params->get('show_category_maxlevel', -1);
+        
+		$this->params = &$params;
+        
+        $this->state = &$state;
+        
+		$this->items  = &$items;
+        
+        $this->pagination  = &$pagination;
+        
+        $this->children  = &$children;
+        
+        $this->category  = &$category;
+
+		$this->_prepareDocument();
+
+		parent::display($tpl);
+        
 	}
-
 
 	/**
 	 * Prepares the document
@@ -103,6 +117,5 @@ class DzvideoViewCategory extends JViewLegacy
 		{
 			$this->document->setMetadata('robots', $this->params->get('robots'));
 		}
-	}    
-    	
+	}
 }

@@ -219,6 +219,13 @@ class DzvideoModelvideos extends JModelList {
 					$oneItem->tag = !empty($namedTags) ? implode(', ',$namedTags) : $oneItem->tag;
 				}
 		}
+        
+        foreach ($items as &$item) {
+            $registry = new JRegistry();
+            $registry->loadString($item->images);
+            $item->images = $registry->toArray();
+        }
+        
         return $items;
     }
 

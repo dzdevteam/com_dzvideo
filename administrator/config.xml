@@ -1,50 +1,383 @@
 <?xml version="1.0" encoding="utf-8"?>
 <config>
 	<fieldset name="component"
-		label="COM_DZVIDEO_COMPONENT_LABEL"
-		description="COM_DZVIDEO_COMPONENT_DESC"
+		label="COM_DZVIDEO_COM_SETTINGS_LABEL"
+		description="COM_DZVIDEO_COM_SETTINGS_DESC"
 	>
+        <field
+            name="image_directory" default="images/dzvideo"
+            type="text" filter="path" required="true"
+            class="required" label="COM_DZVIDEO_IMAGE_DIR_LABEL"
+            description="COM_DZVIDEO_IMAGE_DIR_DESC" />
         
-         <field
-			name="image_path"
+        <field type="spacer" label="COM_DZVIDEO_SMALL_SIZE_LABEL" description="COM_DZVIDEO_SMALL_SIZE_DESC"/>
+        
+        <field
+            name="small_intro_width"
+            type="text" filter="int" class="validate-numeric"
+            label="COM_DZVIDEO_WIDTH_LABEL"
+            description="COM_DZVIDEO_WIDTH_DESC"
+            default="160" />
+        <field
+            name="small_intro_height"
+            type="text" filter="int" class="validate-numeric"
+            label="COM_DZVIDEO_HEIGHT_LABEL"
+            description="COM_DZVIDEO_HEIGHT_DESC"
+            default="120" />
+            
+        <field type="spacer" label="COM_DZVIDEO_MEDIUM_SIZE_LABEL" description="COM_DZVIDEO_MEDIUM_SIZE_DESC"/>
+        
+        <field
+            name="medium_intro_width"
+            type="text" filter="int" class="validate-numeric"
+            label="COM_DZVIDEO_WIDTH_LABEL"
+            description="COM_DZVIDEO_WIDTH_DESC"
+            default="400" />
+        <field
+            name="medium_intro_height"
+            type="text" filter="int" class="validate-numeric"
+            label="COM_DZVIDEO_HEIGHT_LABEL"
+            description="COM_DZVIDEO_HEIGHT_DESC"
+            default="300" />
+                
+        <field type="spacer" label="COM_DZVIDEO_VIDEO_SIZE_LABEL" description="COM_DZVIDEO_VIDEO_SIZE_DESC"/>
+		
+ 		<field
+			name="video_width"
 			type="text"
-			size="50"
-			default="images/video"
-			label="COM_DZVIDEO_IMAGE_FOLDER_LABEL"
-			description="COM_DZVIDEO_IMAGE_FOLDER_DESC" />
-        
+			size="30"
+			default="600"
+			label="COM_DZVIDEO_WIDTH_LABEL"
+			description="COM_DZVIDEO_WIDTH_DESC" />        
         <field
 			name="video_height"
 			type="text"
 			size="30"
-			default="400"
-			label="COM_DZVIDEO_VIDEO_HEIGHT_LABEL"
-			description="COM_DZVIDEO_VIDEO_HEIGHT_DESC" />
+			default="450"
+			label="COM_DZVIDEO_HEIGHT_LABEL"
+			description="COM_DZVIDEO_HEIGHT_DESC" />      
+        
+        <field type="spacer" label="COM_DZVIDEO_DISPLAY_LABEL" description="COM_DZVIDEO_DISPLAY_DESC"/>
+        
+        <field name="video_display_type" type="list"
+            default="0"
+            label="COM_DZVIDEO_DISPLAY_TYPE_LABEL"
+            description="COM_DZVIDEO_DISPLAY_TYPE_DESC">
+                <option value="0">COM_DZVIDEO_DISPLAY_IFRAME</option>
+                <option value="1">COM_DZVIDEO_DISPLAY_EMBED</option>
+        </field>    
+        <field name="video_auto" type="radio"
+			class="btn-group"
+            default="1"
+            label="COM_DZVIDEO_AUTOPLAY_LABEL"
+            description="COM_DZVIDEO_AUTOPLAY_DESC">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+        </field> 
             
-        <field
-			name="video_width"
-			type="text"
-			size="30"
-			default="605"
-			label="COM_DZVIDEO_VIDEO_WIDTH_LABEL"
-			description="COM_DZVIDEO_VIDEO_WIDTH_DESC" />
+	</fieldset>
+	
+    <fieldset name="category"
+		label="COM_DZVIDEO_CAT_VIEW_SETTINGS_LABEL"		
+	>
+			<field type="spacer" label="COM_DZVIDEO_CAT_SETTINGS_LABEL" description="COM_DZVIDEO_CAT_SETTINGS_DESC"/>
+		
+			<field name="show_category_title" type="radio"
+					class="btn-group"
+					label="COM_DZVIDEO_SHOW_CAT_TITLE_LABEL"
+					description="COM_DZVIDEO_SHOW_CAT_TITLE_DESC"
+					default = "1"
+				>
+					<option value="0">JHIDE</option>
+					<option value="1">JSHOW</option>
+				</field>
+			<field name="show_category_desc" type="radio"
+				class="btn-group"
+				description="COM_DZVIDEO_SHOW_CAT_DESC_DESC"
+				label="COM_DZVIDEO_SHOW_CAT_DESC_LABEL"
+                default = "1"
+			>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+			<field name="show_category_image" type="radio"
+				class="btn-group"
+				description="COM_DZVIDEO_SHOW_CAT_DESC_DESC"
+				label="COM_DZVIDEO_SHOW_CAT_IMAGE_LABEL"
+                default = "1"
+			>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>            
+            <field name="show_category_sub" type="radio"
+				class="btn-group"
+				description="COM_DZVIDEO_SHOW_CAT_SUB_DESC"
+				label="COM_DZVIDEO_SHOW_CAT_SUB_LABEL"
+                default = "1"
+			>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+            <field name="show_category_maxlevel" type="list"
+				description="COM_DZVIDEO_SHOW_CAT_MAXLEVEL_DESC"
+				label="COM_DZVIDEO_SHOW_CAT_MAXLEVEL_LABEL"
+                default = "-1"
+			>
+				<option value="-1">JALL</option>
+				<option value="0">JNONE</option>
+				<option value="1">J1</option>
+				<option value="2">J2</option>
+				<option value="3">J3</option>
+				<option value="4">J4</option>
+				<option value="5">J5</option>
+			</field>
+			<field name="show_category_empty" type="radio"
+				class="btn-group"
+				label="COM_DZVIDEO_SHOW_CAT_EMPTY_LABEL"
+				description="COM_DZVIDEO_SHOW_CAT_EMPTY_DESC"
+                default = "1"
+			>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+			
+			<field type="spacer" label="COM_DZVIDEO_VID_SETTINGS_LABEL" description="COM_DZVIDEO_VID_SETTINGS_DESC"/>
+			
+			<field name="display_number" 
+                type="text" filter="int" class="validate-numeric" default = "12"
+                description="COM_DZVIDEO_VID_NUMBER_DESC"
+                label="COM_DZVIDEO_VID_NUMBER_LABEL"
+            />			
+			<field name="display_column" 
+                type="text" filter="int" class="validate-numeric" default = "3"
+                description="COM_DZVIDEO_VID_COLUMN_DESC"
+                label="COM_DZVIDEO_VID_COLUMN_LABEL"
+            />
+			<field
+				name="display_ordering"
+				type="list"
+				default="a.created"
+				description="COM_DZVIDEO_VID_ORDER_DESC"
+				label="COM_DZVIDEO_VID_ORDER_LABEL"
+			>
+				<option value="a.ordering">COM_DZVIDEO_FIELD_CONFIG_ORDER_BY_ORDERING</option>
+				<option value="a.title">COM_DZVIDEO_FIELD_CONFIG_ORDER_BY_TITLE</option>
+				<option value="a.created">COM_DZVIDEO_FIELD_CONFIG_ORDER_BY_TIME</option>
+                <option value="a.hits">COM_DZVIDEO_FIELD_CONFIG_ORDER_BY_HITS</option>
+			</field>            
+            <field
+                name="display_direction"
+                type="list" 
+                default="ASC"
+                label="COM_DZVIDEO_VID_ORDER_DIR_LABEL"
+                description="COM_DZVIDEO_VID_ORDER_DIR_DESC">
+                <option value="ASC">JGLOBAL_ORDER_ASCENDING</option>
+                <option value="DESC">JGLOBAL_ORDER_DESCENDING</option>
+            </field>
             
-        <field
-			name="thumb_height"
-			type="text"
-			size="30"
-			default="120"
-			label="COM_DZVIDEO_FRONTEND_THUMB_WIDTH_LABEL"
-			description="COM_DZVIDEO_FRONTEND_THUMB_WIDTH_DESC" />
-            
-        <field
-			name="thumb_width"
-			type="text"
-			size="30"
-			default="90"
-			label="COM_DZVIDEO_FRONTEND_THUMB_WIDTH_LABEL"
-			description="COM_DZVIDEO_FRONTEND_THUMB_WIDTH_DESC" />
-            
+            <field type="spacer"/>
+			
+			<field name="category_show_video_title" type="radio"
+					class="btn-group"
+					label="COM_DZVIDEO_CAT_SHOW_VID_TITLE_LABEL"
+					description="COM_DZVIDEO_CAT_SHOW_VID_TITLE_DESC"
+					default = "1"
+				>
+					<option value="0">JHIDE</option>
+					<option value="1">JSHOW</option>
+				</field>				
+			<field name="category_show_video_category" type="radio"
+					class="btn-group"
+					label="COM_DZVIDEO_CAT_SHOW_VID_CAT_LABEL"
+					description="COM_DZVIDEO_CAT_SHOW_VID_CAT_DESC"
+					default = "1"
+				>
+					<option value="0">JHIDE</option>
+					<option value="1">JSHOW</option>
+				</field>				
+			<field name="category_show_video_image" type="radio"
+					class="btn-group"
+					label="COM_DZVIDEO_CAT_SHOW_VID_IMAGE_LABEL"
+					description="COM_DZVIDEO_CAT_SHOW_VID_IMAGE_DESC"
+					default = "1"
+				>
+					<option value="0">JHIDE</option>
+					<option value="1">JSHOW</option>
+			</field>
+			<field name="category_show_video_length" type="radio"
+					class="btn-group"
+					label="COM_DZVIDEO_CAT_SHOW_VID_LENGTH_LABEL"
+					description="COM_DZVIDEO_CAT_SHOW_VID_LENGTH_DESC"
+					default = "1"
+				>
+					<option value="0">JHIDE</option>
+					<option value="1">JSHOW</option>
+			</field>
+			<field name="category_show_video_date" type="radio"
+					class="btn-group"
+					label="COM_DZVIDEO_CAT_SHOW_VID_DATE_LABEL"
+					description="COM_DZVIDEO_CAT_SHOW_VID_DATE_DESC"
+					default = "1"
+				>
+					<option value="0">JHIDE</option>
+					<option value="1">JSHOW</option>
+			</field>
+			<field name="category_show_video_hits" type="radio"
+					class="btn-group"
+					label="COM_DZVIDEO_CAT_SHOW_VID_HITS_LABEL"
+					description="COM_DZVIDEO_CAT_SHOW_VID_HITS_DESC"
+					default = "1"
+				>
+					<option value="0">JHIDE</option>
+					<option value="1">JSHOW</option>
+			</field>
+			<field name="category_show_video_author" type="radio"
+					class="btn-group"
+					label="COM_DZVIDEO_CAT_SHOW_VID_AUTHOR_LABEL"
+					description="COM_DZVIDEO_CAT_SHOW_VID_AUTHOR_DESC"
+					default = "1"
+				>
+					<option value="0">JHIDE</option>
+					<option value="1">JSHOW</option>
+			</field>
+			<field name="category_show_video_label" type="radio"
+					class="btn-group"
+					label="COM_DZVIDEO_CAT_SHOW_VID_LABEL_LABEL"
+					description="COM_DZVIDEO_CAT_SHOW_VID_LABEL_DESC"
+					default = "1"
+				>
+					<option value="0">JHIDE</option>
+					<option value="1">JSHOW</option>
+			</field>
+			<field name="category_show_video_intro" type="radio"
+					class="btn-group"
+					label="COM_DZVIDEO_CAT_SHOW_VID_INTRO_LABEL"
+					description="COM_DZVIDEO_CAT_SHOW_VID_INTRO_DESC"
+					default = "1"
+				>
+					<option value="0">JHIDE</option>
+					<option value="1">JSHOW</option>
+			</field>			
+			<field name="category_video_intro_length" 
+                type="text" filter="int" class="validate-numeric" default = "180"
+                description="COM_DZVIDEO_CAT_VID_INTRO_LENGTH_DESC"
+                label="COM_DZVIDEO_CAT_VID_INTRO_LENGTH_LABEL"
+            />
+			
+			<field type="spacer" />            
+
+			<field name="show_pagination" type="list"
+				description="JGLOBAL_PAGINATION_DESC"
+				label="JGLOBAL_PAGINATION_LABEL"
+				default="1"
+			>				
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+				<option value="2">JGLOBAL_AUTO</option>
+			</field>
+			<field name="show_pagination_results" type="list" defaul="1"
+			label="JGLOBAL_PAGINATION_RESULTS_LABEL"
+			description="JGLOBAL_PAGINATION_RESULTS_DESC">				
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+		</field>
+    </fieldset>
+	
+	<fieldset name="video"
+		label="COM_DZVIDEO_VID_VIEW_SETTINGS_LABEL"		
+	>
+	
+			<field name="show_video_title" type="radio"
+					class="btn-group"
+					label="COM_DZVIDEO_SHOW_VID_TITLE_LABEL"
+					description="COM_DZVIDEO_SHOW_VID_TITLE_DESC"
+					default = "1"
+				>
+					<option value="0">JHIDE</option>
+					<option value="1">JSHOW</option>
+				</field>				
+			<field name="show_video_category" type="radio"
+					class="btn-group"
+					label="COM_DZVIDEO_SHOW_VID_CAT_LABEL"
+					description="COM_DZVIDEO_SHOW_VID_CAT_DESC"
+					default = "1"
+				>
+					<option value="0">JHIDE</option>
+					<option value="1">JSHOW</option>
+				</field>				
+			<field name="show_video_length" type="radio"
+					class="btn-group"
+					label="COM_DZVIDEO_SHOW_VID_LENGTH_LABEL"
+					description="COM_DZVIDEO_SHOW_VID_LENGTH_DESC"
+					default = "1"
+				>
+					<option value="0">JHIDE</option>
+					<option value="1">JSHOW</option>
+			</field>
+			<field name="show_video_date" type="radio"
+					class="btn-group"
+					label="COM_DZVIDEO_SHOW_VID_DATE_LABEL"
+					description="COM_DZVIDEO_SHOW_VID_DATE_DESC"
+					default = "1"
+				>
+					<option value="0">JHIDE</option>
+					<option value="1">JSHOW</option>
+			</field>
+			<field name="show_video_hits" type="radio"
+					class="btn-group"
+					label="COM_DZVIDEO_SHOW_VID_HITS_LABEL"
+					description="COM_DZVIDEO_SHOW_VID_HITS_DESC"
+					default = "1"
+				>
+					<option value="0">JHIDE</option>
+					<option value="1">JSHOW</option>
+			</field>
+			<field name="show_video_author" type="radio"
+					class="btn-group"
+					label="COM_DZVIDEO_SHOW_VID_AUTHOR_LABEL"
+					description="COM_DZVIDEO_SHOW_VID_AUTHOR_DESC"
+					default = "1"
+				>
+					<option value="0">JHIDE</option>
+					<option value="1">JSHOW</option>
+			</field>
+			<field name="show_video_label" type="radio"
+					class="btn-group"
+					label="COM_DZVIDEO_SHOW_VID_LABEL_LABEL"
+					description="COM_DZVIDEO_SHOW_VID_LABEL_DESC"
+					default = "1"
+				>
+					<option value="0">JHIDE</option>
+					<option value="1">JSHOW</option>
+			</field>
+			<field name="show_video_intro" type="radio"
+					class="btn-group"
+					label="COM_DZVIDEO_SHOW_VID_INTRO_LABEL"
+					description="COM_DZVIDEO_SHOW_VID_INTRO_DESC"
+					default = "1"
+				>
+					<option value="0">JHIDE</option>
+					<option value="1">JSHOW</option>
+			</field>
+			<field name="show_video_text" type="radio"
+					class="btn-group"
+					label="COM_DZVIDEO_SHOW_VID_TEXT_LABEL"
+					description="COM_DZVIDEO_SHOW_VID_TEXT_DESC"
+					default = "1"
+				>
+					<option value="0">JHIDE</option>
+					<option value="1">JSHOW</option>
+			</field>
+			<field name="show_video_tags" type="radio"
+					class="btn-group"
+					label="COM_DZVIDEO_SHOW_VID_TAGS_LABEL"
+					description="COM_DZVIDEO_SHOW_VID_TAGS_DESC"
+					default = "1"
+				>
+					<option value="0">JHIDE</option>
+					<option value="1">JSHOW</option>
+			</field>
+	
 	</fieldset>
 
 	<fieldset name="permissions"
@@ -62,79 +395,5 @@
 			label="JCONFIG_PERMISSIONS_LABEL"
 			section="component" />
 	</fieldset>
-
 </config>
-<!--
-########################################################################################
-The following are a list of all the different types of fields you can add to this file
-They are here for copy pasting - neat eh?
-########################################################################################
 
-http://docs.joomla.org/Calendar_parameter_type
-<field name="mycalendar" type="calendar" default="5-10-2008" label="Select a date" description="" format="%d-%m-%Y" />
-
-http://docs.joomla.org/Category_parameter_type
-<field name="mycategory" type="category" label="Select a category" description="" section="3" />
-
-http://docs.joomla.org/Editors_parameter_type
-<field name="myeditor" type="editors" default="none" label="Select an editor" />
-
-http://docs.joomla.org/Filelist_parameter_type
-<field name="myfile" type="filelist" default="" label="Select a file" description="" directory="administrator" filter="" exclude="" stripext="" />
-
-http://docs.joomla.org/Folderlist_parameter_type
-<field name="myfolder" type="folderlist" default="" label="Select a folder" directory="administrator" filter="" exclude="" stripext="" />
-
-http://docs.joomla.org/Helpsites_parameter_type
-<field name="myhelpsite" type="helpsites" default="" label="Select a help site" description="" />
-
-http://docs.joomla.org/Hidden_parameter_type
-<field name="mysecretvariable" type="hidden" default="" />
-
-http://docs.joomla.org/Imagelist_parameter_type
-<field name="myimage" type="imagelist" default="" label="Select an image" description="" directory="" exclude="" stripext="" />
-
-http://docs.joomla.org/Languages_parameter_type
-<field name="mylanguage" type="languages" client="site" default="en-GB" label="Select a language" description="" />
-
-http://docs.joomla.org/List_parameter_type
-<field name="mylistvalue" type="list" default="" label="Select an option" description="">
-  <option value="0">Option 1</option>
-  <option value="1">Option 2</option>
-</field>
-
-http://docs.joomla.org/Menu_parameter_type
-<field name="mymenu" type="menu" default="mainmenu" label="Select a menu" description="Select a menu" />
-
-http://docs.joomla.org/Menuitem_parameter_type
-<field name="mymenuitem" type="menuitem" default="45" label="Select a menu item" description="Select a menu item" />
-
-http://docs.joomla.org/Password_parameter_type
-<field name="mypassword" type="password" default="secret" label="Enter a password" description="" size="5" />
-
-http://docs.joomla.org/Radio_parameter_type
-<field name="myradiovalue" type="radio" default="0" label="Select an option" description="">
-  <option value="0">1</option>
-  <option value="1">2</option>
-</field>
-
-http://docs.joomla.org/Spacer_parameter_type
-<field type="spacer" default="&lt;b&gt;Advanced parameters&lt;/b&gt;" />
-
-http://docs.joomla.org/Sql_parameter_type
-<field name="myfield" type="sql" default="10" label="Select an article" query="SELECT id, title FROM #__content" key_field=”id” value_field=”title” />
-
-http://docs.joomla.org/Text_parameter_type
-<field name="mytextvalue" type="text" default="Some text" label="Enter some text" description="" size="10" />
-
-http://docs.joomla.org/Textarea_parameter_type
-<field name="mytextarea" type="textarea" default="default" label="Enter some text" description="" rows="10" cols="5" />
-
-http://docs.joomla.org/Timezones_parameter_type
-<field name="mytimezone" type="timezones" default="-10" label="Select a timezone" description="" />
-
-http://docs.joomla.org/Usergroup_parameter_type
-<field name="myusergroups" type="usergroup" default="" label="Select a user group" description="" />
-
-
- -->

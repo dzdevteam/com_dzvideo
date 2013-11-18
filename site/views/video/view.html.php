@@ -19,7 +19,6 @@ class DzvideoViewVideo extends JViewLegacy {
 
     protected $state;
     protected $item;
-    protected $form;
     protected $params;
 
     /**
@@ -35,15 +34,12 @@ class DzvideoViewVideo extends JViewLegacy {
         $this->params = $app->getParams('com_dzvideo');
    		
 		$this->item->catid_title = $this->getModel()->getCategoryName($this->item->catid)->title;
-		$this->form		= $this->get('Form');
 
         // Check for errors.
         if (count($errors = $this->get('Errors'))) {
             throw new Exception(implode("\n", $errors));
         }
-        
-        
-        
+               
         if($this->_layout == 'edit') {
             
             $authorised = $user->authorise('core.create', 'com_dzvideo');

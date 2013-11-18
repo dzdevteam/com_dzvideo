@@ -22,40 +22,66 @@
         label="COM_DZVIDEO_FORM_LBL_VIDEO_TITLE"
         description="COM_DZVIDEO_FORM_DESC_VIDEO_TITLE" 
         required="true" 
+        size = "60"
+        class = "input-xxlarge"
         filter="string" /> 
 
    <field name="alias" type="text"
         label="COM_DZVIDEO_FORM_LBL_VIDEO_ALIAS"
         description="COM_DZVIDEO_FORM_DESC_VIDEO_ALIAS" 
+        size = "60"
+        class = "input-xxlarge"
         filter="string" /> 
-
+    
    <field name="link" type="text"           
         label="COM_DZVIDEO_FORM_LBL_VIDEO_LINK"
         description="COM_DZVIDEO_FORM_DESC_VIDEO_LINK"   
+        size = "60"
+        class = "input-xxlarge"
         filter="url" /> 
+        
+   <field name="videoid" type="text" readonly = "true"         
+        label="COM_DZVIDEO_FORM_LBL_VIDEOID"
+        description="COM_DZVIDEO_FORM_DESC_VIDEOID"   
+   /> 
+    
+    <field name="featured" type="list" class="span12 small"
+        default="0"
+        label="COM_DZVIDEO_FORM_LBL_VIDEO_FEATURED"
+        description="COM_DZVIDEO_FORM_DESC_VIDEO_FEATURED">
+            <option value="0">JNO</option>
+            <option value="1">JYES</option>
+    </field> 
 
-   <field name="description" type="textarea"
+ 
+	<field name="filter_featured" type="list" onchange="this.form.submit();">
+		<option value="">COM_DZVIDEO_VIDEOS_FEATURED_FILTER</option>
+		<option value="0">JNO</option>
+		<option value="1">JYES</option>
+	</field> 
+    
+    <field name="length" type="text" readonly="true"
+        label="COM_DZVIDEO_FORM_LBL_VIDEO_LENGTH"
+        description="COM_DZVIDEO_FORM_DESC_VIDEO_LENGTH"
+     />
+    
+   <field name="shortdesc" type="textarea"
+        cols ="250"
+        rows = "6" 
+        class = "input-xxlarge"
+        label="COM_DZVIDEO_FORM_LBL_VIDEO_SHORTDESC"
+        description="COM_DZVIDEO_FORM_DESC_VIDEO_SHORTDESC" 
+        filter="raw" /> 
+        
+    <field name="description" type="editor"
         cols ="250"
         rows = "8"  
         editor="alternative"
         label="COM_DZVIDEO_FORM_LBL_VIDEO_DESCRIPTION"
         description="COM_DZVIDEO_FORM_DESC_VIDEO_DESCRIPTION" 
-        filter="raw" /> 
-   <field name="thumbnail" type="text"
-            
-        label="COM_DZVIDEO_FORM_LBL_VIDEO_THUMBNAIL"
-        description="COM_DZVIDEO_FORM_DESC_VIDEO_THUMBNAIL"    
-        filter="url" /> 
-
-   <field name="image" type="media"
-            
-        label="COM_DZVIDEO_FORM_LBL_VIDEO_IMAGE"
-        description="COM_DZVIDEO_FORM_DESC_VIDEO_IMAGE" 
-        filter="raw"
-        directory="images/video" /> 
-
-   <field name="author" type="text"
-            
+        filter="safehtml" />
+        
+    <field name="author" type="text"          
         label="COM_DZVIDEO_FORM_LBL_VIDEO_AUTHOR"
         description="COM_DZVIDEO_FORM_DESC_VIDEO_AUTHOR" 
         filter="url" /> 
@@ -65,14 +91,61 @@
         description="COM_DZVIDEO_FORM_DESC_VIDEO_CATID" 
         extension="com_dzvideo.videos.catid"
         filter="raw" /> 
-
+        
+    <field name="hits"
+			type="text"
+			class="readonly"
+			size="6" label="JGLOBAL_HITS"
+			description="JGLOBAL_HITS"
+			readonly="true"
+			filter="unset" />
+   
+   <fields name="images"> 
+        <field
+            name="thumb"
+            type="text" 
+            label="COM_DZVIDEO_FORM_LBL_IMAGE_LINKS_THUMBNAIL"
+            description="COM_DZVIDEO_FORM_DESC_IMAGE_LINKS_THUMBNAIL" />
+        <field
+            name="medium"
+            type="text" 
+            label="COM_DZVIDEO_FORM_LBL_IMAGE_LINKS_MEDIUM"
+            description="COM_DZVIDEO_FORM_DESC_IMAGE_LINKS_MEDIUM" />
+        <field
+            name="mqdefault"
+            type="text" 
+            readonly = "true"
+            label="COM_DZVIDEO_FORM_LBL_IMAGE_LINKS_MQDEFAULT"
+            description="COM_DZVIDEO_FORM_DESC_IMAGE_LINKS_MQDEFAULT"
+            class = "input-xlarge" />
+        <field
+            name="custom"
+            type="media"
+            directory="/"
+            class = "input-xlarge"
+            label="COM_DZVIDEO_FORM_LBL_CUSTOM_IMAGE_FULL"
+            description="COM_DZVIDEO_FORM_DESC_CUSTOM_IMAGE_FULL" />
+    </fields>
+    
+    <field
+        name="width"
+        type="text" 
+        default ="500"
+        label="COM_DZVIDEO_FORM_LBL_IMAGE_LINKS_WIDTH"
+        description="COM_DZVIDEO_FORM_DESC_IMAGE_LINKS_WIDTH" />
+    <field
+        name="height"
+        type="text" 
+        default ="300"
+        label="COM_DZVIDEO_FORM_LBL_IMAGE_LINKS_HEIGHT"
+        description="COM_DZVIDEO_FORM_DESC_IMAGE_LINKS_HEIGHT" />
+            
     <field name="tags" 
 			type="tag"
 			label="JTAG"
 			description="JTAG_DESC"
 			class="inputbox span12 small"
-			multiple="true"
-		/>
+			multiple="true" />
             
    <field name="metakey" type="textarea"          
         label="COM_DZVIDEO_FORM_LBL_VIDEO_METAKEY"
@@ -104,8 +177,7 @@
             </field>                            
         </fieldset>
     </fields> 
-   
-   <field name="length" type="readonly" class="readonly" filter="unset" /> 
+    
    <field name="params" type="textarea"
         label="COM_DZVIDEO_FORM_LBL_VIDEO_PARAMS"
         description="COM_DZVIDEO_FORM_DESC_VIDEO_PARAMS" 
@@ -122,9 +194,10 @@
    <field name="embed" type="textarea"            
         label="COM_DZVIDEO_FORM_LBL_VIDEO_EMBED"
         description="COM_DZVIDEO_FORM_DESC_VIDEO_EMBED" 
-        cols="100"
+        cols="250"
         rows="4"
-        filter="html" /> 
+        class ="input-xxlarge"
+        filter="html" />
 
     <field
         name="state"
@@ -136,10 +209,9 @@
         default="1">
         <option value="1">JPUBLISHED</option>
         <option value="0">JUNPUBLISHED</option>
-    </field> 
+    </field>
     <field name="checked_out" type="hidden" filter="unset" />
-    <field name="checked_out_time" type="hidden" filter="unset" /> 
-
+    <field name="checked_out_time" type="hidden" filter="unset" />
  </fieldset> 
 
  <fieldset 
@@ -153,8 +225,6 @@
             validate="rules"
             class="inputbox"
             component="com_dzvideo"
-            section="video"
-        />
+            section="video" />
 	</fieldset>
-
 </form>

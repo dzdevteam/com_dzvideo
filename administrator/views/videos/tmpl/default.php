@@ -10,7 +10,7 @@
 // no direct access
 defined('_JEXEC') or die;
 
-JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
+JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/');
 JHtml::_('bootstrap.tooltip');
 JHtml::_('behavior.multiselect');
 JHtml::_('formbehavior.chosen', 'select');
@@ -56,28 +56,13 @@ if (!empty($this->extra_sidebar)) {
 ?>
 
 <?php 
-function checkRemoteFile($url){
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL,$url);
-    // don't download content
-    curl_setopt($ch, CURLOPT_NOBODY, 1);
-    curl_setopt($ch, CURLOPT_FAILONERROR, 1);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    if(curl_exec($ch)!== FALSE)
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
-}
 
 $videoparams    = JComponentHelper::getParams('com_dzvideo');
 $video_height   = $videoparams->get('video_height');  
 $video_width    = $videoparams->get('video_width');
 $thumb_height   = $videoparams->get('thumb_height');  
 $thumb_width    = $videoparams->get('thumb_width');
+
 ?>
 
 <form action="<?php echo JRoute::_('index.php?option=com_dzvideo&view=videos'); ?>" method="post" name="adminForm" id="adminForm">
@@ -118,7 +103,7 @@ $thumb_width    = $videoparams->get('thumb_width');
 					<?php echo JHtml::_('select.options', $sortFields, 'value', 'text', $listOrder);?>
 				</select>
 			</div>
-		</div>        
+		</div>
 		<div class="clearfix"> </div>
 		<table class="table table-striped" id="videoList">
 			<thead>
@@ -138,19 +123,25 @@ $thumb_width    = $videoparams->get('thumb_width');
                 <?php endif; ?>
                 
                 <th class='left'>
+				<?php echo JText::_('COM_DZVIDEO_VIDEOS_IMAGE'); ?>
+				</th>
+                <th class='left'>
 				<?php echo JHtml::_('grid.sort',  'COM_DZVIDEO_VIDEOS_TITLE', 'a.title', $listDirn, $listOrder); ?>
 				</th>    
 				<th class='left'>
-				<?php echo JHtml::_('grid.sort',  'COM_DZVIDEO_VIDEOS_LINK', 'a.link', $listDirn, $listOrder); ?>
+				<?php echo JHtml::_('grid.sort',  'COM_DZVIDEO_VIDEOS_CATID', 'a.catid', $listDirn, $listOrder); ?>
 				</th>
-				<th class='left'>
-				<?php echo JText::_('COM_DZVIDEO_VIDEOS_THUMBNAIL'); ?>
-				</th>
-				<th class='left'>
-				<?php echo JHtml::_('grid.sort',  'COM_DZVIDEO_VIDEOS_EMBED', 'a.catid', $listDirn, $listOrder); ?>
+                <th class='left'>
+				<?php echo JText::_('COM_DZVIDEO_VIDEOS_INFORMATION'); ?>
 				</th>
                 <th class='left'>
 				<?php echo JHtml::_('grid.sort',  'COM_DZVIDEO_VIDEOS_CREATED_BY', 'a.created_by', $listDirn, $listOrder); ?>
+				</th>
+                <th class='left'>
+				<?php echo JHtml::_('grid.sort',  'JGLOBAL_HITS', 'a.hits', $listDirn, $listOrder); ?>
+				</th>
+                <th class='left'>
+				<?php echo JHtml::_('grid.sort',  'JGRID_HEADING_LANGUAGE', 'a.language', $listDirn, $listOrder); ?>
 				</th>
                 <?php if (isset($this->items[0]->id)): ?>
 					<th width="1%" class="nowrap center hidden-phone">
@@ -181,6 +172,18 @@ $thumb_width    = $videoparams->get('thumb_width');
                 $canEdit	= $user->authorise('core.edit',			'com_dzvideo');
                 $canCheckin	= $user->authorise('core.manage',		'com_dzvideo');
                 $canChange	= $user->authorise('core.edit.state',	'com_dzvideo');
+                
+                $image          = array();
+                $image        = $item->images;
+                
+                $display_image  = JUri::root().'images/dzvideo/120x80.gif';
+                if (isset($image['custom']) && !empty($image['custom']) && JFile::exists(JPATH_ROOT.'/'.$image['custom'])) {
+                   $display_image = JUri::root().$image['custom'];
+                } elseif (isset($image['thumb']) && !empty($image['thumb']) && JFile::exists(JPATH_ROOT.'/'.$image['thumb'])) {
+                    $display_image = JUri::root().$image['thumb']; 
+                }
+                
+                
 				?>
 				<tr class="row<?php echo $i % 2; ?>">
                     
@@ -213,6 +216,17 @@ $thumb_width    = $videoparams->get('thumb_width');
 					</td>
                 <?php endif; ?>
                 <td>
+                    <?php 
+                    if (isset($item->videoid)) { 
+                    ?>
+                        <a class="modal " href="http://www.youtube-nocookie.com/embed/<?php echo $item->videoid;?>" rel="{handler: 'iframe', size: {x: <?php echo $video_width; ?> , y: <?php echo $video_height; ?>}} " &tmpl=component />
+                        <img height="<?php echo $thumb_height; ?>" width="<?php echo $thumb_width; ?>" src="<?php echo $display_image; ?>" alt="<?php echo $item->title; ?>" title="<?php echo $item->title; ?>" />
+                        </a>
+                    <?php } else { ?>
+                        <img height="<?php echo $thumb_height; ?>" width="<?php echo $thumb_width; ?>" src="<?php echo $display_image; ?>" alt="<?php echo $item->title; ?>" title="<?php echo $item->title; ?>" />
+                    <?php } ?>
+				</td>
+                <td>
     				<?php if (isset($item->checked_out) && $item->checked_out) : ?>
     					<?php echo JHtml::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'videos.', $canCheckin); ?>
     				<?php endif; ?>
@@ -222,42 +236,37 @@ $thumb_width    = $videoparams->get('thumb_width');
     				<?php else : ?>
     					<?php echo $this->escape($item->title); ?>
     				<?php endif; ?>
-				</td>
-				<td>
+                    <br />
                     <?php 
-                        if (preg_match("/^(?:http(?:s)?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:(?:watch)?\?(?:.*&)?v(?:i)?=|(?:embed|v|vi|user)\/))([^\?&\"'>]+)/", $item->link, $matches)) {
-                            //get video_id
-                            $video_id = $matches[1];   
+                        if (isset($item->videoid)) { 
                     ?>
-                        <a class="modal " href="http://www.youtube-nocookie.com/embed/<?php echo $video_id;?>" rel="{handler: 'iframe', size: {x: <?php echo $video_width; ?> , y: <?php echo $video_height; ?>}} " &tmpl=component />
+                        <a class="modal " href="http://www.youtube-nocookie.com/embed/<?php echo $item->videoid;?>" rel="{handler: 'iframe', size: {x: <?php echo $video_width; ?> , y: <?php echo $video_height; ?>}} " &tmpl=component />
                         <?php echo $item->link; ?>
                         </a>
                         <?php } else {
                             echo $item->link;     
                         }
                     ?>
-                    	
-				</td>
-				<td>
-                    <?php if (JFile::exists(JPATH_ROOT.'/'.$item->image)) {
-                            $image = JUri::root().$item->image;
-                          } else {
-                            if (checkRemoteFile($item->thumbnail)) {
-                               $image = $item->thumbnail; 
-                            } else {
-                                $image = 'noimage.jpg';
-                            }      
-                          }
-                    ?>
-                    <img height="<?php echo $thumb_height; ?>" width="<?php echo $thumb_width; ?>" src="<?php echo $image ?>" alt="<?php echo $item->title; ?>" title="<?php echo $item->title; ?>" />
 				</td>
 				<td>
 					<?php echo $item->catid; ?>
 				</td>
+                <td>
+					<?php echo JTEXT::_('COM_DZVIDEO_VIDEOS_DURATION').': '.str_pad(floor($item->length/60),2,'0',STR_PAD_LEFT).':'.str_pad(floor($item->length%60),2,'0',STR_PAD_LEFT); ?>
+                    <br/>
+                    <?php echo JTEXT::_('COM_DZVIDEO_VIDEOS_DIMENSION').': '.$item->width.'x'.$item->height; ?>
+                    <br/>
+                    <?php echo JTEXT::_('COM_DZVIDEO_VIDEOS_AUTHOR').': '.$item->author; ?>
+				</td>
    	            <td>
-
 					<?php echo $item->created_by; ?>
 				</td>
+                <td>
+                    <?php echo $item->hits; ?>
+                </td>
+                <td>
+                    <?php echo $item->language; ?>
+                </td>
 
                 <?php if (isset($this->items[0]->id)): ?>
 					<td class="center hidden-phone">

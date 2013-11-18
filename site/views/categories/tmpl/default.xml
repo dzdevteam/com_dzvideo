@@ -1,54 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <metadata>
-	<layout title="COM_DZVIDEO_TITLE_LIST_VIDEOS" option="View">
+	<layout title="COM_DZVIDEO_CATEGORIES_VIEW_DEFAULT_TITLE" option="COM_DZVIDEO_CATEGORIES_VIEW_DEFAULT_OPTION">
 		<message>
-			<![CDATA[COM_DZVIDEO_TITLE_LIST_VIDEOS_DESC]]>
+			<![CDATA[COM_DZVIDEO_CATEGORIES_VIEW_DEFAULT_DESC]]>
 		</message>
 	</layout>
 
 	<!-- Add fields to the request variables for the layout. -->
 	<fields name="request">
-		<fieldset name="request">
+		<fieldset name="request"
+		>
 			<field name="id" type="category"
 				description="JGLOBAL_FIELD_CATEGORIES_CHOOSE_CATEGORY_DESC"
 				extension="com_dzvideo.videos.catid"
 				label="JGLOBAL_FIELD_CATEGORIES_CHOOSE_CATEGORY_LABEL"
-				show_root = "true"
-                required="true"
+				show_root="true"
+				required="true"
 			/>
 		</fieldset>
 	</fields>
 
 	<!-- Add fields to the parameters object for the layout. -->
     <fields name="params">
-    <fieldset name="basic" label="JGLOBAL_CATEGORY_OPTIONS">
-			<field name="spacer1" type="spacer" class="text"
-					label="JGLOBAL_SUBSLIDER_DRILL_CATEGORIES_LABEL" />
-            
-            <!-- Featured Type -->
-            <field name="show_only_featured" type="list"
-            default = "0"
-			label="COM_DZVIDEO_FIELD_CONFIG_DISPLAY_BY_ONLY_FEATURED"
-			description="COM_DZVIDEO_FIELD_CONFIG_DISPLAY_BY_ONLY_FEATURED">
-				<option value="0">JNO</option>
-				<option value="1">JYES</option>
+    <fieldset name="basic" label="JGLOBAL_CATEGORIES_OPTIONS">
+
+			<field name="show_subcat_desc_cat" type="list"
+			description="COM_DZVIDEO_FIELD_CONFIG_SHOW_SUBCATEGORY_LABEL"
+			label="COM_DZVIDEO_FIELD_CONFIG_SHOW_SUBCATEGORY_LABEL"
+            >
+				<option value="">JGLOBAL_USE_GLOBAL</option>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
 			</field>
-            <!-- Featured End-->
-             
+
 			<field
-				name="ordering"
+				name="catordering"
 				type="list"
-				default="a.ordering"
+				default="a.lft"
 				description="COM_DZVIDEO_FIELD_CONFIG_ORDER_DESC"
 				label="COM_DZVIDEO_FIELD_CONFIG_ORDER_LABEL"
 			>
-				<option value="a.ordering">COM_DZVIDEO_FIELD_CONFIG_ORDER_BY_ORDERING</option>
+				<option value="a.lft">COM_DZVIDEO_FIELD_CONFIG_ORDER_BY_ORDERING</option>
 				<option value="a.title">COM_DZVIDEO_FIELD_CONFIG_ORDER_BY_TITLE</option>
 				<option value="a.created">COM_DZVIDEO_FIELD_CONFIG_ORDER_BY_TIME</option>
-                <option value="a.hits">COM_DZVIDEO_FIELD_CONFIG_ORDER_BY_HITS</option>
 			</field>
             
-            <field
+           	<field
                 name="direction"
                 type="list" 
                 default="ASC"
@@ -58,21 +55,7 @@
                 <option value="DESC">JGLOBAL_ORDER_DESCENDING</option>
             </field>
             
-            <field
-				name="filter_date"
-				type="list"
-				default="all"
-				description="COM_DZVIDEO_FIELD_CONFIG_FILTER_DATE_DESC"
-				label="COM_DZVIDEO_FIELD_CONFIG_FILTER_DATE_DESC"
-			>
-				<option value="all">COM_DZVIDEO_FIELD_CONFIG_FILTER_DATE_ALL</option>
-				<option value="year">COM_DZVIDEO_FIELD_CONFIG_FILTER_DATE_YEAR</option>
-				<option value="3month">COM_DZVIDEO_FIELD_CONFIG_FILTER_DATE_3MONTH</option>
-                <option value="month">COM_DZVIDEO_FIELD_CONFIG_FILTER_DATE_MONTH</option>
-                <option value="week">COM_DZVIDEO_FIELD_CONFIG_FILTER_DATE_WEEK</option>
-			</field>
-            
-            <field name="video_column" 
+            <field name="category_column" 
                 type="text" filter="int" class="validate-numeric" default = "3"
                 description="COM_DZVIDEO_FIELD_CATEGORY_COLUMN_LABEL"
                 label="COM_DZVIDEO_FIELD_CATEGORY_COLUMN_DESC"
@@ -83,6 +66,15 @@
                 description="COM_DZVIDEO_FIELD_COUNT_LABEL"
                 label="COM_DZVIDEO_FIELD_COUNT_DESC"
             />
+                        
+			<field	name="show_pagination_limit" type="list"
+			label="JGLOBAL_DISPLAY_SELECT_LABEL"
+			description="JGLOBAL_DISPLAY_SELECT_DESC">
+
+				<option value="">JGLOBAL_USE_GLOBAL</option>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
 
 			<field name="show_pagination" type="list"
 				description="JGLOBAL_PAGINATION_DESC"
@@ -95,12 +87,15 @@
 			</field>
 
 			<field name="show_pagination_results" type="list"
+
 			label="JGLOBAL_PAGINATION_RESULTS_LABEL"
 			description="JGLOBAL_PAGINATION_RESULTS_DESC">
+
 				<option value="">JGLOBAL_USE_GLOBAL</option>
 				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
 		</field>
 	</fieldset>
+
 </fields>
 </metadata>

@@ -1,7 +1,7 @@
 <?php
 /**
  * @package     Joomla.Site
- * @subpackage  com_dzvideo
+ * @subpackage  com_Dzvideo
  *
  * @copyright   Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
@@ -10,23 +10,28 @@
 defined('_JEXEC') or die;
 
 /**
- * HTML View class for listing videos
+ * Content categories view.
  *
  * @package     Joomla.Site
- * @subpackage  com_dzvideo
+ * @subpackage  com_Dzvideo
  * @since       1.5
  */
-class DzvideoViewVideos extends JViewLegacy
+class DzvideoViewCategories extends JViewLegacy
 {
-	protected $state;
+	protected $state = null;
 
-	protected $items;
+	protected $items = null;
+    
+    protected $pagination = null;
 
-	protected $pagination;
-
+	/**
+	 * Display the view
+	 *
+	 * @return  mixed  False on error, null otherwise.
+	 */
 	public function display($tpl = null)
 	{
-        $state		      = $this->get('State'); 
+		$state		      = $this->get('State'); 
 		$items		      = $this->get('Items');
         $pagination		  = $this->get('Pagination');
 
@@ -48,19 +53,17 @@ class DzvideoViewVideos extends JViewLegacy
 
 		//Escape strings for HTML output
 		$this->pageclass_sfx = htmlspecialchars($params->get('pageclass_sfx'));
+
   
 		$this->params = &$params;
-        
-        $this->state = &$state;
         
 		$this->items  = &$items;
         
         $this->pagination  = &$pagination;
-        
+
 		$this->_prepareDocument();
 
 		parent::display($tpl);
-        
 	}
 
 	/**
@@ -75,20 +78,25 @@ class DzvideoViewVideos extends JViewLegacy
 		// Because the application sets a default page title,
 		// we need to get it from the menu item itself
 		$menu = $menus->getActive();
-		if($menu)
+		if ($menu)
 		{
 			$this->params->def('page_heading', $this->params->get('page_title', $menu->title));
-		} else {
-			$this->params->def('page_heading', JText::_('com_dzvideo_DEFAULT_PAGE_TITLE'));
+		}
+		else
+		{
+			$this->params->def('page_heading', JText::_('COM_Dzvideo_DEFAULT_PAGE_TITLE'));
 		}
 		$title = $this->params->get('page_title', '');
-		if (empty($title)) {
+		if (empty($title))
+		{
 			$title = $app->getCfg('sitename');
 		}
-		elseif ($app->getCfg('sitename_pagetitles', 0) == 1) {
+		elseif ($app->getCfg('sitename_pagetitles', 0) == 1)
+		{
 			$title = JText::sprintf('JPAGETITLE', $app->getCfg('sitename'), $title);
 		}
-		elseif ($app->getCfg('sitename_pagetitles', 0) == 2) {
+		elseif ($app->getCfg('sitename_pagetitles', 0) == 2)
+		{
 			$title = JText::sprintf('JPAGETITLE', $title, $app->getCfg('sitename'));
 		}
 		$this->document->setTitle($title);

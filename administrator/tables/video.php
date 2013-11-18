@@ -36,15 +36,23 @@ class DzvideoTablevideo extends JTable {
      */
     public function bind($array, $ignore = '') {
 		$input = JFactory::getApplication()->input;
+        
 		$task = $input->getString('task', '');
 		if(($task == 'save' || $task == 'apply') && (!JFactory::getUser()->authorise('core.edit.state','com_dzvideo.video.'.$array['id']) && $array['state'] == 1)){
 			$array['state'] = 0;
 		}
+        
 		$task = JRequest::getVar('task');
-		if($task == 'apply' || $task == 'save'){
+		if ($task == 'apply' || $task == 'save'){
 			$array['modified'] = date("Y-m-d H:i:s");
 		}
-
+                
+        if (isset($array['images']) && is_array($array['images'])) {
+            $registry = new JRegistry();
+            $registry->loadArray($array['images']);
+            $array['images'] = (string) $registry;
+        }
+        
         if (isset($array['params']) && is_array($array['params'])) {
             $registry = new JRegistry();
             $registry->loadArray($array['params']);
@@ -56,6 +64,7 @@ class DzvideoTablevideo extends JTable {
             $registry->loadArray($array['metadata']);
             $array['metadata'] = (string) $registry;
         }
+        
         if(!JFactory::getUser()->authorise('core.admin', 'com_dzvideo.video.'.$array['id'])){
             $actions = JFactory::getACL()->getActions('com_dzvideo','video');
             $default_actions = JFactory::getACL()->getAssetRules('com_dzvideo.video.'.$array['id'])->getData();

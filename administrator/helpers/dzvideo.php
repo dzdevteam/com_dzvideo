@@ -9,6 +9,8 @@
 
 // No direct access
 defined('_JEXEC') or die;
+jimport( 'joomla.filesystem.file' );
+jimport( 'joomla.filesystem.folder' );
 
 /**
  * Dzvideo helper.
@@ -31,9 +33,9 @@ class DzvideoHelper
 			$vName == 'categories.videos'
 		);
 		
-if ($vName=='categories.videos.catid') {			
-JToolBarHelper::title('DZ Video: Categories');		
-}
+        if ($vName=='categories.videos.catid') {			
+            JToolBarHelper::title('DZ Video: Categories');		
+        }
 	}
 
 	/**
@@ -59,4 +61,47 @@ JToolBarHelper::title('DZ Video: Categories');
 
 		return $result;
 	}
+    
+    public static function generateThumbs($imgfile, $videoid)
+    {
+        $params = JComponentHelper::getParams('com_dzvideo');
+        $basedir = $params->get('image_directory', JPATH_ROOT.'/images/dzvideo');
+        
+        
+        if (!JFolder::exists(JPATH_ROOT.'/'.$basedir)) {
+            JFolder::copy(JPATH_COMPONENT_ADMINISTRATOR."/dzvideo",JPATH_ROOT.'/'.$basedir);
+        }
+    
+        // Get different pre-configured sizes
+        $thumbwidth     = $params->get('small_intro_width', '120');
+        $thumbheight    = $params->get('small_intro_height', '80');
+        $mediumwidth    = $params->get('medium_intro_width', '300');
+        $mediumheight   = $params->get('medium_intro_height', '200');
+        
+        $desc = JPATH_ROOT.'/'.$basedir.'/'.$videoid.'.jpg';
+        
+        $ch = curl_init($imgfile);
+        $fp = fopen($desc, 'wb');
+        curl_setopt($ch, CURLOPT_FILE, $fp);
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        curl_exec($ch);
+        curl_close($ch);
+        fclose($fp);
+        
+        // Generate thumbs
+        $image = new JImage($desc);
+        $imagedir = pathinfo($image->getPath(), PATHINFO_DIRNAME);
+        $other_thumbs = $image->createThumbs(array($mediumwidth.'x'.$mediumheight), JImage::SCALE_INSIDE, $imagedir);
+        $thumb = $image->createThumbs($thumbwidth.'x'.$thumbheight, JImage::SCALE_INSIDE, $imagedir); 
+        
+        $links = array();
+        $basepath = substr($imagedir, strpos($imagedir, $basedir));
+        $links['thumb'] = $basepath. '/' . pathinfo($thumb[0]->getPath(), PATHINFO_BASENAME);
+        $links['medium'] = $basepath. '/' . pathinfo($other_thumbs[0]->getPath(), PATHINFO_BASENAME);
+        
+        JFile::delete($desc);
+        
+        return $links;
+    }
 }

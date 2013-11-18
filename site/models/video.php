@@ -49,21 +49,8 @@ class DzvideoModelVideo extends JModelForm
             $this->setState('video.id', $params_array['item_id']);
         }
 		$this->setState('params', $params);
-
 	}
         
-
-    protected function getdisplayyoutube($link){
-
-        if (preg_match("/^(?:http(?:s)?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:(?:watch)?\?(?:.*&)?v(?:i)?=|(?:embed|v|vi|user)\/))([^\?&\"'>]+)/", $link, $matches)) {
-
-            $video_id = $matches[1];           
-
-        } 
-
-        return $video_id;
-
-    }
 	/**
 	 * Method to get an ojbect.
 	 *
@@ -102,8 +89,18 @@ class DzvideoModelVideo extends JModelForm
                 $this->_item->videolink    = JRoute::_(DZVideoHelperRoute::getVideoRoute(implode(array($this->_item->id,':',$this->_item->alias)), $this->_item->catid));
 
                 $this->_item->catlink      = Jroute::_(DZVideoHelperRoute::getCategoryRoute($this->_item->catid));
-
-                $this->_item->vcode        = $this->getdisplayyoutube($this->_item->link);
+                
+                $registry = new JRegistry();
+                $registry->loadString($this->_item->images);
+                $this->_item->images = $registry->toArray();
+                
+                $registry = new JRegistry();
+                $registry->loadString($this->_item->params);
+                $this->_item->params = $registry->toArray();
+                
+                $this->_item->tags = new JHelperTags;
+			    $this->_item->tags->getItemTags('com_dzvideo.video', $this->_item->id);
+                
 			} elseif ($error = $table->getError()) {
 				$this->setError($error);
 			}
