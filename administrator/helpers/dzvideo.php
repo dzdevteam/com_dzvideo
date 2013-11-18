@@ -65,7 +65,7 @@ class DzvideoHelper
     public static function generateThumbs($imgfile, $videoid)
     {
         $params = JComponentHelper::getParams('com_dzvideo');
-        $basedir = $params->get('image_directory', JPATH_ROOT.'/images/dzvideo');
+        $basedir = $params->get('image_directory', 'images/dzvideo');
         
         
         if (!JFolder::exists(JPATH_ROOT.'/'.$basedir)) {

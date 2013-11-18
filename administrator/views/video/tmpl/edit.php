@@ -126,10 +126,6 @@ $video_height   = $params->get('video_height');
 				<div class="control-label"><?php echo $this->form->getLabel('alias'); ?></div>
 				<div class="controls"><?php echo $this->form->getInput('alias'); ?></div>
 			</div>
-            <div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('catid'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('catid'); ?></div>
-			</div>
             <hr />
             <?php if (isset($this->item->videoid) && isset($this->item->link)) { ?>
             <div id="video-play" class="controls" >
@@ -155,6 +151,8 @@ $video_height   = $params->get('video_height');
                     <?php if (isset($this->item->images['medium'])) { ?>
                         <img src="<?php echo JURI::root().$this->item->images['medium'] ?>" />
                     <?php } ?>
+                    <?php echo $this->form->getInput('medium', 'images'); ?>
+                    <?php echo $this->form->getInput('thumb', 'images'); ?>
                 </div> 
 			</div>
             <div class="control-group">
@@ -231,7 +229,7 @@ $video_height   = $params->get('video_height');
       </div>
         <div class="clr"></div>
         <!-- Begin Sidebar -->
-        <?php echo JLayoutHelper::render('joomla.edit.details', $this); ?>
+        <?php echo JLayoutHelper::render('joomla.edit.global', $this); ?>
         <!-- End Sidebar -->
 
         <input type="hidden" name="task" value="" />

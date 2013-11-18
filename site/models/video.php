@@ -100,7 +100,9 @@ class DzvideoModelVideo extends JModelForm
                 
                 $this->_item->tags = new JHelperTags;
 			    $this->_item->tags->getItemTags('com_dzvideo.video', $this->_item->id);
-                
+			    
+			    $this->_item->created_by = new JUser($this->_item->created_by);
+			    
 			} elseif ($error = $table->getError()) {
 				$this->setError($error);
 			}

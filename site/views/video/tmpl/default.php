@@ -65,6 +65,7 @@ if (!$canEdit && JFactory::getUser()->authorise('core.edit.own', 'com_dzvideo' .
 			<?php echo $this->item->language; ?></li>
 			<li><?php echo JText::_('COM_DZVIDEO_FORM_LBL_VIDEO_EMBED'); ?>:
 			<?php echo $this->item->embed; ?></li>
+			<li>Uploader: <?php echo $this->item->created_by->name; ?></li>
 			<li><?php echo JText::_('COM_DZVIDEO_FORM_LBL_VIDEO_TAG'); ?>:
 			     <?php $this->item->tagLayout = new JLayoutFile('joomla.content.tags'); ?>
                 <?php echo $this->item->tagLayout->render($this->item->tags->itemTags); ?>

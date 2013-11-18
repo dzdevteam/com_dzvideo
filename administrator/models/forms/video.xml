@@ -83,8 +83,7 @@
         
     <field name="author" type="text"          
         label="COM_DZVIDEO_FORM_LBL_VIDEO_AUTHOR"
-        description="COM_DZVIDEO_FORM_DESC_VIDEO_AUTHOR" 
-        filter="url" /> 
+        description="COM_DZVIDEO_FORM_DESC_VIDEO_AUTHOR"/> 
 
    <field name="catid" type="category"            
         label="COM_DZVIDEO_FORM_LBL_VIDEO_CATID"
@@ -103,12 +102,12 @@
    <fields name="images"> 
         <field
             name="thumb"
-            type="text" 
+            type="hidden" 
             label="COM_DZVIDEO_FORM_LBL_IMAGE_LINKS_THUMBNAIL"
             description="COM_DZVIDEO_FORM_DESC_IMAGE_LINKS_THUMBNAIL" />
         <field
             name="medium"
-            type="text" 
+            type="hidden" 
             label="COM_DZVIDEO_FORM_LBL_IMAGE_LINKS_MEDIUM"
             description="COM_DZVIDEO_FORM_DESC_IMAGE_LINKS_MEDIUM" />
         <field
@@ -140,12 +139,14 @@
         label="COM_DZVIDEO_FORM_LBL_IMAGE_LINKS_HEIGHT"
         description="COM_DZVIDEO_FORM_DESC_IMAGE_LINKS_HEIGHT" />
             
-    <field name="tags" 
-			type="tag"
-			label="JTAG"
-			description="JTAG_DESC"
-			class="inputbox span12 small"
-			multiple="true" />
+    <field 
+        name="tags"
+        type="tag"
+        label="JTAG"
+        description="JTAG_DESC"
+        class="inputbox span12"
+        multiple="true">
+    </field>
             
    <field name="metakey" type="textarea"          
         label="COM_DZVIDEO_FORM_LBL_VIDEO_METAKEY"
@@ -185,11 +186,11 @@
         rows="4"
         filter="raw" /> 
 
-   <field name="language" type="language"          
+    <field name="language" type="contentlanguage"          
         label="COM_DZVIDEO_FORM_LBL_VIDEO_LANGUAGE"
-        description="COM_DZVIDEO_FORM_DESC_VIDEO_LANGUAGE" 
-        filter="string"
-        client="false" /> 
+        description="COM_DZVIDEO_FORM_DESC_VIDEO_LANGUAGE"> 
+       <option value="*">JALL</option>
+    </field>
 
    <field name="embed" type="textarea"            
         label="COM_DZVIDEO_FORM_LBL_VIDEO_EMBED"
@@ -204,7 +205,7 @@
         type="list"
         label="JSTATUS"
         description="JFIELD_PUBLISHED_DESC"
-        class="inputbox"
+        class="chzn-color-state"
         size="1"
         default="1">
         <option value="1">JPUBLISHED</option>

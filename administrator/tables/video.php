@@ -22,8 +22,8 @@ class DzvideoTablevideo extends JTable {
      */
     public function __construct(&$db) {
         parent::__construct('#__dzvideo_videos', 'id', $db);
-        //JTableObserverTags::createObserver($this, array('typeAlias' => 'com_dzvideo.video'));
-        //JObserverMapper::addObserverClassToClass('JTableObserverTags', 'DZVideoTableVideos', array('typeAlias' => 'com_dzvideo.video'));
+        JTableObserverTags::createObserver($this, array('typeAlias' => 'com_dzvideo.video'));
+        JObserverMapper::addObserverClassToClass('JTableObserverTags', 'DZVideoTableVideo', array('typeAlias' => 'com_dzvideo.video'));
     }
 
     /**
