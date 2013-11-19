@@ -107,11 +107,6 @@ class DzvideoModelCategory extends JModelList
        	// Select required fields from the categories.
 		$query->select($this->getState('list.select', 'a.*'))
 			->from($db->quoteName('#__dzvideo_videos') . ' AS a');
-        
-        $showsubcategories = $this->getState('filter.subcategories'); 
-        if ($showsubcategories) {
-            $levels = $this->getState('filter.max_category_levels');
-        }
          
 		// Filter by category.
         $categoryId = $this->getState('category.id','root');
@@ -119,18 +114,30 @@ class DzvideoModelCategory extends JModelList
 		{
             $categoryEquals = 'a.catid = '. (int) $categoryId;
             
-			$subQuery = $db->getQuery(true)
-					->select('sub.id')
-					->from('#__categories as sub')
-					->join('INNER', '#__categories as c ON sub.lft > c.lft AND sub.rgt < c.rgt')
-					->where('c.id = ' . (int) $categoryId);
-				if ($levels >= 0)
-				{
-					$subQuery->where('sub.level <= c.level + ' . $levels);
-				}
+            $showsubcategories = $this->getState('filter.subcategories'); 
+            if ($showsubcategories) {
+                $levels = (int) $this->getState('filter.max_category_levels', 1);
+                
+                if ($categoryId == 0)
+                    $categoryId = 1;
+                $subQuery = $db->getQuery(true)
+                    ->select('sub.id')
+                    ->from('#__categories as sub')
+                    ->join('INNER', '#__categories as this ON sub.lft > this.lft AND sub.rgt < this.rgt')
+                    ->where('this.id = ' . (int) $categoryId);
+                if ($levels >= 0)
+                {
+                    $subQuery->where('sub.level <= this.level + ' . $levels);
+                }
+                
+                // Add the subquery to the main query
+                $query->where('(' . $categoryEquals . ' OR a.catid IN (' . $subQuery->__toString() . '))');
+            } else {
+                $query->where($categoryEquals);
+            }
+			
 
-				// Add the subquery to the main query
-				$query->where('(' . $categoryEquals . ' OR a.catid IN (' . $subQuery->__toString() . '))');
+				
 
 			//Filter by published category
 			$cpublished = $this->getState('filter.c.published');
