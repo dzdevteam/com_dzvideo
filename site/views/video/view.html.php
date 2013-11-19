@@ -74,6 +74,9 @@ class DzvideoViewVideo extends JViewLegacy {
 			$this->params->def('page_heading', JText::_('com_dzvideo_DEFAULT_PAGE_TITLE'));
 		}
 		$title = $this->params->get('page_title', '');
+		if ($menu && ($menu->query['view'] != 'video' || $this->item->id != (int) @$menu->query['id'])) {
+            $title = $this->item->title;
+		}
 		if (empty($title)) {
 			$title = $app->getCfg('sitename');
 		}
