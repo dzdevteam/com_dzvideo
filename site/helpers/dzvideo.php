@@ -11,11 +11,11 @@ defined('_JEXEC') or die;
 
 abstract class DzvideoHelper
 {
-	public static function myFunction()
-	{
-		$result = 'Something';
-		return $result;
-	}
+    public static function myFunction()
+    {
+        $result = 'Something';
+        return $result;
+    }
 
 }
 

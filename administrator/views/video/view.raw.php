@@ -17,23 +17,23 @@ jimport('joomla.application.component.view');
  */
 class DzvideoViewVideo extends JViewLegacy
 {
-	protected $state;
-	protected $item;
-	protected $form;
+    protected $state;
+    protected $item;
+    protected $form;
 
-	/**
-	 * Display the view
-	 */
-	public function display($tpl = null)
-	{
-		$this->state	= $this->get('State');
-		$this->item		= $this->get('Item');
-		$this->form		= $this->get('Form');
+    /**
+     * Display the view
+     */
+    public function display($tpl = null)
+    {
+        $this->state    = $this->get('State');
+        $this->item     = $this->get('Item');
+        $this->form     = $this->get('Form');
 
-		// Check for errors.
-		if (count($errors = $this->get('Errors'))) {
+        // Check for errors.
+        if (count($errors = $this->get('Errors'))) {
             throw new Exception(implode("\n", $errors));
-		}
+        }
         
         define('YT_API_URL', 'http://gdata.youtube.com/feeds/api/videos?q=');
         
@@ -93,5 +93,5 @@ class DzvideoViewVideo extends JViewLegacy
             JFactory::getApplication()->close();
         }
         
-	}
+    }
 }

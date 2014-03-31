@@ -19,42 +19,42 @@ require_once JPATH_COMPONENT.'/helpers/route.php';
  */
 class DzvideoModelVideos extends JModelList
 {
-	/**
-	 * Model context string.
-	 *
-	 * @var		string
-	 */
-	public $_context = 'com_dzvideo.categories';
+    /**
+     * Model context string.
+     *
+     * @var     string
+     */
+    public $_context = 'com_dzvideo.categories';
 
-	/**
-	 * The category context (allows other extensions to derived from this model).
-	 *
-	 * @var		string
-	 */
-	protected $_extension = 'com_dzvideo.videos.catid';
+    /**
+     * The category context (allows other extensions to derived from this model).
+     *
+     * @var     string
+     */
+    protected $_extension = 'com_dzvideo.videos.catid';
 
-	protected $_items = null;
+    protected $_items = null;
     
     
     /**
-	 * Constructor.
-	 *
-	 * @param   array  An optional associative array of configuration settings.
-	 * @see     JController
-	 * @since   1.6
-	 */
+     * Constructor.
+     *
+     * @param   array  An optional associative array of configuration settings.
+     * @see     JController
+     * @since   1.6
+     */
     public function __construct($config = array()) {
         parent::__construct($config);
     }
 
-	/**
-	 * Method to get a list of items.
-	 *
-	 * @return  mixed  An array of objects on success, false on failure.
-	 */
-	public function getItems()
-	{
-	   
+    /**
+     * Method to get a list of items.
+     *
+     * @return  mixed  An array of objects on success, false on failure.
+     */
+    public function getItems()
+    {
+       
         $items = parent::getItems();
         foreach ($items as &$item) {
             $item->catlink       = Jroute::_(DZVideoHelperRoute::getCategoryRoute($item->catid));
@@ -75,54 +75,60 @@ class DzvideoModelVideos extends JModelList
             }
             
             $item->tags = new JHelperTags;
-			$item->tags->getItemTags('com_dzvideo.video', $item->id);
+            $item->tags->getItemTags('com_dzvideo.video', $item->id);
         }
 
-		return $items;
-	}
+        return $items;
+    }
 
-	/**
-	 * Method to build an SQL query to load the list data.
-	 *
-	 * @return  string    An SQL query
-	 * @since   1.6
-	 */
-	protected function getListQuery()
-	{
+    /**
+     * Method to build an SQL query to load the list data.
+     *
+     * @return  string    An SQL query
+     * @since   1.6
+     */
+    protected function getListQuery()
+    {
         // Create a new query object.
         $db = $this->getDbo();
         $query = $db->getQuery(true);
         
         $menuparams = $this->getState('menuparams');
         
-       	// Select required fields from the categories.
-		$query->select($this->getState('list.select', 'a.*','c.title as catid_title','c.params as catid_params','c.description as catid_desciption'))
-			->from($db->quoteName('#__dzvideo_videos') . ' AS a');
+        // Select required fields from the categories.
+        $query->select(
+            $this->getState(
+                'list.select', 
+                'a.*, ' .
+                'c.title as catid_title, c.params as catid_params, c.description as catid_desciption, ' .
+                'CASE WHEN a.publish_up = 0 THEN a.created ELSE a.publish_up END as publish_up'
+            )
+        )->from($db->quoteName('#__dzvideo_videos') . ' AS a');
 
-		// Filter by category.
-		if ($categoryId = $this->getState('category.id'))
-		{
-		  if ($categoryId > 1) {
-    			$query->where('a.catid = ' . (int) $categoryId);
+        // Filter by category.
+        if ($categoryId = $this->getState('category.id'))
+        {
+          if ($categoryId > 1) {
+                $query->where('a.catid = ' . (int) $categoryId);
           }
         }
         
-		$query->join('LEFT', '#__categories AS c ON c.id = a.catid');
+        $query->join('LEFT', '#__categories AS c ON c.id = a.catid');
 
-		//Filter by published category
-		$cpublished = $this->getState('filter.c.published');
-		if (is_numeric($cpublished))
-		{
-			$query->where('c.published = ' . (int) $cpublished);
-		}
+        //Filter by published category
+        $cpublished = $this->getState('filter.c.published');
+        if (is_numeric($cpublished))
+        {
+            $query->where('c.published = ' . (int) $cpublished);
+        }
         
         // Filter by search in title
         $search = $this->getState('list.filter');
         if (!empty($search))
-		{
-			$search = $db->quote('%' . $db->escape($search, true) . '%');
-			$query->where('(a.title LIKE ' . $search . ')');
-		}
+        {
+            $search = $db->quote('%' . $db->escape($search, true) . '%');
+            $query->where('(a.title LIKE ' . $search . ')');
+        }
         $featured = (int)$this->getState('featured') == 1;
         if ($featured) {
             $query->where('a.featured = 1');    
@@ -134,41 +140,48 @@ class DzvideoModelVideos extends JModelList
         $published = $this->getState('filter.published', 1);
         $query->where('a.state = '.(int)$published);
         
+        // Filter by start and end dates.
+        $nullDate   = $db->Quote($db->getNullDate());
+        $nowDate    = $db->Quote(JFactory::getDate()->toSql());
+
+        $query->where('(a.publish_up = '.$nullDate.' OR a.publish_up <= '.$nowDate.')');
+        $query->where('(a.publish_down = '.$nullDate.' OR a.publish_down >= '.$nowDate.')');
+        
         // Filter by language
-		if ($this->getState('filter.language'))
-		{
-			$query->where('a.language in (' . $db->quote(JFactory::getLanguage()->getTag()) . ',' . $db->quote('*') . ')');
-		}
+        if ($this->getState('filter.language'))
+        {
+            $query->where('a.language in (' . $db->quote(JFactory::getLanguage()->getTag()) . ',' . $db->quote('*') . ')');
+        }
               
-		// Add the list ordering clause.
-		$query->order($db->escape($this->getState('list.ordering','a.ordering')) . ' ' . $db->escape($this->getState('list.direction', 'ASC')));
-		return $query;
-	}
+        // Add the list ordering clause.
+        $query->order($db->escape($this->getState('list.ordering','a.ordering')) . ' ' . $db->escape($this->getState('list.direction', 'ASC')));
+        return $query;
+    }
     
     /**
-	 * Method to auto-populate the model state.
-	 *
-	 * Note. Calling getState in this method will result in recursion.
-	 *
-	 * @since   1.6
-	 */
-	protected function populateState($ordering = null, $direction = null)
-	{
-		$app = JFactory::getApplication();
-		$this->setState('filter.extension', $this->_extension);
+     * Method to auto-populate the model state.
+     *
+     * Note. Calling getState in this method will result in recursion.
+     *
+     * @since   1.6
+     */
+    protected function populateState($ordering = null, $direction = null)
+    {
+        $app = JFactory::getApplication();
+        $this->setState('filter.extension', $this->_extension);
                         
-		// Get the parent id if defined.
+        // Get the parent id if defined.
         
-		$id = $app->input->get('id', 0, 'int'); 
-		$this->setState('category.id', $id);        
+        $id = $app->input->get('id', 0, 'int'); 
+        $this->setState('category.id', $id);        
 
-		$params = $app->getParams();
-		$this->setState('params', $params);
+        $params = $app->getParams();
+        $this->setState('params', $params);
 
-		$this->setState('filter.published',	1);
+        $this->setState('filter.published', 1);
         
         // Optional filter text
-		$this->setState('list.filter', $app->input->getString('filter-search'));
+        $this->setState('list.filter', $app->input->getString('filter-search'));
         
         // Menu parameters
         $input = JFactory::getApplication()->input;
@@ -193,5 +206,5 @@ class DzvideoModelVideos extends JModelList
         $this->setState('list.start', $limitstart);        
         
         $this->setState('filter.language', JLanguageMultilang::isEnabled());
-	}
+    }
 }

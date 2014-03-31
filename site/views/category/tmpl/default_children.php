@@ -13,15 +13,15 @@ JHtml::_('bootstrap.tooltip');
 
  foreach ($this->children as $id => $child) :
   ?>
-	<div>
-            <h3 class="page-header item-title">			
-    			<a href="<?php echo Jroute::_(DZVideoHelperRoute::getCategoryRoute($child->id)); ?>">
-    			<?php echo $this->escape($child->title); ?></a>
+    <div>
+            <h3 class="page-header item-title">         
+                <a href="<?php echo Jroute::_(DZVideoHelperRoute::getCategoryRoute($child->id)); ?>">
+                <?php echo $this->escape($child->title); ?></a>
     
-    			<?php if (count($child->getChildren()) > 0) : ?>
-    				<a href="#category-<?php echo $child->id;?>" ></a>
-    			<?php endif;?>
+                <?php if (count($child->getChildren()) > 0) : ?>
+                    <a href="#category-<?php echo $child->id;?>" ></a>
+                <?php endif;?>
             </h3>
-	</div>
+    </div>
 <?php endforeach; ?>
 

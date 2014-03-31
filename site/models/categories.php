@@ -18,48 +18,48 @@ require_once JPATH_COMPONENT.'/helpers/route.php';
  */
 class DzvideoModelCategories extends JModelList
 {
-	/**
-	 * Model context string.
-	 *
-	 * @var		string
-	 */
-	public $_context = 'com_dzvideo.categories';
+    /**
+     * Model context string.
+     *
+     * @var     string
+     */
+    public $_context = 'com_dzvideo.categories';
 
-	/**
-	 * The category context (allows other extensions to derived from this model).
-	 *
-	 * @var		string
-	 */
-	protected $_extension = 'com_dzvideo.videos.catid';
+    /**
+     * The category context (allows other extensions to derived from this model).
+     *
+     * @var     string
+     */
+    protected $_extension = 'com_dzvideo.videos.catid';
 
-	private $_items = null;
+    private $_items = null;
     
     public function __construct($config = array()) {
         parent::__construct($config);
     }
     
-	/**
-	 * Method to auto-populate the model state.
-	 *
-	 * Note. Calling getState in this method will result in recursion.
-	 *
-	 * @since   1.6
-	 */
-	protected function populateState($ordering = null, $direction = null)
-	{
-		$app = JFactory::getApplication();
-		$this->setState('filter.extension', $this->_extension);
+    /**
+     * Method to auto-populate the model state.
+     *
+     * Note. Calling getState in this method will result in recursion.
+     *
+     * @since   1.6
+     */
+    protected function populateState($ordering = null, $direction = null)
+    {
+        $app = JFactory::getApplication();
+        $this->setState('filter.extension', $this->_extension);
                         
-		// Get the parent id if defined.
-		$parentId =  $app->input->get('id', 0, 'int');
+        // Get the parent id if defined.
+        $parentId =  $app->input->get('id', 0, 'int');
         
         if ($parentId == 0) $parentId = 1;
-		$this->setState('filter.parentId', $parentId);
+        $this->setState('filter.parentId', $parentId);
 
-		$params = $app->getParams();
-		$this->setState('params', $params);
+        $params = $app->getParams();
+        $this->setState('params', $params);
 
-		$this->setState('filter.published',	1);
+        $this->setState('filter.published', 1);
         
         // Menu parameters
         $input = JFactory::getApplication()->input;
@@ -78,28 +78,28 @@ class DzvideoModelCategories extends JModelList
         
         $limitstart = $app->input->getInt('limitstart', 0);
         $this->setState('list.start', $limitstart);        
-	}
+    }
 
-	/**
-	 * Method to get a store id based on model configuration state.
-	 *
-	 * This is necessary because the model is used by the component and
-	 * different modules that might need different sets of data or different
-	 * ordering requirements.
-	 *
-	 * @param   string  $id	A prefix for the store id.
-	 *
-	 * @return  string  A store id.
-	 */
-	protected function getStoreId($id = '')
-	{
-		// Compile the store id.
-		$id	.= ':'.$this->getState('filter.extension');
-		$id	.= ':'.$this->getState('filter.published');
-		$id	.= ':'.$this->getState('filter.parentId');
+    /**
+     * Method to get a store id based on model configuration state.
+     *
+     * This is necessary because the model is used by the component and
+     * different modules that might need different sets of data or different
+     * ordering requirements.
+     *
+     * @param   string  $id A prefix for the store id.
+     *
+     * @return  string  A store id.
+     */
+    protected function getStoreId($id = '')
+    {
+        // Compile the store id.
+        $id .= ':'.$this->getState('filter.extension');
+        $id .= ':'.$this->getState('filter.published');
+        $id .= ':'.$this->getState('filter.parentId');
 
-		return parent::getStoreId($id);
-	}
+        return parent::getStoreId($id);
+    }
     
     protected function getListQuery() {
         // Create a new query object.
@@ -121,10 +121,10 @@ class DzvideoModelCategories extends JModelList
         // Filter by search in title
         $search = $this->getState('filter.search');
         if (!empty($search))
-		{
-			$search = $db->quote('%' . $db->escape($search, true) . '%');
-			$query->where('(a.title LIKE ' . $search . ')');
-		}
+        {
+            $search = $db->quote('%' . $db->escape($search, true) . '%');
+            $query->where('(a.title LIKE ' . $search . ')');
+        }
         
         $published = $this->getState('filter.published', 1);
         $query->where('a.published = '.(int)$published);
@@ -134,13 +134,13 @@ class DzvideoModelCategories extends JModelList
         return $query;
     }
 
-	/**
-	 * redefine the function an add some properties to make the styling more easy
-	 *
-	 * @return mixed An array of data items on success, false on failure.
-	 */
-	public function getItems()
-	{
+    /**
+     * redefine the function an add some properties to make the styling more easy
+     *
+     * @return mixed An array of data items on success, false on failure.
+     */
+    public function getItems()
+    {
         $items = parent::getItems();
         foreach ($items as &$item) {
             $item->link     = Jroute::_(DZVideoHelperRoute::getCategoryRoute($item->id));
@@ -150,5 +150,5 @@ class DzvideoModelCategories extends JModelList
         }
 
         return $items;
-	}  
+    }  
 }

@@ -19,10 +19,10 @@ defined('_JEXEC') or die;
  */
 class DZVideoCategories extends JCategories
 {
-	public function __construct($options = array())
-	{
-		$options['table'] = '#__dzvideo_videos';
-		$options['extension'] = 'com_dzvideo.videos.catid';
-		parent::__construct($options);
-	}
+    public function __construct($options = array())
+    {
+        $options['table'] = '#__dzvideo_videos';
+        $options['extension'] = 'com_dzvideo.videos.catid';
+        parent::__construct($options);
+    }
 }

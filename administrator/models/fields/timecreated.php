@@ -16,21 +16,21 @@ jimport('joomla.form.formfield');
  */
 class JFormFieldTimecreated extends JFormField
 {
-	/**
-	 * The form field type.
-	 *
-	 * @var		string
-	 * @since	1.6
-	 */
-	protected $type = 'timecreated';
+    /**
+     * The form field type.
+     *
+     * @var     string
+     * @since   1.6
+     */
+    protected $type = 'timecreated';
 
-	/**
-	 * Method to get the field input markup.
-	 *
-	 * @return	string	The field input markup.
-	 * @since	1.6
-	 */
-	protected function getInput() {
+    /**
+     * Method to get the field input markup.
+     *
+     * @return  string  The field input markup.
+     * @since   1.6
+     */
+    protected function getInput() {
         // Initialize variables.
         $html = array();
 

@@ -22,27 +22,27 @@ JHtml::_('behavior.framework');
 ?>
 
 <form action="<?php echo htmlspecialchars(JUri::getInstance()->toString()); ?>" method="post" name="adminForm" id="adminForm">
-	<fieldset class="filters btn-toolbar">
-		<div class="btn-group">
-			<label class="filter-search-lbl element-invisible" for="filter-search"><span class="label label-warning"><?php echo JText::_('JUNPUBLISHED'); ?></span><?php echo JText::_('COM_DZVIDEO_FILTER_LABEL').'&#160;'; ?></label>
-			<input type="text" name="filter-search" id="filter-search" value="<?php echo $this->escape($this->state->get('list.filter')); ?>" class="inputbox" onchange="document.adminForm.submit();" title="<?php echo JText::_('COM_DZVIDEO_FILTER_SEARCH_DESC'); ?>" placeholder="<?php echo JText::_('COM_DZVIDEO_FILTER_SEARCH_DESC'); ?>" />
-		</div>
-		<?php if ($this->params->get('show_pagination_limit')) : ?>
-			<div class="btn-group pull-right">
-				<label for="limit" class="element-invisible">
-					<?php echo JText::_('JGLOBAL_DISPLAY_NUM'); ?>
-				</label>
-				<?php echo $this->pagination->getLimitBox(); ?>
-			</div>
-		<?php endif; ?>
-	</fieldset>
-	
+    <fieldset class="filters btn-toolbar">
+        <div class="btn-group">
+            <label class="filter-search-lbl element-invisible" for="filter-search"><span class="label label-warning"><?php echo JText::_('JUNPUBLISHED'); ?></span><?php echo JText::_('COM_DZVIDEO_FILTER_LABEL').'&#160;'; ?></label>
+            <input type="text" name="filter-search" id="filter-search" value="<?php echo $this->escape($this->state->get('list.filter')); ?>" class="inputbox" onchange="document.adminForm.submit();" title="<?php echo JText::_('COM_DZVIDEO_FILTER_SEARCH_DESC'); ?>" placeholder="<?php echo JText::_('COM_DZVIDEO_FILTER_SEARCH_DESC'); ?>" />
+        </div>
+        <?php if ($this->params->get('show_pagination_limit')) : ?>
+            <div class="btn-group pull-right">
+                <label for="limit" class="element-invisible">
+                    <?php echo JText::_('JGLOBAL_DISPLAY_NUM'); ?>
+                </label>
+                <?php echo $this->pagination->getLimitBox(); ?>
+            </div>
+        <?php endif; ?>
+    </fieldset>
+    
 <?php 
 
 /** SHOW VIDEOS LIST */
 $n = count($this->items);
-$listOrder	= $this->escape($this->params->get('list.ordering'));
-$listDirn	= $this->escape($this->params->get('list.direction'));
+$listOrder  = $this->escape($this->params->get('list.ordering'));
+$listDirn   = $this->escape($this->params->get('list.direction'));
 
 $k = 0;
 
@@ -66,11 +66,11 @@ foreach ($this->items as $id => $item) {
     <li>
         <a href="<?php echo $item->videolink;?>"><?php echo $this->escape($item->title); ?></a>
         Vcode: <?php echo $item->videoid; ?>
-		<?php if ($item->description) : ?>
-			<div class="category-desc">
+        <?php if ($item->description) : ?>
+            <div class="category-desc">
         <?php echo JHtml::_('content.prepare', $item->description, '', 'com_dzvideo.categories'); ?>
-			</div>
-		<?php endif; ?>
+            </div>
+        <?php endif; ?>
         <br/>
         Image: <img src="<?php echo $image; ?>" />
         <?php 
@@ -79,7 +79,7 @@ foreach ($this->items as $id => $item) {
             $tagLayout = new JLayoutFile('joomla.content.tags');
             $item->tags = $tagLayout->render($tags->itemTags);
         ?>
-    	
+        
     </li>
 <?php 
     if ($k % $video_column == 0) {
@@ -90,13 +90,13 @@ foreach ($this->items as $id => $item) {
 }
 ?>
     <?php if ($this->params->get('show_pagination')) : ?>
-    	 <div class="pagination">
-    		<?php if ($this->params->def('show_pagination_results', 1)) : ?>
-    			<p class="counter">
-    				<?php echo $this->pagination->getPagesCounter(); ?>
-    			</p>
-    		<?php endif; ?>
-    			<?php echo $this->pagination->getPagesLinks(); ?>
-    		</div>
-    	<?php endif; ?>
+         <div class="pagination">
+            <?php if ($this->params->def('show_pagination_results', 1)) : ?>
+                <p class="counter">
+                    <?php echo $this->pagination->getPagesCounter(); ?>
+                </p>
+            <?php endif; ?>
+                <?php echo $this->pagination->getPagesLinks(); ?>
+            </div>
+        <?php endif; ?>
 </form>

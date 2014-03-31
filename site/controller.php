@@ -15,31 +15,31 @@ jimport('joomla.application.component.controller');
 class DzvideoController extends JControllerLegacy
 {   
     public function display($cachable = false, $urlparams = false)
-	{
-		$cachable	= true;	// Huh? Why not just put that in the constructor?
-		$user		= JFactory::getUser();
+    {
+        $cachable   = true; // Huh? Why not just put that in the constructor?
+        $user       = JFactory::getUser();
 
-		// Set the default view name and format from the Request.
-		// Note we are using w_id to avoid collisions with the router and the return page.
-		// Frontend is a bit messier than the backend.
-		$id    = $this->input->getInt('w_id');
-		$vName = $this->input->get('view', 'categories');
-		$this->input->set('view', $vName);
+        // Set the default view name and format from the Request.
+        // Note we are using w_id to avoid collisions with the router and the return page.
+        // Frontend is a bit messier than the backend.
+        $id    = $this->input->getInt('w_id');
+        $vName = $this->input->get('view', 'categories');
+        $this->input->set('view', $vName);
 
-		if ($user->get('id') ||($this->input->getMethod() == 'POST' && $vName = 'categories'))
-		{
-			$cachable = false;
-		}
+        if ($user->get('id') ||($this->input->getMethod() == 'POST' && $vName = 'categories'))
+        {
+            $cachable = false;
+        }
 
-		$safeurlparams = array(
-			'id'				=> 'INT',
-			'limit'				=> 'UINT',
-			'limitstart'		=> 'UINT',
-			'filter_order'		=> 'CMD',
-			'filter_order_Dir'	=> 'CMD',
-			'lang'				=> 'CMD'
-		);
+        $safeurlparams = array(
+            'id'                => 'INT',
+            'limit'             => 'UINT',
+            'limitstart'        => 'UINT',
+            'filter_order'      => 'CMD',
+            'filter_order_Dir'  => 'CMD',
+            'lang'              => 'CMD'
+        );
 
-		return parent::display($cachable, $safeurlparams);
+        return parent::display($cachable, $safeurlparams);
     }
 }

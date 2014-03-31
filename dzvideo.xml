@@ -7,7 +7,7 @@
     <author>DZ Team</author>
     <authorEmail>dev@dezign.vn</authorEmail>
     <authorUrl>dezign.vn</authorUrl>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
     <description>Video management component by DZ Team</description>
     
     <install> <!-- Runs on install -->
@@ -20,12 +20,18 @@
             <file driver="mysql" charset="utf8">sql/uninstall.mysql.utf8.sql</file>
         </sql>
     </uninstall>
+    <update>
+        <schemas>
+            <schemapath type="mysql">sql/updates/mysql</schemapath>
+        </schemas>
+    </update>
 
     <files folder="site">
         <filename>index.html</filename>
         <filename>dzvideo.php</filename>
         <filename>controller.php</filename>
         <filename>router.php</filename>
+        <folder>assets</folder>
         <folder>views</folder>
         <folder>models</folder>
         <folder>controllers</folder>
@@ -33,16 +39,16 @@
     </files>
     <languages folder="site">
         
-			<language tag="en-GB">language/en-GB.com_dzvideo.ini</language>
-			<language tag="vi-VN">language/vi-VN.com_dzvideo.ini</language>
+            <language tag="en-GB">language/en-GB.com_dzvideo.ini</language>
+            <language tag="vi-VN">language/vi-VN.com_dzvideo.ini</language>
     </languages>
     <administration>
         <menu img="components/com_dzvideo/assets/images/s_com_dzvideo.png" >COM_DZVIDEO</menu>
         <submenu>
             
-			<menu link="option=com_dzvideo&amp;view=videos" view="videos" img="components/com_dzvideo/assets/images/s_videos.png" alt="Dzvideo/Videos">COM_DZVIDEO_TITLE_VIDEOS</menu>
+            <menu link="option=com_dzvideo&amp;view=videos" view="videos" img="components/com_dzvideo/assets/images/s_videos.png" alt="Dzvideo/Videos">COM_DZVIDEO_TITLE_VIDEOS</menu>
 
-			<menu link="option=com_categories&amp;extension=com_dzvideo.videos.catid" view="categories" img="components/com_dzvideo/assets/images/s_videos.png" alt="Dzvideo/Categories">COM_DZVIDEO_TITLE_CATEGORIES</menu>
+            <menu link="option=com_categories&amp;extension=com_dzvideo.videos.catid" view="categories" img="components/com_dzvideo/assets/images/s_videos.png" alt="Dzvideo/Categories">COM_DZVIDEO_TITLE_CATEGORIES</menu>
 
         </submenu>
         <files folder="administrator">
@@ -52,6 +58,7 @@
             <filename>index.html</filename>
             <filename>dzvideo.php</filename>
             <folder>controllers</folder>
+            <folder>dzvideo</folder>
             <folder>assets</folder>
             <folder>helpers</folder>
             <folder>models</folder>
@@ -60,10 +67,10 @@
             <folder>views</folder>
         </files>
         <languages folder="administrator">
-			<language tag="en-GB">language/en-GB.com_dzvideo.ini</language>
-			<language tag="en-GB">language/en-GB.com_dzvideo.sys.ini</language>
-			<language tag="vi-VN">language/vi-VN.com_dzvideo.ini</language>
-			<language tag="vi-VN">language/vi-VN.com_dzvideo.sys.ini</language>
+            <language tag="en-GB">language/en-GB.com_dzvideo.ini</language>
+            <language tag="en-GB">language/en-GB.com_dzvideo.sys.ini</language>
+            <language tag="vi-VN">language/vi-VN.com_dzvideo.ini</language>
+            <language tag="vi-VN">language/vi-VN.com_dzvideo.sys.ini</language>
         </languages>
     </administration>
 </extension>

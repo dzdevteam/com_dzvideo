@@ -13,6 +13,8 @@ defined('_JEXEC') or die;
 jimport('joomla.application.component.modelform');
 jimport('joomla.event.dispatcher');
 
+require JPATH_COMPONENT_ADMINISTRATOR . '/helpers/dzvideo.php';
+
 /**
  * Dzvideo model.
  */
@@ -21,68 +23,68 @@ class DzvideoModelVideoForm extends JModelForm
     
     var $_item = null;
     
-	/**
-	 * Method to auto-populate the model state.
-	 *
-	 * Note. Calling getState in this method will result in recursion.
-	 *
-	 * @since	1.6
-	 */
-	protected function populateState()
-	{
-		$app = JFactory::getApplication('com_dzvideo');
+    /**
+     * Method to auto-populate the model state.
+     *
+     * Note. Calling getState in this method will result in recursion.
+     *
+     * @since   1.6
+     */
+    protected function populateState()
+    {
+        $app = JFactory::getApplication('com_dzvideo');
 
-		// Load state from the request userState on edit or from the passed variable on default
+        // Load state from the request userState on edit or from the passed variable on default
         if (JFactory::getApplication()->input->get('layout') == 'edit') {
             $id = JFactory::getApplication()->getUserState('com_dzvideo.edit.video.id');
         } else {
             $id = JFactory::getApplication()->input->get('id');
             JFactory::getApplication()->setUserState('com_dzvideo.edit.video.id', $id);
         }
-		$this->setState('video.id', $id);
+        $this->setState('video.id', $id);
 
-		// Load the parameters.
+        // Load the parameters.
         $params = $app->getParams();
         $params_array = $params->toArray();
         if(isset($params_array['item_id'])){
             $this->setState('video.id', $params_array['item_id']);
         }
-		$this->setState('params', $params);
+        $this->setState('params', $params);
 
-	}
+    }
         
 
-	/**
-	 * Method to get an ojbect.
-	 *
-	 * @param	integer	The id of the object to get.
-	 *
-	 * @return	mixed	Object on success, false on failure.
-	 */
-	public function &getData($id = null)
-	{
-		if ($this->_item === null)
-		{
-			$this->_item = false;
+    /**
+     * Method to get an ojbect.
+     *
+     * @param   integer The id of the object to get.
+     *
+     * @return  mixed   Object on success, false on failure.
+     */
+    public function &getData($id = null)
+    {
+        if ($this->_item === null)
+        {
+            $this->_item = false;
 
-			if (empty($id)) {
-				$id = $this->getState('video.id');
-			}
+            if (empty($id)) {
+                $id = $this->getState('video.id');
+            }
 
-			// Get a level row instance.
-			$table = $this->getTable();
+            // Get a level row instance.
+            $table = $this->getTable();
 
-			// Attempt to load the row.
-			if ($table->load($id))
-			{
+            // Attempt to load the row.
+            if ($table->load($id))
+            {
                 
                 $user = JFactory::getUser();
                 $id = $table->id;
                 if($id){
-	$canEdit = $user->authorise('core.edit', 'com_dzvideo.video.'.$id) || $user->authorise('core.create', 'com_dzvideo.video.'.$id);
+    $canEdit = $user->authorise('core.edit', 'com_dzvideo.video.'.$id) || $user->authorise('core.create', 'com_dzvideo.video.'.$id);
 }
 else{
-	$canEdit = $user->authorise('core.edit', 'com_dzvideo') || $user->authorise('core.create', 'com_dzvideo');
+    $canEdit = $user->authorise('core.edit', 'com_dzvideo') || $user->authorise('core.create', 'com_dzvideo');
 }
                 if (!$canEdit && $user->authorise('core.edit.own', 'com_dzvideo.video.'.$id)) {
                     $canEdit = $user->id == $table->created_by;
@@ -92,140 +94,140 @@ else{
                     JError::raiseError('500', JText::_('JERROR_ALERTNOAUTHOR'));
                 }
                 
-				// Check published state.
-				if ($published = $this->getState('filter.published'))
-				{
-					if ($table->state != $published) {
-						return $this->_item;
-					}
-				}
+                // Check published state.
+                if ($published = $this->getState('filter.published'))
+                {
+                    if ($table->state != $published) {
+                        return $this->_item;
+                    }
+                }
 
-				// Convert the JTable to a clean JObject.
-				$properties = $table->getProperties(1);
-				$this->_item = JArrayHelper::toObject($properties, 'JObject');
-			} elseif ($error = $table->getError()) {
-				$this->setError($error);
-			}
-		}
+                // Convert the JTable to a clean JObject.
+                $properties = $table->getProperties(1);
+                $this->_item = JArrayHelper::toObject($properties, 'JObject');
+            } elseif ($error = $table->getError()) {
+                $this->setError($error);
+            }
+        }
 
-		return $this->_item;
-	}
+        return $this->_item;
+    }
     
-	public function getTable($type = 'Video', $prefix = 'DzvideoTable', $config = array())
-	{   
+    public function getTable($type = 'Video', $prefix = 'DzvideoTable', $config = array())
+    {   
         $this->addTablePath(JPATH_COMPONENT_ADMINISTRATOR.'/tables');
         return JTable::getInstance($type, $prefix, $config);
-	}     
+    }     
 
     
-	/**
-	 * Method to check in an item.
-	 *
-	 * @param	integer		The id of the row to check out.
-	 * @return	boolean		True on success, false on failure.
-	 * @since	1.6
-	 */
-	public function checkin($id = null)
-	{
-		// Get the id.
-		$id = (!empty($id)) ? $id : (int)$this->getState('video.id');
+    /**
+     * Method to check in an item.
+     *
+     * @param   integer     The id of the row to check out.
+     * @return  boolean     True on success, false on failure.
+     * @since   1.6
+     */
+    public function checkin($id = null)
+    {
+        // Get the id.
+        $id = (!empty($id)) ? $id : (int)$this->getState('video.id');
 
-		if ($id) {
+        if ($id) {
             
-			// Initialise the table
-			$table = $this->getTable();
+            // Initialise the table
+            $table = $this->getTable();
 
-			// Attempt to check the row in.
+            // Attempt to check the row in.
             if (method_exists($table, 'checkin')) {
                 if (!$table->checkin($id)) {
                     $this->setError($table->getError());
                     return false;
                 }
             }
-		}
+        }
 
-		return true;
-	}
+        return true;
+    }
 
-	/**
-	 * Method to check out an item for editing.
-	 *
-	 * @param	integer		The id of the row to check out.
-	 * @return	boolean		True on success, false on failure.
-	 * @since	1.6
-	 */
-	public function checkout($id = null)
-	{
-		// Get the user id.
-		$id = (!empty($id)) ? $id : (int)$this->getState('video.id');
+    /**
+     * Method to check out an item for editing.
+     *
+     * @param   integer     The id of the row to check out.
+     * @return  boolean     True on success, false on failure.
+     * @since   1.6
+     */
+    public function checkout($id = null)
+    {
+        // Get the user id.
+        $id = (!empty($id)) ? $id : (int)$this->getState('video.id');
 
-		if ($id) {
+        if ($id) {
             
-			// Initialise the table
-			$table = $this->getTable();
+            // Initialise the table
+            $table = $this->getTable();
 
-			// Get the current user object.
-			$user = JFactory::getUser();
+            // Get the current user object.
+            $user = JFactory::getUser();
 
-			// Attempt to check the row out.
+            // Attempt to check the row out.
             if (method_exists($table, 'checkout')) {
                 if (!$table->checkout($user->get('id'), $id)) {
                     $this->setError($table->getError());
                     return false;
                 }
             }
-		}
+        }
 
-		return true;
-	}    
+        return true;
+    }    
     
-	/**
-	 * Method to get the profile form.
-	 *
-	 * The base form is loaded from XML 
+    /**
+     * Method to get the profile form.
+     *
+     * The base form is loaded from XML 
      * 
-	 * @param	array	$data		An optional array of data for the form to interogate.
-	 * @param	boolean	$loadData	True if the form is to load its own data (default case), false if not.
-	 * @return	JForm	A JForm object on success, false on failure
-	 * @since	1.6
-	 */
-	public function getForm($data = array(), $loadData = true)
-	{
-		// Get the form.
-		$form = $this->loadForm('com_dzvideo.video', 'videoform', array('control' => 'jform', 'load_data' => $loadData));
-		if (empty($form)) {
-			return false;
-		}
+     * @param   array   $data       An optional array of data for the form to interogate.
+     * @param   boolean $loadData   True if the form is to load its own data (default case), false if not.
+     * @return  JForm   A JForm object on success, false on failure
+     * @since   1.6
+     */
+    public function getForm($data = array(), $loadData = true)
+    {
+        // Get the form.
+        $form = $this->loadForm('com_dzvideo.video', 'videoform', array('control' => 'jform', 'load_data' => $loadData));
+        if (empty($form)) {
+            return false;
+        }
 
-		return $form;
-	}
+        return $form;
+    }
 
-	/**
-	 * Method to get the data that should be injected in the form.
-	 *
-	 * @return	mixed	The data for the form.
-	 * @since	1.6
-	 */
-	protected function loadFormData()
-	{
-		$data = JFactory::getApplication()->getUserState('com_dzvideo.edit.video.data', array());
+    /**
+     * Method to get the data that should be injected in the form.
+     *
+     * @return  mixed   The data for the form.
+     * @since   1.6
+     */
+    protected function loadFormData()
+    {
+        $data = JFactory::getApplication()->getUserState('com_dzvideo.edit.video.data', array());
         if (empty($data)) {
             $data = $this->getData();
         }
         
         return $data;
-	}
+    }
 
-	/**
-	 * Method to save the form data.
-	 *
-	 * @param	array		The form data.
-	 * @return	mixed		The user id on success, false on failure.
-	 * @since	1.6
-	 */
-	public function save($data)
-	{
-		$id = (!empty($data['id'])) ? $data['id'] : (int)$this->getState('video.id');
+    /**
+     * Method to save the form data.
+     *
+     * @param   array       The form data.
+     * @return  mixed       The user id on success, false on failure.
+     * @since   1.6
+     */
+    public function save($data)
+    {
+        $id = (!empty($data['id'])) ? $data['id'] : (int)$this->getState('video.id');
         $state = (!empty($data['state'])) ? 1 : 0;
         $user = JFactory::getUser();
 
@@ -248,6 +250,12 @@ else{
             return false;
         }
         
+        if (!empty($data['images']['mqdefault'])) {
+            $links = DzvideoHelper::generateThumbs($data['images']['mqdefault'],$data['videoid']);
+            $data['images']['thumb'] = $links['thumb'];
+            $data['images']['medium'] = $links['medium'];
+        }
+        
         $table = $this->getTable();
         if ($table->save($data) === true) {
             return $id;
@@ -255,7 +263,7 @@ else{
             return false;
         }
         
-	}
+    }
     
      function delete($data)
     {

@@ -13,6 +13,6 @@ defined('_JEXEC') or die;
 jimport('joomla.application.component.controller');
 
 // Execute the task.
-$controller	= JControllerLegacy::getInstance('Dzvideo');
+$controller = JControllerLegacy::getInstance('Dzvideo');
 $controller->execute(JFactory::getApplication()->input->get('task'));
 $controller->redirect();

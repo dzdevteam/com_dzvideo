@@ -71,14 +71,14 @@ class DzvideoModelvideos extends JModelList {
         $this->setState('filter.state', $published);
         
         $categoryId = $this->getUserStateFromRequest($this->context . '.filter.category_id', 'filter_category_id');
-		$this->setState('filter.category_id', $categoryId);
+        $this->setState('filter.category_id', $categoryId);
 
         // Load the parameters.
         $params = JComponentHelper::getParams('com_dzvideo');
         $this->setState('params', $params);
 
         // List state information.
-        parent::populateState('a.id', 'asc');
+        parent::populateState('a.created', 'desc');
     }
 
     /**
@@ -88,9 +88,9 @@ class DzvideoModelvideos extends JModelList {
      * different modules that might need different sets of data or different
      * ordering requirements.
      *
-     * @param	string		$id	A prefix for the store id.
-     * @return	string		A store id.
-     * @since	1.6
+     * @param   string      $id A prefix for the store id.
+     * @return  string      A store id.
+     * @since   1.6
      */
      
  
@@ -106,8 +106,8 @@ class DzvideoModelvideos extends JModelList {
     /**
      * Build an SQL query to load the list data.
      *
-     * @return	JDatabaseQuery
-     * @since	1.6
+     * @return  JDatabaseQuery
+     * @since   1.6
      */
     protected function getListQuery() {
         // Create a new query object.
@@ -126,12 +126,12 @@ class DzvideoModelvideos extends JModelList {
         $query->select('uc.name AS editor');
         $query->join('LEFT', '#__users AS uc ON uc.id=a.checked_out');
     
-		// Join over the user field 'created_by'
-		$query->select('created_by.name AS created_by');
-		$query->join('LEFT', '#__users AS created_by ON created_by.id = a.created_by');
-		// Join over the category 'catid'
-		$query->select('catid.title AS catid');
-		$query->join('LEFT', '#__categories AS catid ON catid.id = a.catid');
+        // Join over the user field 'created_by'
+        $query->select('created_by.name AS created_by');
+        $query->join('LEFT', '#__users AS created_by ON created_by.id = a.created_by');
+        // Join over the category 'catid'
+        $query->select('catid.title AS catid');
+        $query->join('LEFT', '#__categories AS catid ON catid.id = a.catid');
 
         
         // Filter by published state
@@ -143,22 +143,22 @@ class DzvideoModelvideos extends JModelList {
         }
         
         $categoryId = $this->getState('filter.category_id');
-		if (is_numeric($categoryId))
-		{
-			$cat_tbl = JTable::getInstance('Category', 'JTable');
-			$cat_tbl->load($categoryId);
-			$rgt = $cat_tbl->rgt;
-			$lft = $cat_tbl->lft;
-			$baselevel = (int) $cat_tbl->level;
-			$query->where('catid.lft >= ' . (int) $lft)
-				->where('catid.rgt <= ' . (int) $rgt);
-		}
-		elseif (is_array($categoryId))
-		{
-			JArrayHelper::toInteger($categoryId);
-			$categoryId = implode(',', $categoryId);
-			$query->where('a.catid IN (' . $categoryId . ')');
-		}
+        if (is_numeric($categoryId))
+        {
+            $cat_tbl = JTable::getInstance('Category', 'JTable');
+            $cat_tbl->load($categoryId);
+            $rgt = $cat_tbl->rgt;
+            $lft = $cat_tbl->lft;
+            $baselevel = (int) $cat_tbl->level;
+            $query->where('catid.lft >= ' . (int) $lft)
+                ->where('catid.rgt <= ' . (int) $rgt);
+        }
+        elseif (is_array($categoryId))
+        {
+            JArrayHelper::toInteger($categoryId);
+            $categoryId = implode(',', $categoryId);
+            $query->where('a.catid IN (' . $categoryId . ')');
+        }
     
         // Filter by search in title
         $search = $this->getState('filter.search');
@@ -184,41 +184,41 @@ class DzvideoModelvideos extends JModelList {
     public function getItems() {
         $items = parent::getItems();
         
-		foreach ($items as $oneItem) {
+        foreach ($items as $oneItem) {
 
-			if ( isset($oneItem->tag) ) {
-				// Catch the item tags (string with ',' coma glue)
-				$tags = explode(",",$oneItem->tag);
+            if ( isset($oneItem->tag) ) {
+                // Catch the item tags (string with ',' coma glue)
+                $tags = explode(",",$oneItem->tag);
 
-				$db = JFactory::getDbo();
-					$namedTags = array(); // Cleaning and initalization of named tags array
+                $db = JFactory::getDbo();
+                    $namedTags = array(); // Cleaning and initalization of named tags array
 
-					// Get the tag names of each tag id
-					foreach ($tags as $tag) {
+                    // Get the tag names of each tag id
+                    foreach ($tags as $tag) {
 
-						$query = $db->getQuery(true);
-						$query->select("title");
-						$query->from('`#__tags`');
-						$query->where( "id=" . intval($tag) );
+                        $query = $db->getQuery(true);
+                        $query->select("title");
+                        $query->from('`#__tags`');
+                        $query->where( "id=" . intval($tag) );
 
-						$db->setQuery($query);
-						$row = $db->loadObjectList();
+                        $db->setQuery($query);
+                        $row = $db->loadObjectList();
 
-						// Read the row and get the tag name (title)
-						if (!is_null($row)) {
-							foreach ($row as $value) {
-								if ( $value && isset($value->title) ) {
-									$namedTags[] = trim($value->title);
-								}
-							}
-						}
+                        // Read the row and get the tag name (title)
+                        if (!is_null($row)) {
+                            foreach ($row as $value) {
+                                if ( $value && isset($value->title) ) {
+                                    $namedTags[] = trim($value->title);
+                                }
+                            }
+                        }
 
-					}
+                    }
 
-					// Finally replace the data object with proper information
-					$oneItem->tag = !empty($namedTags) ? implode(', ',$namedTags) : $oneItem->tag;
-				}
-		}
+                    // Finally replace the data object with proper information
+                    $oneItem->tag = !empty($namedTags) ? implode(', ',$namedTags) : $oneItem->tag;
+                }
+        }
         
         foreach ($items as &$item) {
             $registry = new JRegistry();

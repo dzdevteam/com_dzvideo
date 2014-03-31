@@ -17,13 +17,13 @@ require_once JPATH_COMPONENT.'/controller.php';
  */
 class DzvideoControllerVideos extends DzvideoController
 {
-	/**
-	 * Proxy for getModel.
-	 * @since	1.6
-	 */
-	public function &getModel($name = 'Videos', $prefix = 'DzvideoModel')
-	{
-		$model = parent::getModel($name, $prefix, array('ignore_request' => true));
-		return $model;
-	}
+    /**
+     * Proxy for getModel.
+     * @since   1.6
+     */
+    public function &getModel($name = 'Videos', $prefix = 'DzvideoModel')
+    {
+        $model = parent::getModel($name, $prefix, array('ignore_request' => true));
+        return $model;
+    }
 }

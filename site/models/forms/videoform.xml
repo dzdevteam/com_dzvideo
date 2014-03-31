@@ -1,190 +1,225 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form>
-	<fieldset>
-
-              <field name="id" type="text" default="0" label="COM_DZVIDEO_FORM_LBL_VIDEO_ID"
-            readonly="true" class="readonly"
+    <fieldset>
+        <field name="id" type="text" default="0" label="COM_DZVIDEO_FORM_LBL_VIDEO_ID"
+            readonly="true" class="readonly"
             description="JGLOBAL_FIELD_ID_DESC" /> 
 
-       <field name="created_by" type="createdby" default="" 
+        <field name="created" type="timecreated" default="" 
+            label="COM_DZVIDEO_FORM_LBL_VIDEO_CREATED"
+            description="COM_DZVIDEO_FORM_DESC_VIDEO_CREATED"  /> 
+
+        <field name="created_by" type="createdby" default="" 
             label="COM_DZVIDEO_FORM_LBL_VIDEO_CREATED_BY"
             description="COM_DZVIDEO_FORM_DESC_VIDEO_CREATED_BY"  /> 
 
-       <field name="title" type="text"
-                
+        <field name="created_by_alias" type="text"
+            label="COM_DZVIDEO_FORM_LBL_VIDEO_CREATED_BY_ALIAS" description="COM_DZVIDEO_FORM_DESC_VIDEO_CREATED_BY_ALIAS"
+            class="inputbox" size="20" />
+        
+        <field name="modified" type="calendar" class="readonly"
+            label="JGLOBAL_FIELD_MODIFIED_LABEL" description="COM_DZVIDEO_FORM_DESC_VIDEO_MODIFIED"
+            size="22" readonly="true" format="%Y-%m-%d %H:%M:%S" filter="user_utc" />
+        <field name="publish_up" type="calendar"
+            label="COM_DZVIDEO_FORM_LBL_VIDEO_PUBLISH_UP" description="COM_DZVIDEO_FORM_DESC_VIDEO_PUBLISH_UP"
+            class="inputbox" format="%Y-%m-%d %H:%M:%S" size="22"
+            filter="user_utc" />
+
+        <field name="publish_down" type="calendar"
+            label="COM_DZVIDEO_FORM_LBL_VIDEO_PUBLISH_DOWN" description="COM_DZVIDEO_FORM_DESC_VIDEO_PUBLISH_DOWN"
+            class="inputbox" format="%Y-%m-%d %H:%M:%S" size="22"
+            filter="user_utc" />
+
+        <field name="title" type="text"            
             label="COM_DZVIDEO_FORM_LBL_VIDEO_TITLE"
-            description="COM_DZVIDEO_FORM_DESC_VIDEO_TITLE" 
-                
-                
-                 required="true" 
+            description="COM_DZVIDEO_FORM_DESC_VIDEO_TITLE" 
+            required="true" 
             filter="string" /> 
 
-       <field name="alias" type="text"
-                
+        <field name="alias" type="text"
             label="COM_DZVIDEO_FORM_LBL_VIDEO_ALIAS"
-            description="COM_DZVIDEO_FORM_DESC_VIDEO_ALIAS" 
-                
-                
-                
+            description="COM_DZVIDEO_FORM_DESC_VIDEO_ALIAS" 
             filter="string" /> 
-
-       <field name="link" type="text"
-                
+            
+        <field name="link" type="text"           
             label="COM_DZVIDEO_FORM_LBL_VIDEO_LINK"
-            description="COM_DZVIDEO_FORM_DESC_VIDEO_LINK" 
-                
-                
-                
+            description="COM_DZVIDEO_FORM_DESC_VIDEO_LINK"   
             filter="url" /> 
-
-       <field name="description" type="textarea"
                 
-            label="COM_DZVIDEO_FORM_LBL_VIDEO_DESCRIPTION"
-            description="COM_DZVIDEO_FORM_DESC_VIDEO_DESCRIPTION" 
-                
-                
-                
-            cols="100"
-            rows="8"
-            filter="safehtml" /> 
-
-       <field name="thumbnail" type="text"
-                
-            label="COM_DZVIDEO_FORM_LBL_VIDEO_THUMBNAIL"
-            description="COM_DZVIDEO_FORM_DESC_VIDEO_THUMBNAIL" 
-                
-                
-                
-            filter="raw" /> 
-
-       <field name="image" type="media"
-                
-            label="COM_DZVIDEO_FORM_LBL_VIDEO_IMAGE"
-            description="COM_DZVIDEO_FORM_DESC_VIDEO_IMAGE" 
-                
-                
-                
-            filter="raw"
-            directory="images/video" /> 
-
-       <field name="author" type="text"
-                
-            label="COM_DZVIDEO_FORM_LBL_VIDEO_AUTHOR"
-            description="COM_DZVIDEO_FORM_DESC_VIDEO_AUTHOR" 
-                
-                
-                
-            filter="url" /> 
-
-       <field name="catid" type="category"
-                
-            label="COM_DZVIDEO_FORM_LBL_VIDEO_CATID"
-            description="COM_DZVIDEO_FORM_DESC_VIDEO_CATID" 
-                
-                
-                
-            extension="com_dzvideo.videos.catid"
-            filter="raw" /> 
-
-       <field name="metakey" type="textarea"
-                
-            label="COM_DZVIDEO_FORM_LBL_VIDEO_METAKEY"
-            description="COM_DZVIDEO_FORM_DESC_VIDEO_METAKEY" 
-                
-                
-                
-            cols="100"
-            rows="8"
-            filter="string" /> 
-
-       <field name="metadesc" type="textarea"
-                
-            label="COM_DZVIDEO_FORM_LBL_VIDEO_METADESC"
-            description="COM_DZVIDEO_FORM_DESC_VIDEO_METADESC" 
-                
-                
-                
-            cols="100"
-            rows="8"
-            filter="string" /> 
-
-       <field name="metadata" type="textarea"
-                
-            label="COM_DZVIDEO_FORM_LBL_VIDEO_METADATA"
-            description="COM_DZVIDEO_FORM_DESC_VIDEO_METADATA" 
-                
-                
-                
-            cols="100"
-            rows="8"
-            filter="raw" /> 
-
-       <field name="params" type="textarea"
-                
-            label="COM_DZVIDEO_FORM_LBL_VIDEO_PARAMS"
-            description="COM_DZVIDEO_FORM_DESC_VIDEO_PARAMS" 
-                
-                
-                
-            cols="100"
-            rows="8"
-            filter="raw" /> 
-
-       <field name="language" type="language"
-                
-            label="COM_DZVIDEO_FORM_LBL_VIDEO_LANGUAGE"
-            description="COM_DZVIDEO_FORM_DESC_VIDEO_LANGUAGE" 
-                
-                
-                
-            filter="string"
-            client="false" /> 
-
-       <field name="embed" type="textarea"
-                
-            label="COM_DZVIDEO_FORM_LBL_VIDEO_EMBED"
-            description="COM_DZVIDEO_FORM_DESC_VIDEO_EMBED" 
-                
-                
-                
-            cols="100"
-            rows="8"
-            filter="html" /> 
+        <field name="videoid" type="hidden" readonly = "true"         
+            label="COM_DZVIDEO_FORM_LBL_VIDEOID"
+            description="COM_DZVIDEO_FORM_DESC_VIDEOID"  /> 
+    
+        <field name="featured" type="list" class="span12 small"
+            default="0"
+            label="COM_DZVIDEO_FORM_LBL_VIDEO_FEATURED"
+            description="COM_DZVIDEO_FORM_DESC_VIDEO_FEATURED">
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+        </field> 
 
  
-		<field name="tag" type="tag" mode="ajax" label="Tag" description="tag" multiple="true" custom="allow"  /> 
+        <field name="filter_featured" type="list" onchange="this.form.submit();">
+            <option value="">COM_DZVIDEO_VIDEOS_FEATURED_FILTER</option>
+            <option value="0">JNO</option>
+            <option value="1">JYES</option>
+        </field> 
+        
+        <field name="length" type="hidden"
+            label="COM_DZVIDEO_FORM_LBL_VIDEO_LENGTH"
+            description="COM_DZVIDEO_FORM_DESC_VIDEO_LENGTH"
+        />
+        
+        <field name="shortdesc" type="textarea"
+            label="COM_DZVIDEO_FORM_LBL_VIDEO_SHORTDESC"
+            description="COM_DZVIDEO_FORM_DESC_VIDEO_SHORTDESC" 
+            filter="safehtml" /> 
+            
+        <field name="description" type="textarea"  
+            label="COM_DZVIDEO_FORM_LBL_VIDEO_DESCRIPTION"
+            description="COM_DZVIDEO_FORM_DESC_VIDEO_DESCRIPTION" 
+            filter="safehtml" />
+            
+        <field name="author" type="text"          
+            label="COM_DZVIDEO_FORM_LBL_VIDEO_AUTHOR"
+            description="COM_DZVIDEO_FORM_DESC_VIDEO_AUTHOR"/> 
 
-         <field
-        name="state"
-        type="list"
-        label="JSTATUS"
-        description="JFIELD_PUBLISHED_DESC"
-        class="inputbox"
-        size="1"
-        default="1">
-        <option value="1">JPUBLISHED</option>
-        <option value="0">JUNPUBLISHED</option>
-    </field> 
+        <field name="catid" type="category"            
+            label="COM_DZVIDEO_FORM_LBL_VIDEO_CATID"
+            description="COM_DZVIDEO_FORM_DESC_VIDEO_CATID" 
+            extension="com_dzvideo.videos.catid"
+            filter="raw" /> 
+            
+        <field name="hits"
+            type="text"
+            class="readonly"
+            size="6" label="JGLOBAL_HITS"
+            description="JGLOBAL_HITS"
+            readonly="true"
+            filter="unset" />
+   
+        <fields name="images"> 
+            <field
+                name="thumb"
+                type="hidden" 
+                label="COM_DZVIDEO_FORM_LBL_IMAGE_LINKS_THUMBNAIL"
+                description="COM_DZVIDEO_FORM_DESC_IMAGE_LINKS_THUMBNAIL" />
+            <field
+                name="medium"
+                type="hidden" 
+                label="COM_DZVIDEO_FORM_LBL_IMAGE_LINKS_MEDIUM"
+                description="COM_DZVIDEO_FORM_DESC_IMAGE_LINKS_MEDIUM" />
+            <field
+                name="mqdefault"
+                type="hidden" 
+                label="COM_DZVIDEO_FORM_LBL_IMAGE_LINKS_MQDEFAULT"
+                description="COM_DZVIDEO_FORM_DESC_IMAGE_LINKS_MQDEFAULT" />
+            <field
+                name="custom"
+                type="media"
+                directory="/"
+                class = "input-xlarge"
+                label="COM_DZVIDEO_FORM_LBL_CUSTOM_IMAGE_FULL"
+                description="COM_DZVIDEO_FORM_DESC_CUSTOM_IMAGE_FULL" />
+        </fields>
+    
+        <field
+            name="width"
+            type="hidden" 
+            default="500"
+            label="COM_DZVIDEO_FORM_LBL_IMAGE_LINKS_WIDTH"
+            description="COM_DZVIDEO_FORM_DESC_IMAGE_LINKS_WIDTH" />
+        <field
+            name="height"
+            type="hidden" 
+            default="300"
+            label="COM_DZVIDEO_FORM_LBL_IMAGE_LINKS_HEIGHT"
+            description="COM_DZVIDEO_FORM_DESC_IMAGE_LINKS_HEIGHT" />
+                
+        <field 
+            name="tags"
+            type="tag"
+            label="JTAG"
+            description="JTAG_DESC"
+            class="inputbox span12"
+            multiple="true">
+        </field>
+                
+        <field name="metakey" type="textarea"          
+            label="COM_DZVIDEO_FORM_LBL_VIDEO_METAKEY"
+            description="COM_DZVIDEO_FORM_DESC_VIDEO_METAKEY" 
+            cols="100"
+            rows="4"
+            filter="string" /> 
 
-                        <field name="checked_out" type="hidden" filter="unset" />
-        <field name="checked_out_time" type="hidden" filter="unset" /> 
+        <field name="metadesc" type="textarea"          
+            label="COM_DZVIDEO_FORM_LBL_VIDEO_METADESC"
+            description="COM_DZVIDEO_FORM_DESC_VIDEO_METADESC" 
+            cols="200"
+            rows="10"
+            filter="string" /> 
 
- </fieldset> 
+        <fields name="metadata">
+            <fieldset name="jmetadata"
+                label="JGLOBAL_FIELDSET_METADATA_OPTIONS">  
+                <field name="robots"
+                    type="list"
+                    label="JFIELD_METADATA_ROBOTS_LABEL"
+                    description="JFIELD_METADATA_ROBOTS_DESC"
+                    labelclass="control-label">
+                    <option value="">JGLOBAL_USE_GLOBAL</option>
+                    <option value="index, follow">JGLOBAL_INDEX_FOLLOW</option>
+                    <option value="noindex, follow">JGLOBAL_NOINDEX_FOLLOW</option>
+                    <option value="index, nofollow">JGLOBAL_INDEX_NOFOLLOW</option>
+                    <option value="noindex, nofollow">JGLOBAL_NOINDEX_NOFOLLOW</option>
+                </field>                            
+            </fieldset>
+        </fields> 
+    
+        <field name="params" type="textarea"
+            label="COM_DZVIDEO_FORM_LBL_VIDEO_PARAMS"
+            description="COM_DZVIDEO_FORM_DESC_VIDEO_PARAMS" 
+            cols="100"
+            rows="4"
+            filter="raw" /> 
 
- <fieldset 
-                        name="accesscontrol">
-                       <field name="asset_id" type="hidden" filter="unset" />
-                       <field name="rules"
-                            type="rules"
-                            label="JFIELD_RULES_LABEL"
-                            translate_label="false"
-                            filter="rules"
-                            validate="rules"
-                            class="inputbox"
-                            component="com_dzvideo"
-                            section="video"
-                        />
+        <field name="language" type="contentlanguage"          
+            label="COM_DZVIDEO_FORM_LBL_VIDEO_LANGUAGE"
+            description="COM_DZVIDEO_FORM_DESC_VIDEO_LANGUAGE"> 
+            <option value="*">JALL</option>
+        </field>
 
-	</fieldset>
+        <field name="embed" type="textarea"            
+            label="COM_DZVIDEO_FORM_LBL_VIDEO_EMBED"
+            description="COM_DZVIDEO_FORM_DESC_VIDEO_EMBED" 
+            filter="html" />
 
+        <field
+            name="state"
+            type="list"
+            label="JSTATUS"
+            description="JFIELD_PUBLISHED_DESC"
+            class="chzn-color-state"
+            size="1"
+            default="1">
+            <option value="1">JPUBLISHED</option>
+            <option value="0">JUNPUBLISHED</option>
+        </field>
+        <field name="checked_out" type="hidden" filter="unset" />
+        <field name="checked_out_time" type="hidden" filter="unset" />
+    </fieldset> 
+
+    <fieldset 
+        name="accesscontrol">
+        <field name="asset_id" type="hidden" filter="unset" />
+        <field name="rules"
+            type="rules"
+            label="JFIELD_RULES_LABEL"
+            translate_label="false"
+            filter="rules"
+            validate="rules"
+            class="inputbox"
+            component="com_dzvideo"
+            section="video" />
+    </fieldset>
 </form>
