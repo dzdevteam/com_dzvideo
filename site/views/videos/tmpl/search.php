@@ -37,7 +37,7 @@ JHtml::_('behavior.framework');
         <?php endif; ?>
     </fieldset>
     
-<?php if (!empty($this->state->get('list.filter'))) : ?>    
+<?php if ($this->state->get('list.filter')) : ?>    
 
 <?php 
 
