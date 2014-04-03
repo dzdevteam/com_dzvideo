@@ -24,7 +24,6 @@ JHtml::_('behavior.framework');
 <form action="<?php echo htmlspecialchars(JUri::getInstance()->toString()); ?>" method="post" name="adminForm" id="adminForm">
     <fieldset class="filters btn-toolbar">
         <div class="btn-group">
-            <label class="filter-search-lbl element-invisible" for="filter-search"><span class="label label-warning"><?php echo JText::_('JUNPUBLISHED'); ?></span><?php echo JText::_('COM_DZVIDEO_FILTER_LABEL').'&#160;'; ?></label>
             <input type="text" name="filter-search" id="filter-search" value="<?php echo $this->escape($this->state->get('list.filter')); ?>" class="inputbox" onchange="document.adminForm.submit();" title="<?php echo JText::_('COM_DZVIDEO_FILTER_SEARCH_DESC'); ?>" placeholder="<?php echo JText::_('COM_DZVIDEO_FILTER_SEARCH_DESC'); ?>" />
         </div>
         <?php if ($this->params->get('show_pagination_limit')) : ?>
