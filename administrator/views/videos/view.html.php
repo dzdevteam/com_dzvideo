@@ -126,7 +126,7 @@ class DzvideoViewVideos extends JViewLegacy
         JHtmlSidebar::addFilter(
             JText::_('JOPTION_SELECT_CATEGORY'),
             'filter_category_id',
-            JHtml::_('select.options', JHtml::_('category.options', 'com_dzvideo.videos.catid'), 'value', 'text', $this->state->get('filter.category_id'))
+            JHtml::_('select.options', JHtml::_('category.options', 'com_dzvideo'), 'value', 'text', $this->state->get('filter.category_id'))
         );
 
         

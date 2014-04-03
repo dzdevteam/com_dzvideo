@@ -95,8 +95,10 @@
         <field name="catid" type="category"            
             label="COM_DZVIDEO_FORM_LBL_VIDEO_CATID"
             description="COM_DZVIDEO_FORM_DESC_VIDEO_CATID" 
-            extension="com_dzvideo.videos.catid"
-            filter="raw" /> 
+            extension="com_dzvideo"
+            filter="int">
+            <option value="">COM_DZVIDEO_OPTION_SELECT_CATEGORY</option>
+        </field>
             
         <field name="hits"
             type="text"

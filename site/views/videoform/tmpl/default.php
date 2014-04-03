@@ -57,10 +57,6 @@ $lang->load('com_dzvideo', JPATH_ADMINISTRATOR);
             <div class="controls"><?php echo $this->form->getInput('author'); ?></div>
         </div>
         <div class="control-group">
-            <div class="control-label"><?php echo $this->form->getLabel('catid'); ?></div>
-            <div class="controls"><?php echo $this->form->getInput('catid'); ?></div>
-        </div>
-        <div class="control-group">
         <?php $canState = false; ?>
         <?php if ($this->item->id): ?>
             <?php $canState = JFactory::getUser()->authorise('core.edit.state','com_dzvideo.video'.$this->item->id); ?>
@@ -90,6 +86,7 @@ $lang->load('com_dzvideo', JPATH_ADMINISTRATOR);
             <?php echo $this->form->getInput('width'); ?>
             <?php echo $this->form->getInput('height'); ?>
             <?php echo $this->form->getInput('length'); ?>
+            <?php echo $this->form->getInput('language'); ?>
         </div>
 
         <div class="control-group">

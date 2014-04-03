@@ -37,6 +37,8 @@ JHtml::_('behavior.framework');
         <?php endif; ?>
     </fieldset>
     
+<?php if (!empty($this->state->get('list.filter'))) : ?>    
+
 <?php 
 
 /** SHOW VIDEOS LIST */
@@ -44,7 +46,7 @@ $n = count($this->items);
 $listOrder  = $this->escape($this->params->get('list.ordering'));
 $listDirn   = $this->escape($this->params->get('list.direction'));
 
-$k = 0;
+$k = 12;
 
 $video_column = $this->params->get('video_column');
 
@@ -90,13 +92,18 @@ foreach ($this->items as $id => $item) {
 }
 ?>
     <?php if ($this->params->get('show_pagination')) : ?>
-         <div class="pagination">
-            <?php if ($this->params->def('show_pagination_results', 1)) : ?>
-                <p class="counter">
-                    <?php echo $this->pagination->getPagesCounter(); ?>
-                </p>
-            <?php endif; ?>
-                <?php echo $this->pagination->getPagesLinks(); ?>
-            </div>
+        <div class="pagination">
+        <?php if ($this->params->def('show_pagination_results', 1)) : ?>
+            <p class="counter">
+                <?php echo $this->pagination->getPagesCounter(); ?>
+            </p>
         <?php endif; ?>
+            <?php echo $this->pagination->getPagesLinks(); ?>
+        </div>
+    <?php endif; ?>
+
+<?php else: ?>
+--- Enter a keyword into the searchbox ---
+<?php endif; ?>
+
 </form>

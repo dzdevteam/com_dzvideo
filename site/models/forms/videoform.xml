@@ -87,7 +87,7 @@
         <field name="catid" type="category"            
             label="COM_DZVIDEO_FORM_LBL_VIDEO_CATID"
             description="COM_DZVIDEO_FORM_DESC_VIDEO_CATID" 
-            extension="com_dzvideo.videos.catid"
+            extension="com_dzvideo"
             filter="raw" /> 
             
         <field name="hits"
@@ -183,11 +183,9 @@
             rows="4"
             filter="raw" /> 
 
-        <field name="language" type="contentlanguage"          
+        <field name="language" type="hidden" default="*"          
             label="COM_DZVIDEO_FORM_LBL_VIDEO_LANGUAGE"
-            description="COM_DZVIDEO_FORM_DESC_VIDEO_LANGUAGE"> 
-            <option value="*">JALL</option>
-        </field>
+            description="COM_DZVIDEO_FORM_DESC_VIDEO_LANGUAGE" />
 
         <field name="embed" type="textarea"            
             label="COM_DZVIDEO_FORM_LBL_VIDEO_EMBED"

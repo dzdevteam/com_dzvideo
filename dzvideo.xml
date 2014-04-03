@@ -48,7 +48,7 @@
             
             <menu link="option=com_dzvideo&amp;view=videos" view="videos" img="components/com_dzvideo/assets/images/s_videos.png" alt="Dzvideo/Videos">COM_DZVIDEO_TITLE_VIDEOS</menu>
 
-            <menu link="option=com_categories&amp;extension=com_dzvideo.videos.catid" view="categories" img="components/com_dzvideo/assets/images/s_videos.png" alt="Dzvideo/Categories">COM_DZVIDEO_TITLE_CATEGORIES</menu>
+            <menu link="option=com_categories&amp;extension=com_dzvideo" view="categories" img="components/com_dzvideo/assets/images/s_videos.png" alt="Dzvideo/Categories">COM_DZVIDEO_TITLE_CATEGORIES</menu>
 
         </submenu>
         <files folder="administrator">

@@ -142,6 +142,43 @@ class DzvideoTablevideo extends JTable {
         return parent::check();
     }
     
+    /**
+     * Overrides JTable::store to set modified data and user id.
+     *
+     * @param   boolean  $updateNulls  True to update fields even if they are null.
+     *
+     * @return  boolean  True on success.
+     *
+     * @since   11.1
+     */
+    public function store($updateNulls = false)
+    {
+        $date = JFactory::getDate();
+        $user = JFactory::getUser();
+
+        if ($this->id)
+        {
+            // Existing item
+            $this->modified = $date->toSql();
+        }
+        else
+        {
+            // New article. An article created and created_by field can be set by the user,
+            // so we don't touch either of these if they are set.
+            if (!(int) $this->created)
+            {
+                $this->created = $date->toSql();
+            }
+
+            if (empty($this->created_by))
+            {
+                $this->created_by = $user->get('id');
+            }
+        }
+
+        return parent::store($updateNulls);
+    }
+    
 
     /*
      * Remove 5 Vietnamese accent / tone marks if has Combining Unicode characters

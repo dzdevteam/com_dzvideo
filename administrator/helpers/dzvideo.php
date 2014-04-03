@@ -29,11 +29,11 @@ class DzvideoHelper
         );
         JHtmlSidebar::addEntry(
             'Categories',
-            "index.php?option=com_categories&extension=com_dzvideo.videos.catid",
-            $vName == 'categories.videos'
+            "index.php?option=com_categories&extension=com_dzvideo",
+            $vName == 'categories'
         );
         
-        if ($vName=='categories.videos.catid') {            
+        if ($vName=='categories') {            
             JToolBarHelper::title('DZ Video: Categories');      
         }
     }

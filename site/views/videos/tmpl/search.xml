@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <metadata>
-	<layout title="COM_DZVIDEO_TITLE_LIST_VIDEOS" option="View">
+	<layout title="COM_DZVIDEO_TITLE_LIST_SEARCH" option="View">
 		<message>
-			<![CDATA[COM_DZVIDEO_TITLE_LIST_VIDEOS_DESC]]>
+			<![CDATA[COM_DZVIDEO_TITLE_LIST_SEARCH_DESC]]>
 		</message>
 	</layout>
 
@@ -11,7 +11,7 @@
 		<fieldset name="request">
 			<field name="id" type="category"
 				description="JGLOBAL_FIELD_CATEGORIES_CHOOSE_CATEGORY_DESC"
-				extension="com_dzvideo"
+				extension="com_dzvideo.videos.catid"
 				label="JGLOBAL_FIELD_CATEGORIES_CHOOSE_CATEGORY_LABEL"
 				show_root = "true"
                 required="true"
@@ -22,18 +22,6 @@
 	<!-- Add fields to the parameters object for the layout. -->
     <fields name="params">
     <fieldset name="basic" label="JGLOBAL_CATEGORY_OPTIONS">
-			<field name="spacer1" type="spacer" class="text"
-					label="JGLOBAL_SUBSLIDER_DRILL_CATEGORIES_LABEL" />
-            
-            <!-- Featured Type -->
-            <field name="show_only_featured" type="list"
-            default = "0"
-			label="COM_DZVIDEO_FIELD_CONFIG_DISPLAY_BY_ONLY_FEATURED"
-			description="COM_DZVIDEO_FIELD_CONFIG_DISPLAY_BY_ONLY_FEATURED">
-				<option value="0">JNO</option>
-				<option value="1">JYES</option>
-			</field>
-            <!-- Featured End-->
              
 			<field
 				name="ordering"
@@ -73,10 +61,15 @@
 			</field>
             
             <field name="video_column" 
-                type="text" filter="int" class="validate-numeric" default = "3"
-                description="COM_DZVIDEO_FIELD_CATEGORY_COLUMN_LABEL"
-                label="COM_DZVIDEO_FIELD_CATEGORY_COLUMN_DESC"
-            />
+                type="list" filter="int" class="validate-numeric" default = "3"
+                label="COM_DZVIDEO_FIELD_COLUMN_LABEL"
+                description="COM_DZVIDEO_FIELD_COLUMN_DESC">
+                <option value="1">1 column</option>
+                <option value="2">2 columns</option>
+                <option value="3">3 columns</option>
+                <option value="4">4 columns</option>
+                <option value="6">6 columns</option>
+            </field>
             
             <field name="display_num" 
                 type="text" filter="int" class="validate-numeric" default = "12"

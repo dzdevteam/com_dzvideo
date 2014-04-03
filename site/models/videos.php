@@ -8,7 +8,7 @@
  */
 
 defined('_JEXEC') or die;
-require_once JPATH_COMPONENT.'/helpers/route.php';
+require_once JPATH_SITE.'/components/com_dzvideo/helpers/route.php';
 
 /**
  * Dzvideo Component Weblink Model
@@ -31,7 +31,7 @@ class DzvideoModelVideos extends JModelList
      *
      * @var     string
      */
-    protected $_extension = 'com_dzvideo.videos.catid';
+    protected $_extension = 'com_dzvideo';
 
     protected $_items = null;
     
@@ -80,6 +80,36 @@ class DzvideoModelVideos extends JModelList
 
         return $items;
     }
+    
+    /**
+     * Method to get a store id based on model configuration state.
+     *
+     * This is necessary because the model is used by the component and
+     * different modules that might need different sets of data or different
+     * ordering requirements.
+     *
+     * @param   string  $id  A prefix for the store id.
+     *
+     * @return  string  A store id.
+     *
+     * @since   1.6
+     */
+    protected function getStoreId($id = '')
+    {
+        // Compile the store id.
+        $id .= ':' . serialize($this->getState('filter.published'));
+        $id .= ':' . $this->getState('filter.access');
+        $id .= ':' . $this->getState('featured');
+        $id .= ':' . serialize($this->getState('category.id'));
+        $id .= ':' . $this->getState('filter.date_filtering');
+        $id .= ':' . $this->getState('filter.date_field');
+        $id .= ':' . $this->getState('filter.start_date_range');
+        $id .= ':' . $this->getState('filter.end_date_range');
+        $id .= ':' . $this->getState('filter.relative_date');
+        $id .= ':' . $this->getState('filter.language');
+
+        return parent::getStoreId($id);
+    }
 
     /**
      * Method to build an SQL query to load the list data.
@@ -108,9 +138,13 @@ class DzvideoModelVideos extends JModelList
         // Filter by category.
         if ($categoryId = $this->getState('category.id'))
         {
-          if ($categoryId > 1) {
-                $query->where('a.catid = ' . (int) $categoryId);
-          }
+            if (is_array($categoryId)) {
+                $query->where('a.catid IN (' . implode(',', $categoryId) . ')');
+            } else {
+                if ($categoryId > 1) {
+                    $query->where('a.catid = ' . (int) $categoryId);
+                }
+            }
         }
         
         $query->join('LEFT', '#__categories AS c ON c.id = a.catid');
@@ -152,9 +186,50 @@ class DzvideoModelVideos extends JModelList
         {
             $query->where('a.language in (' . $db->quote(JFactory::getLanguage()->getTag()) . ',' . $db->quote('*') . ')');
         }
+        
+        // Filter by tags
+        $tags = $this->getState('filter.tag_ids');
+        if ($tags) {
+            $query->join('INNER', '#__contentitem_tag_map as tm ON a.id = tm.content_item_id AND tm.tag_id IN (' . $tags . ')');
+            $query->group('a.id');
+        }
+        
+        // Filter exclude id
+        $exclude_id = $this->getState('filter.exclude_id');
+        if ($exclude_id > 1) {
+            $query->where('a.id != ' . (int) $exclude_id);
+        }
+        
+        // Filter by Date Range or Relative Date
+        $dateFiltering = $this->getState('filter.date_filtering', 'off');
+        $dateField = $this->getState('filter.date_field', 'a.created');
+
+        switch ($dateFiltering)
+        {
+            case 'range':
+                $startDateRange = $db->quote($this->getState('filter.start_date_range', $nullDate));
+                $endDateRange = $db->quote($this->getState('filter.end_date_range', $nullDate));
+                $query->where(
+                    '(' . $dateField . ' >= ' . $startDateRange . ' AND ' . $dateField .
+                        ' <= ' . $endDateRange . ')'
+                );
+                break;
+
+            case 'relative':
+                $relativeDate = (int) $this->getState('filter.relative_date', 0);
+                $query->where(
+                    $dateField . ' >= DATE_SUB(' . $nowDate . ', INTERVAL ' .
+                        $relativeDate . ' DAY)'
+                );
+                break;
+
+            case 'off':
+            default:
+                break;
+        }
               
         // Add the list ordering clause.
-        $query->order($db->escape($this->getState('list.ordering','a.ordering')) . ' ' . $db->escape($this->getState('list.direction', 'ASC')));
+        $query->order($db->escape($this->getState('list.ordering','a.created')) . ' ' . $db->escape($this->getState('list.direction', 'DESC')));
         return $query;
     }
     

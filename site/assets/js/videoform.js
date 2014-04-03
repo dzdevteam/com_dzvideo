@@ -39,7 +39,7 @@ jQuery(document).ready(function() {
                     jQuery('#jform_author').val(video.snippet.channelTitle);
                     jQuery('#embed').html(video.player.embedHtml);
                     jQuery('#jform_videoid').val(video.id);
-                    jQuery('#jform_images_mqdefault').val(video.snippet.thumbnails.default.url);
+                    jQuery('#jform_images_mqdefault').val(video.snippet.thumbnails.medium.url);
                     time_parts = video.contentDetails.duration.match(/^PT(\d*)M(\d*)S/);
                     jQuery('#jform_length').val(parseInt(time_parts[1]) * 60 + parseInt(time_parts[2]));
                 }
