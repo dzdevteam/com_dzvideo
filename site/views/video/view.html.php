@@ -109,7 +109,7 @@ class DzvideoViewVideo extends JViewLegacy {
         // Facebook meta tag
         $this->document->setMetadata('og:title', $this->item->title);
         $this->document->setMetadata('og:image', JUri::root() . '/' . $this->item->images['medium']);
-        $this->document->setMetadata('og:description', empty($this->item->description) ? $this->item->shortdesc : $this->item->description);
+        $this->document->setMetadata('og:description', empty($this->item->description) ? str_replace('<br />', "\n", $this->item->shortdesc) : $this->item->description);
         $this->document->setMetadata('og:type', 'video');
     }        
     
