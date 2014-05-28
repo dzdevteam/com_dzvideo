@@ -12,7 +12,7 @@
 		>
 			<field name="id" type="category"
 				description="JGLOBAL_FIELD_CATEGORIES_CHOOSE_CATEGORY_DESC"
-				extension="com_dzvideo.videos.catid"
+				extension="com_dzvideo"
 				label="JGLOBAL_FIELD_CATEGORIES_CHOOSE_CATEGORY_LABEL"
 				show_root="true"
 				required="true"
@@ -44,29 +44,29 @@
 				<option value="a.title">COM_DZVIDEO_FIELD_CONFIG_ORDER_BY_TITLE</option>
 				<option value="a.created">COM_DZVIDEO_FIELD_CONFIG_ORDER_BY_TIME</option>
 			</field>
-            
+
            	<field
                 name="direction"
-                type="list" 
+                type="list"
                 default="ASC"
                 label="COM_DZVIDEO_REQUEST_LBL_FILTER_ORDER_DIR"
                 description="COM_DZVIDEO_REQUEST_DESC_FILTER_ORDER_DIR">
                 <option value="ASC">JGLOBAL_ORDER_ASCENDING</option>
                 <option value="DESC">JGLOBAL_ORDER_DESCENDING</option>
             </field>
-            
-            <field name="category_column" 
+
+            <field name="category_column"
                 type="text" filter="int" class="validate-numeric" default = "3"
                 description="COM_DZVIDEO_FIELD_CATEGORY_COLUMN_LABEL"
                 label="COM_DZVIDEO_FIELD_CATEGORY_COLUMN_DESC"
             />
-            
-            <field name="display_num" 
+
+            <field name="display_num"
                 type="text" filter="int" class="validate-numeric" default = "12"
                 description="COM_DZVIDEO_FIELD_COUNT_LABEL"
                 label="COM_DZVIDEO_FIELD_COUNT_DESC"
             />
-                        
+
 			<field	name="show_pagination_limit" type="list"
 			label="JGLOBAL_DISPLAY_SELECT_LABEL"
 			description="JGLOBAL_DISPLAY_SELECT_DESC">

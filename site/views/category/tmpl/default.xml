@@ -11,7 +11,7 @@
 		<fieldset name="request">
 			<field name="id" type="category"
 				description="JGLOBAL_FIELD_CATEGORIES_CHOOSE_CATEGORY_DESC"
-				extension="com_dzvideo.videos.catid"
+				extension="com_dzvideo"
 				label="JGLOBAL_FIELD_CATEGORIES_CHOOSE_CATEGORY_LABEL"
                 required="true">
                 <option value="root">Root</option>
@@ -22,15 +22,15 @@
 	<!-- Add fields to the parameters object for the layout. -->
     <fields name="params">
 	<fieldset name="category" label="COM_DZVIDEO_CAT_VIEW_SETTINGS_LABEL">
-	
+
 		<field type="spacer" label="COM_DZVIDEO_CAT_SETTINGS_LABEL" description="COM_DZVIDEO_CAT_SETTINGS_DESC"/>
-		
+
 		<field name="show_category_title" type="radio"
 					class="btn-group"
 					label="COM_DZVIDEO_SHOW_CAT_TITLE_LABEL"
-					description="COM_DZVIDEO_SHOW_CAT_TITLE_DESC"					
+					description="COM_DZVIDEO_SHOW_CAT_TITLE_DESC"
 				>
-					<option value="">JGLOBAL_USE_GLOBAL</option>					
+					<option value="">JGLOBAL_USE_GLOBAL</option>
 					<option value="0">JHIDE</option>
 					<option value="1">JSHOW</option>
 		</field>
@@ -38,27 +38,27 @@
 				class="btn-group"
 				description="COM_DZVIDEO_SHOW_CAT_DESC_DESC"
 				label="COM_DZVIDEO_SHOW_CAT_DESC_LABEL"
-                
+
 			>
-					<option value="">JGLOBAL_USE_GLOBAL</option>					
+					<option value="">JGLOBAL_USE_GLOBAL</option>
 					<option value="0">JHIDE</option>
 					<option value="1">JSHOW</option>
 			</field>
 		<field name="show_category_image" type="radio"
 				class="btn-group"
 				description="COM_DZVIDEO_SHOW_CAT_DESC_DESC"
-				label="COM_DZVIDEO_SHOW_CAT_IMAGE_LABEL"       
+				label="COM_DZVIDEO_SHOW_CAT_IMAGE_LABEL"
 			>
-					<option value="">JGLOBAL_USE_GLOBAL</option>					
+					<option value="">JGLOBAL_USE_GLOBAL</option>
 					<option value="0">JHIDE</option>
 					<option value="1">JSHOW</option>
-			</field>            
+			</field>
 		<field name="show_category_sub" type="radio"
 				class="btn-group"
 				description="COM_DZVIDEO_SHOW_CAT_SUB_DESC"
-				label="COM_DZVIDEO_SHOW_CAT_SUB_LABEL"    
+				label="COM_DZVIDEO_SHOW_CAT_SUB_LABEL"
 			>
-					<option value="">JGLOBAL_USE_GLOBAL</option>					
+					<option value="">JGLOBAL_USE_GLOBAL</option>
 					<option value="0">JHIDE</option>
 					<option value="1">JSHOW</option>
 			</field>
@@ -74,143 +74,143 @@
 				<option value="3">J3</option>
 				<option value="4">J4</option>
 				<option value="5">J5</option>
-			</field>    
+			</field>
 		<field name="show_category_empty" type="radio"
 				class="btn-group"
 				label="COM_DZVIDEO_SHOW_CAT_EMPTY_LABEL"
 				description="COM_DZVIDEO_SHOW_CAT_EMPTY_DESC"
 			>
-					<option value="">JGLOBAL_USE_GLOBAL</option>					
+					<option value="">JGLOBAL_USE_GLOBAL</option>
 					<option value="0">JHIDE</option>
 					<option value="1">JSHOW</option>
 			</field>
-			
+
 		<field type="spacer" label="COM_DZVIDEO_VID_SETTINGS_LABEL" description="COM_DZVIDEO_VID_SETTINGS_DESC"/>
-		
-        <field name="display_number" 
-                type="text" size="3" 
+
+        <field name="display_number"
+                type="text" size="3"
                 description="COM_DZVIDEO_VID_NUMBER_DESC"
                 label="COM_DZVIDEO_VID_NUMBER_LABEL"
-            />	
-						
-		<field name="display_column" 
-                type="text" size="3" 
+            />
+
+		<field name="display_column"
+                type="text" size="3"
                 description="COM_DZVIDEO_VID_COLUMN_DESC"
                 label="COM_DZVIDEO_VID_COLUMN_LABEL"
-            />	
-            
+            />
+
 		<field
 				name="display_ordering"
-				type="list"				
+				type="list"
 				description="COM_DZVIDEO_VID_ORDER_DESC"
 				label="COM_DZVIDEO_VID_ORDER_LABEL"
 			>
-				<option value="">JGLOBAL_USE_GLOBAL</option>				
+				<option value="">JGLOBAL_USE_GLOBAL</option>
 				<option value="a.ordering">COM_DZVIDEO_FIELD_CONFIG_ORDER_BY_ORDERING</option>
 				<option value="a.title">COM_DZVIDEO_FIELD_CONFIG_ORDER_BY_TITLE</option>
 				<option value="a.created">COM_DZVIDEO_FIELD_CONFIG_ORDER_BY_TIME</option>
                 <option value="a.hits">COM_DZVIDEO_FIELD_CONFIG_ORDER_BY_HITS</option>
-			</field>	            
+			</field>
         <field
             name="display_direction"
-            type="list"                 
+            type="list"
             label="COM_DZVIDEO_VID_ORDER_DIR_LABEL"
             description="COM_DZVIDEO_VID_ORDER_DIR_DESC">
-			<option value="">JGLOBAL_USE_GLOBAL</option>				
+			<option value="">JGLOBAL_USE_GLOBAL</option>
             <option value="ASC">JGLOBAL_ORDER_ASCENDING</option>
             <option value="DESC">JGLOBAL_ORDER_DESCENDING</option>
-        </field>  
-			
-		<field type="spacer"/> 
-			
+        </field>
+
+		<field type="spacer"/>
+
 		<field name="category_show_video_title" type="radio"
 					class="btn-group"
 					label="COM_DZVIDEO_CAT_SHOW_VID_TITLE_LABEL"
-					description="COM_DZVIDEO_CAT_SHOW_VID_TITLE_DESC"					
+					description="COM_DZVIDEO_CAT_SHOW_VID_TITLE_DESC"
 				>
 					<option value="">JGLOBAL_USE_GLOBAL</option>
 					<option value="0">JHIDE</option>
 					<option value="1">JSHOW</option>
-				</field>				
+				</field>
 		<field name="category_show_video_category" type="radio"
 					class="btn-group"
 					label="COM_DZVIDEO_CAT_SHOW_VID_CAT_LABEL"
-					description="COM_DZVIDEO_CAT_SHOW_VID_CAT_DESC"					
+					description="COM_DZVIDEO_CAT_SHOW_VID_CAT_DESC"
 				>
 					<option value="">JGLOBAL_USE_GLOBAL</option>
 					<option value="0">JHIDE</option>
 					<option value="1">JSHOW</option>
-				</field>					
+				</field>
 		<field name="category_show_video_image" type="radio"
 					class="btn-group"
 					label="COM_DZVIDEO_CAT_SHOW_VID_IMAGE_LABEL"
-					description="COM_DZVIDEO_CAT_SHOW_VID_IMAGE_DESC"					
+					description="COM_DZVIDEO_CAT_SHOW_VID_IMAGE_DESC"
 				>
 					<option value="">JGLOBAL_USE_GLOBAL</option>
 					<option value="0">JHIDE</option>
 					<option value="1">JSHOW</option>
-			</field>	
+			</field>
 		<field name="category_show_video_length" type="radio"
 					class="btn-group"
 					label="COM_DZVIDEO_CAT_SHOW_VID_LENGTH_LABEL"
-					description="COM_DZVIDEO_CAT_SHOW_VID_LENGTH_DESC"					
+					description="COM_DZVIDEO_CAT_SHOW_VID_LENGTH_DESC"
 				>
 					<option value="">JGLOBAL_USE_GLOBAL</option>
 					<option value="0">JHIDE</option>
 					<option value="1">JSHOW</option>
-			</field>	
+			</field>
 		<field name="category_show_video_date" type="radio"
 					class="btn-group"
 					label="COM_DZVIDEO_CAT_SHOW_VID_DATE_LABEL"
-					description="COM_DZVIDEO_CAT_SHOW_VID_DATE_DESC"					
+					description="COM_DZVIDEO_CAT_SHOW_VID_DATE_DESC"
 				>
 					<option value="">JGLOBAL_USE_GLOBAL</option>
 					<option value="0">JHIDE</option>
 					<option value="1">JSHOW</option>
-			</field>	
+			</field>
 		<field name="category_show_video_hits" type="radio"
 					class="btn-group"
 					label="COM_DZVIDEO_CAT_SHOW_VID_HITS_LABEL"
-					description="COM_DZVIDEO_CAT_SHOW_VID_HITS_DESC"					
+					description="COM_DZVIDEO_CAT_SHOW_VID_HITS_DESC"
 				>
 					<option value="">JGLOBAL_USE_GLOBAL</option>
 					<option value="0">JHIDE</option>
 					<option value="1">JSHOW</option>
-			</field>	
+			</field>
 		<field name="category_show_video_author" type="radio"
 					class="btn-group"
 					label="COM_DZVIDEO_CAT_SHOW_VID_AUTHOR_LABEL"
-					description="COM_DZVIDEO_CAT_SHOW_VID_AUTHOR_DESC"					
+					description="COM_DZVIDEO_CAT_SHOW_VID_AUTHOR_DESC"
 				>
 					<option value="">JGLOBAL_USE_GLOBAL</option>
 					<option value="0">JHIDE</option>
 					<option value="1">JSHOW</option>
-			</field>	
+			</field>
 		<field name="category_show_video_label" type="radio"
 					class="btn-group"
 					label="COM_DZVIDEO_CAT_SHOW_VID_LABEL_LABEL"
-					description="COM_DZVIDEO_CAT_SHOW_VID_LABEL_DESC"					
+					description="COM_DZVIDEO_CAT_SHOW_VID_LABEL_DESC"
 				>
 					<option value="">JGLOBAL_USE_GLOBAL</option>
 					<option value="0">JHIDE</option>
 					<option value="1">JSHOW</option>
-			</field>	
+			</field>
 		<field name="category_show_video_intro" type="radio"
 					class="btn-group"
 					label="COM_DZVIDEO_CAT_SHOW_VID_INTRO_LABEL"
-					description="COM_DZVIDEO_CAT_SHOW_VID_INTRO_DESC"					
+					description="COM_DZVIDEO_CAT_SHOW_VID_INTRO_DESC"
 				>
 					<option value="">JGLOBAL_USE_GLOBAL</option>
 					<option value="0">JHIDE</option>
 					<option value="1">JSHOW</option>
-			</field>				
-		<field name="category_video_intro_length" 
+			</field>
+		<field name="category_video_intro_length"
                 type="text" class="validate-numeric"
                 description="COM_DZVIDEO_CAT_VID_INTRO_LENGTH_DESC"
                 label="COM_DZVIDEO_CAT_VID_INTRO_LENGTH_LABEL"
             />
-			
-		<field type="spacer" />            
+
+		<field type="spacer" />
 
 		<field name="show_pagination" type="list"
 				description="JGLOBAL_PAGINATION_DESC"
@@ -227,33 +227,33 @@
 				<option value="">JGLOBAL_USE_GLOBAL</option>
 				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
-		</field>	 
-	</fieldset>	
+		</field>
+	</fieldset>
 	<fieldset name="video" label="COM_DZVIDEO_VID_VIEW_SETTINGS_LABEL">
 			<field name="show_video_title" type="radio"
 					class="btn-group"
 					label="COM_DZVIDEO_SHOW_VID_TITLE_LABEL"
-					description="COM_DZVIDEO_SHOW_VID_TITLE_DESC"					
+					description="COM_DZVIDEO_SHOW_VID_TITLE_DESC"
 				>
 					<option value="">JGLOBAL_USE_GLOBAL</option>
 					<option value="use_video">COM_DZVIDEO_USE_VIDEO</option>
 					<option value="0">JHIDE</option>
 					<option value="1">JSHOW</option>
-				</field>				
+				</field>
 			<field name="show_video_category" type="radio"
 					class="btn-group"
 					label="COM_DZVIDEO_SHOW_VID_CAT_LABEL"
-					description="COM_DZVIDEO_SHOW_VID_CAT_DESC"					
+					description="COM_DZVIDEO_SHOW_VID_CAT_DESC"
 				>
 					<option value="">JGLOBAL_USE_GLOBAL</option>
 					<option value="use_video">COM_DZVIDEO_USE_VIDEO</option>
 					<option value="0">JHIDE</option>
 					<option value="1">JSHOW</option>
-				</field>				
+				</field>
 			<field name="show_video_length" type="radio"
 					class="btn-group"
 					label="COM_DZVIDEO_SHOW_VID_LENGTH_LABEL"
-					description="COM_DZVIDEO_SHOW_VID_LENGTH_DESC"					
+					description="COM_DZVIDEO_SHOW_VID_LENGTH_DESC"
 				>
 					<option value="">JGLOBAL_USE_GLOBAL</option>
 					<option value="use_video">COM_DZVIDEO_USE_VIDEO</option>
@@ -263,7 +263,7 @@
 			<field name="show_video_date" type="radio"
 					class="btn-group"
 					label="COM_DZVIDEO_SHOW_VID_DATE_LABEL"
-					description="COM_DZVIDEO_SHOW_VID_DATE_DESC"					
+					description="COM_DZVIDEO_SHOW_VID_DATE_DESC"
 				>
 					<option value="">JGLOBAL_USE_GLOBAL</option>
 					<option value="use_video">COM_DZVIDEO_USE_VIDEO</option>
@@ -273,7 +273,7 @@
 			<field name="show_video_hits" type="radio"
 					class="btn-group"
 					label="COM_DZVIDEO_SHOW_VID_HITS_LABEL"
-					description="COM_DZVIDEO_SHOW_VID_HITS_DESC"					
+					description="COM_DZVIDEO_SHOW_VID_HITS_DESC"
 				>
 					<option value="">JGLOBAL_USE_GLOBAL</option>
 					<option value="use_video">COM_DZVIDEO_USE_VIDEO</option>
@@ -283,7 +283,7 @@
 			<field name="show_video_author" type="radio"
 					class="btn-group"
 					label="COM_DZVIDEO_SHOW_VID_AUTHOR_LABEL"
-					description="COM_DZVIDEO_SHOW_VID_AUTHOR_DESC"					
+					description="COM_DZVIDEO_SHOW_VID_AUTHOR_DESC"
 				>
 					<option value="">JGLOBAL_USE_GLOBAL</option>
 					<option value="use_video">COM_DZVIDEO_USE_VIDEO</option>
@@ -293,7 +293,7 @@
 			<field name="show_video_label" type="radio"
 					class="btn-group"
 					label="COM_DZVIDEO_SHOW_VID_LABEL_LABEL"
-					description="COM_DZVIDEO_SHOW_VID_LABEL_DESC"					
+					description="COM_DZVIDEO_SHOW_VID_LABEL_DESC"
 				>
 					<option value="">JGLOBAL_USE_GLOBAL</option>
 					<option value="use_video">COM_DZVIDEO_USE_VIDEO</option>
@@ -303,7 +303,7 @@
 			<field name="show_video_intro" type="radio"
 					class="btn-group"
 					label="COM_DZVIDEO_SHOW_VID_INTRO_LABEL"
-					description="COM_DZVIDEO_SHOW_VID_INTRO_DESC"					
+					description="COM_DZVIDEO_SHOW_VID_INTRO_DESC"
 				>
 					<option value="">JGLOBAL_USE_GLOBAL</option>
 					<option value="use_video">COM_DZVIDEO_USE_VIDEO</option>
@@ -313,7 +313,7 @@
 			<field name="show_video_text" type="radio"
 					class="btn-group"
 					label="COM_DZVIDEO_SHOW_VID_TEXT_LABEL"
-					description="COM_DZVIDEO_SHOW_VID_TEXT_DESC"					
+					description="COM_DZVIDEO_SHOW_VID_TEXT_DESC"
 				>
 					<option value="">JGLOBAL_USE_GLOBAL</option>
 					<option value="use_video">COM_DZVIDEO_USE_VIDEO</option>
@@ -323,14 +323,14 @@
 			<field name="show_video_tags" type="radio"
 					class="btn-group"
 					label="COM_DZVIDEO_SHOW_VID_TAGS_LABEL"
-					description="COM_DZVIDEO_SHOW_VID_TAGS_DESC"					
+					description="COM_DZVIDEO_SHOW_VID_TAGS_DESC"
 				>
 					<option value="">JGLOBAL_USE_GLOBAL</option>
 					<option value="use_video">COM_DZVIDEO_USE_VIDEO</option>
 					<option value="0">JHIDE</option>
 					<option value="1">JSHOW</option>
 			</field>
-	</fieldset>	
-    
+	</fieldset>
+
 </fields>
 </metadata>

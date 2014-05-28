@@ -30,14 +30,14 @@ class DzvideoModelCategories extends JModelList
      *
      * @var     string
      */
-    protected $_extension = 'com_dzvideo.videos.catid';
+    protected $_extension = 'com_dzvideo';
 
     private $_items = null;
-    
+
     public function __construct($config = array()) {
         parent::__construct($config);
     }
-    
+
     /**
      * Method to auto-populate the model state.
      *
@@ -49,10 +49,10 @@ class DzvideoModelCategories extends JModelList
     {
         $app = JFactory::getApplication();
         $this->setState('filter.extension', $this->_extension);
-                        
+
         // Get the parent id if defined.
         $parentId =  $app->input->get('id', 0, 'int');
-        
+
         if ($parentId == 0) $parentId = 1;
         $this->setState('filter.parentId', $parentId);
 
@@ -60,7 +60,7 @@ class DzvideoModelCategories extends JModelList
         $this->setState('params', $params);
 
         $this->setState('filter.published', 1);
-        
+
         // Menu parameters
         $input = JFactory::getApplication()->input;
         $menuitemid = $input->getInt( 'Itemid' );  // this returns the menu id number so you can reference parameters
@@ -69,15 +69,15 @@ class DzvideoModelCategories extends JModelList
            $menuparams = $menu->getParams( $menuitemid );
            $this->setState('menuparams',$menuparams);
         }
-        
+
         $this->setState('list.catordering',$menuparams->get('catordering'));
         $this->setState('list.direction',$menuparams->get('direction'));
-        
+
         $limit = $app->getUserStateFromRequest('global.list.limit', 'limit',$menuparams->get('display_num'), $app->getCfg('list_limit'));
         $this->setState('list.limit', $limit);
-        
+
         $limitstart = $app->input->getInt('limitstart', 0);
-        $this->setState('list.start', $limitstart);        
+        $this->setState('list.start', $limitstart);
     }
 
     /**
@@ -100,12 +100,12 @@ class DzvideoModelCategories extends JModelList
 
         return parent::getStoreId($id);
     }
-    
+
     protected function getListQuery() {
         // Create a new query object.
         $db = $this->getDbo();
         $query = $db->getQuery(true);
-        
+
         $menuparams = $this->getState('menuparams');
         // Select the required fields from the table.
         $query->select(
@@ -113,11 +113,11 @@ class DzvideoModelCategories extends JModelList
                         'list.select', 'a.*'
                 )
         );
-        
+
         $query->from('#__categories AS a');
-        
-        $query->where('a.extension = ' . $db->quote($this->_extension))->where('a.parent_id = '.$this->getState('filter.parentId')); 
-        
+
+        $query->where('a.extension = ' . $db->quote($this->_extension))->where('a.parent_id = '.$this->getState('filter.parentId'));
+
         // Filter by search in title
         $search = $this->getState('filter.search');
         if (!empty($search))
@@ -125,12 +125,12 @@ class DzvideoModelCategories extends JModelList
             $search = $db->quote('%' . $db->escape($search, true) . '%');
             $query->where('(a.title LIKE ' . $search . ')');
         }
-        
+
         $published = $this->getState('filter.published', 1);
         $query->where('a.published = '.(int)$published);
-              
+
         $query->order($db->escape($this->getState('list.catordering', 'a.lft')) . ' ' . $db->escape($this->getState('list.direction', 'ASC')));
-        
+
         return $query;
     }
 
@@ -150,5 +150,5 @@ class DzvideoModelCategories extends JModelList
         }
 
         return $items;
-    }  
+    }
 }

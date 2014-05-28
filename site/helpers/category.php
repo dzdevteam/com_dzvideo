@@ -22,7 +22,7 @@ class DZVideoCategories extends JCategories
     public function __construct($options = array())
     {
         $options['table'] = '#__dzvideo_videos';
-        $options['extension'] = 'com_dzvideo.videos.catid';
+        $options['extension'] = 'com_dzvideo';
         parent::__construct($options);
     }
 }
