@@ -31,7 +31,7 @@ $category_params = $registry->toArray();
     <div class="category_description"><?php echo $this->category->description; ?></div>
 <?php endif; ?>
 <?php if ($this->params->def('show_description_image', 1) == 1) : ?>
-    <?php if (isset($category_params['image']) && (JFile::exists(JPATH_ROOT.'/'.$category_params['image']))) : 
+    <?php if (isset($category_params['image']) && (JFile::exists(JPATH_ROOT.'/'.$category_params['image']))) :
             $category_image = Juri::root().'/'.$category_params['image'];
     ?>
             <img src="<?php echo $category_image; ?>" />
@@ -46,7 +46,7 @@ $category_params = $registry->toArray();
             <input type="text" name="filter-search" id="filter-search" value="<?php echo $this->escape($this->state->get('list.filter')); ?>" class="inputbox" onchange="document.adminForm.submit();" title="<?php echo JText::_('COM_DZVIDEO_FILTER_SEARCH_DESC'); ?>" placeholder="<?php echo JText::_('COM_DZVIDEO_FILTER_SEARCH_DESC'); ?>" />
         </div>
     </fieldset>
-<?php 
+<?php
 
 /** SHOW VIDEOS LIST */
 $n = count($this->items);
@@ -55,15 +55,15 @@ $listDirn   = $this->escape($this->params->get('list.direction'));
 
 $k = 0;
 
-$video_column = $this->params->get('display_column');
+$video_column = $this->params->get('display_column', 1);
 
 foreach ($this->items as $id => $item) {
     if ($k % $video_column == 0) {
 ?>
     <ul class="startrow"> <!-- Start row -->
-<?php        
-    } 
-    
+<?php
+    }
+
     $images = $item->images;
     $image = JPATH_ROOT.'/images/dzvideo/300x200.gif';
     if (JFile::exists(JPATH_ROOT.'/'.$images['custom'])) {
@@ -82,19 +82,19 @@ foreach ($this->items as $id => $item) {
         <?php endif; ?>
         <br/>
         Image: <img src="<?php echo $image; ?>" />
-        <?php 
+        <?php
             $tags = new JHelperTags;
             $tags->getItemTags('com_dzvideo.video', $item->id);
             $tagLayout = new JLayoutFile('joomla.content.tags');
             $item->tags = $tagLayout->render($tags->itemTags);
         ?>
-        
+
     </li>
-<?php 
+<?php
     if ($k % $video_column == 0) {
 ?>
     </ul> <!-- End row -->
-<?php 
+<?php
     }
 }
 ?>
