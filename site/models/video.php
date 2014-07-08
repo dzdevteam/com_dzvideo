@@ -19,9 +19,9 @@ require_once JPATH_COMPONENT.'/helpers/route.php';
  */
 class DzvideoModelVideo extends JModelForm
 {
-    
+
     var $_item = null;
-    
+
     /**
      * Method to auto-populate the model state.
      *
@@ -50,7 +50,7 @@ class DzvideoModelVideo extends JModelForm
         }
         $this->setState('params', $params);
     }
-        
+
     /**
      * Method to get an ojbect.
      *
@@ -85,42 +85,67 @@ class DzvideoModelVideo extends JModelForm
                 // Convert the JTable to a clean JObject.
                 $properties = $table->getProperties(1);
                 $this->_item = JArrayHelper::toObject($properties, 'JObject');
-                
+
                 $this->_item->videolink    = JRoute::_(DZVideoHelperRoute::getVideoRoute(implode(array($this->_item->id,':',$this->_item->alias)), $this->_item->catid));
 
                 $this->_item->catlink      = Jroute::_(DZVideoHelperRoute::getCategoryRoute($this->_item->catid));
-                
+
                 $registry = new JRegistry();
                 $registry->loadString($this->_item->images);
                 $this->_item->images = $registry->toArray();
-                
+
                 $registry = new JRegistry();
                 $registry->loadString($this->_item->params);
                 $this->_item->params = $registry->toArray();
-                
+
                 $this->_item->tags = new JHelperTags;
                 $this->_item->tags->getItemTags('com_dzvideo.video', $this->_item->id);
-                
+
                 $this->_item->created_by = new JUser($this->_item->created_by);
-                
+
                 $this->_item->shortdesc = str_replace("\n", "<br />", $this->_item->shortdesc);
-                
+
+                // Get next video
+                $videosModel = JModelLegacy::getInstance('Videos', 'DZVideoModel', array('ignore_request' => true));
+                $videosModel->setState('filter.date_filtering', 'range');
+                $videosModel->setState('filter.exclude_id', $this->_item->id);
+                $videosModel->setState('list.limit', 1);
+                $videosModel->setState('list.ordering', "a.created");
+                $videosModel->setState('filter.start_date_range', $this->_item->created);
+                $videosModel->setState('filter.end_date_range', date_format(new DateTime(),"Y-m-d H:i:s"));
+                $videosModel->setState('list.direction', 'ASC');
+
+                $videos = $videosModel->getItems();
+
+                if (!empty($videos)) {
+                  $this->_item->next_video = $videos[0];
+                }
+
+                // Get previous video
+                $videosModel->setState('filter.start_date_range', $this->getDbo()->getNullDate());
+                $videosModel->setState('filter.end_date_range', $this->_item->created);
+                $videosModel->setState('list.direction', 'DESC');
+                $videos = $videosModel->getItems();
+
+                if (!empty($videos)) {
+                  $this->_item->previous_video = $videos[0];
+                }
             } elseif ($error = $table->getError()) {
                 $this->setError($error);
             }
         }
-        
-        
+
+
         return $this->_item;
     }
-    
+
     public function getTable($type = 'Video', $prefix = 'DzvideoTable', $config = array())
-    {   
+    {
         $this->addTablePath(JPATH_COMPONENT_ADMINISTRATOR.'/tables');
         return JTable::getInstance($type, $prefix, $config);
-    }     
+    }
 
-    
+
     /**
      * Method to check in an item.
      *
@@ -134,7 +159,7 @@ class DzvideoModelVideo extends JModelForm
         $id = (!empty($id)) ? $id : (int)$this->getState('video.id');
 
         if ($id) {
-            
+
             // Initialise the table
             $table = $this->getTable();
 
@@ -163,7 +188,7 @@ class DzvideoModelVideo extends JModelForm
         $id = (!empty($id)) ? $id : (int)$this->getState('video.id');
 
         if ($id) {
-            
+
             // Initialise the table
             $table = $this->getTable();
 
@@ -180,13 +205,13 @@ class DzvideoModelVideo extends JModelForm
         }
 
         return true;
-    }    
-    
+    }
+
     /**
      * Method to get the profile form.
      *
-     * The base form is loaded from XML 
-     * 
+     * The base form is loaded from XML
+     *
      * @param   array   $data       An optional array of data for the form to interogate.
      * @param   boolean $loadData   True if the form is to load its own data (default case), false if not.
      * @return  JForm   A JForm object on success, false on failure
@@ -211,8 +236,8 @@ class DzvideoModelVideo extends JModelForm
      */
     protected function loadFormData()
     {
-        $data = $this->getData(); 
-        
+        $data = $this->getData();
+
 
                 if ( isset($data->tag) ) {
                     // Catch the item tags (string with ',' coma glue)
@@ -280,16 +305,16 @@ class DzvideoModelVideo extends JModelForm
             JError::raiseError(403, JText::_('JERROR_ALERTNOAUTHOR'));
             return false;
         }
-        
+
         $table = $this->getTable();
         if ($table->save($data) === true) {
             return $id;
         } else {
             return false;
         }
-        
+
     }
-    
+
      function delete($data)
     {
         $id = (!empty($data['id'])) ? $data['id'] : (int)$this->getState('video.id');
@@ -303,21 +328,21 @@ class DzvideoModelVideo extends JModelForm
         } else {
             return false;
         }
-        
+
         return true;
     }
-    
+
     function getCategoryName($id){
         $db = JFactory::getDbo();
         $query = $db->getQuery(true);
-        $query 
+        $query
             ->select('title')
             ->from('#__categories')
             ->where('id = ' . $id);
         $db->setQuery($query);
         return $db->loadObject();
     }
-    
+
     /**
      * Increment the hit counter for the article.
      *
@@ -329,11 +354,11 @@ class DzvideoModelVideo extends JModelForm
     {
         $input = JFactory::getApplication()->input;
         $hitcount = $input->getInt('hitcount', 1);
-        
+
         if ($hitcount)
         {
             $pk = (!empty($pk)) ? $pk : (int) $this->getState('video.id');
-            
+
             $table = JTable::getInstance('Video', 'DZVideoTable');
             $table->load($pk);
             $table->hit($pk);

@@ -19,7 +19,7 @@ if (!$canEdit && JFactory::getUser()->authorise('core.edit.own', 'com_dzvideo' .
 
 ?>
 
-<?php if ($this->item) : 
+<?php if ($this->item) :
     $video_height = $this->params->get('video_height');
     $video_width  = $this->params->get('video_width');
 ?>
@@ -70,10 +70,12 @@ if (!$canEdit && JFactory::getUser()->authorise('core.edit.own', 'com_dzvideo' .
                  <?php $this->item->tagLayout = new JLayoutFile('joomla.content.tags'); ?>
                 <?php echo $this->item->tagLayout->render($this->item->tags->itemTags); ?>
             </li>
+            <li>Next video: <?= !empty($this->item->next_video) ? "<a href=\"{$this->item->next_video->videolink}\">{$this->item->next_video->title}</a>" : NULL; ?></li>
+            <li>Previous video: <?= !empty($this->item->previous_video) ? "<a href=\"{$this->item->previous_video->videolink}\">{$this->item->previous_video->title}</a>" : NULL; ?></li>
             <object width="605" height="400">
                 <param value="<?php echo $this->item->videolink; ?>" name="movie">
                 <param value="true" name="allowFullScreen">
-                <embed width="<?php echo $video_width; ?>" height="<?php echo $video_height; ?>" allowfullscreen="true" type="application/x-shockwave-flash" 
+                <embed width="<?php echo $video_width; ?>" height="<?php echo $video_height; ?>" allowfullscreen="true" type="application/x-shockwave-flash"
                 src="http://www.youtube.com/v/<?php echo $this->item->videoid; if ($this->params->get('video_autoplay') == 1) echo '?autoplay=1'; ?>">
             </object>
         </ul>

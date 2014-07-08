@@ -25,33 +25,33 @@ class DzvideoViewVideo extends JViewLegacy {
      * Display the view
      */
     public function display($tpl = null) {
-        
+
         $app    = JFactory::getApplication();
         $user       = JFactory::getUser();
-        
+
         $this->state = $this->get('State');
         $this->item = $this->get('Data');
         $this->params = $app->getParams('com_dzvideo');
-        
+
         $this->item->catid_title = ($this->item->catid) ? $this->getModel()->getCategoryName($this->item->catid)->title : '';
 
         // Check for errors.
         if (count($errors = $this->get('Errors'))) {
             throw new Exception(implode("\n", $errors));
         }
-               
+
         if($this->_layout == 'edit') {
-            
+
             $authorised = $user->authorise('core.create', 'com_dzvideo');
 
             if ($authorised !== true) {
                 throw new Exception(JText::_('JERROR_ALERTNOAUTHOR'));
             }
         }
-        
+
         // Increase hit counter
         $this->getModel()->hit();
-        
+
         $this->_prepareDocument();
 
         parent::display($tpl);
@@ -66,6 +66,9 @@ class DzvideoViewVideo extends JViewLegacy {
         $app    = JFactory::getApplication();
         $menus  = $app->getMenu();
         $title  = null;
+
+        $pathway = $app->getPathway();
+        $pathway->addItem($this->item->title);
 
         // Because the application sets a default page title,
         // we need to get it from the menu item itself
@@ -105,12 +108,12 @@ class DzvideoViewVideo extends JViewLegacy {
         {
             $this->document->setMetadata('robots', $this->params->get('robots'));
         }
-        
+
         // Facebook meta tag
         $this->document->setMetadata('og:title', $this->item->title);
         $this->document->setMetadata('og:image', JUri::root() . '/' . $this->item->images['medium']);
         $this->document->setMetadata('og:description', empty($this->item->description) ? str_replace('<br />', "\n", $this->item->shortdesc) : $this->item->description);
         $this->document->setMetadata('og:type', 'video');
-    }        
-    
+    }
+
 }

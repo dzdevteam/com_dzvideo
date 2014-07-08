@@ -197,7 +197,7 @@ class DzvideoModelVideos extends JModelList
 
         // Filter exclude id
         $exclude_id = $this->getState('filter.exclude_id');
-        if ($exclude_id > 1) {
+        if ($exclude_id > 0) {
             $query->where('a.id != ' . (int) $exclude_id);
         }
 
