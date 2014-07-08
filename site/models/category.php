@@ -83,8 +83,9 @@ class DzvideoModelCategory extends JModelList
                 $item->catid_params = $registry->toArray();
             }
 
-            $item->tags = new JHelperTags;
-            $item->tags->getItemTags('com_dzvideo.video', $item->id);
+            // Don't get tags here as it causes zillion of queries
+//             $item->tags = new JHelperTags;
+//             $item->tags->getItemTags('com_dzvideo.video', $item->id);
         }
 
         return $items;
