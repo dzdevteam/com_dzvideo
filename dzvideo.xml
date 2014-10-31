@@ -7,7 +7,7 @@
     <author>DZ Team</author>
     <authorEmail>dev@dezign.vn</authorEmail>
     <authorUrl>dezign.vn</authorUrl>
-    <version>1.1.1</version>
+    <version>1.1.2</version>
     <description>Video management component by DZ Team</description>
     
     <install> <!-- Runs on install -->
