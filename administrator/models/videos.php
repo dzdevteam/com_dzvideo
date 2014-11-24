@@ -167,7 +167,7 @@ class DzvideoModelvideos extends JModelList {
                 $query->where('a.id = ' . (int) substr($search, 3));
             } else {
                 $search = $db->Quote('%' . $db->escape($search, true) . '%');
-                
+                $query->where("a.title LIKE $search OR a.shortdesc LIKE $search OR a.description LIKE $search OR a.author LIKE $search");
             }
         }
 
