@@ -12,7 +12,7 @@ defined('_JEXEC') or die;
 
 jimport('joomla.application.component.modelform');
 jimport('joomla.event.dispatcher');
-require_once JPATH_COMPONENT.'/helpers/route.php';
+require_once JPATH_SITE.'/components/com_dzvideo/helpers/route.php';
 
 /**
  * Dzvideo model.
