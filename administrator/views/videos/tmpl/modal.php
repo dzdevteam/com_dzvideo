@@ -84,6 +84,12 @@ $thumb_width    = $videoparams->get('thumb_width');
             <button class="btn hasTooltip" type="submit" title="<?php echo JText::_('JSEARCH_FILTER_SUBMIT'); ?>"><i class="icon-search"></i></button>
             <button class="btn hasTooltip" type="button" title="<?php echo JText::_('JSEARCH_FILTER_CLEAR'); ?>" onclick="document.id('filter_search').value='';this.form.submit();"><i class="icon-remove"></i></button>
         </div>
+        <div class="btn-group pull-right">
+            <a class="btn btn-success btn-sm" href="index.php?option=com_dzvideo&amp;view=video&amp;layout=edit" target="_blank">
+                <span class="icon-new icon-white"></span>
+                <?php echo JText::_('JTOOLBAR_NEW'); ?>
+            </a>
+        </div>
         <div class="btn-group pull-right hidden-phone">
             <label for="limit" class="element-invisible"><?php echo JText::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC');?></label>
             <?php echo $this->pagination->getLimitBox(); ?>
@@ -105,6 +111,8 @@ $thumb_width    = $videoparams->get('thumb_width');
         </div>
     </div>
     <div class="clearfix"> </div>
+    <div id="notice" style="overflow: hidden"></div>
+    <div class="clearfix"> </div>
     <table class="table table-striped" id="videoList">
         <thead>
             <tr>
@@ -119,9 +127,6 @@ $thumb_width    = $videoparams->get('thumb_width');
                 </th>
             <?php endif; ?>
             
-            <th class='left'>
-            <?php echo JText::_('COM_DZVIDEO_VIDEOS_IMAGE'); ?>
-            </th>
             <th class='left'>
             <?php echo JHtml::_('grid.sort',  'COM_DZVIDEO_VIDEOS_TITLE', 'a.title', $listDirn, $listOrder); ?>
             </th>    
@@ -201,14 +206,11 @@ $thumb_width    = $videoparams->get('thumb_width');
                 </td>
             <?php endif; ?>
             <td>
-                <img height="<?php echo $thumb_height; ?>" width="<?php echo $thumb_width; ?>" src="<?php echo $display_image; ?>" alt="<?php echo $item->title; ?>" title="<?php echo $item->title; ?>" />
-            </td>
-            <td>
                 <?php if (isset($item->checked_out) && $item->checked_out) : ?>
                     <?php echo JHtml::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'videos.', $canCheckin); ?>
                 <?php endif; ?>
                 <?php if ($canEdit) : ?>
-                    <a href="#" onclick="window.parent.<?php echo $this->escape($function); ?>(<?php echo $item->id; ?>, '<?php echo $form; ?>'); return false;">
+                    <a href="#" data-id="<?php echo $item->id ?>" class="add-video">
                     <?php echo $this->escape($item->title); ?></a>
                 <?php else : ?>
                     <?php echo $this->escape($item->title); ?>
@@ -241,5 +243,16 @@ $thumb_width    = $videoparams->get('thumb_width');
     <input type="hidden" name="filter_order_Dir" value="<?php echo $listDirn; ?>" />
     <?php echo JHtml::_('form.token'); ?>
 </form>        
-
-        
+<script type="text/javascript">
+jQuery('a.add-video').on('click', function() {
+    console.log('clicked');
+    if (window.parent) {
+        jQuery('.alert').off('closed').alert('close');
+        window.parent.<?php echo $this->escape($function); ?>(jQuery(this).data('id'), '<?php echo $form; ?>');
+        var $alert = jQuery('<div class="alert alert-success fade" ><a class="close" data-dismiss="alert" href="#">&times;</a>Added <b>{loadvideo ' + jQuery(this).data('id') + '}</b></div>').alert();
+        jQuery('#notice').append($alert).innerHeight($alert.outerHeight()); $alert.addClass('in');
+        $alert.on('closed', function() {jQuery('#notice').height(0)});
+    }
+    return false;
+});
+</script>
