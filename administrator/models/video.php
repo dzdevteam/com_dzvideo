@@ -120,6 +120,18 @@ class DzvideoModelvideo extends JModelAdmin
     protected function prepareTable($table)
     {
         jimport('joomla.filter.output');
+        // Set the publish date to now
+        $db = $this->getDbo();
+        
+        if ($table->state == 1 && (int) $table->publish_up == 0)
+        {
+            $table->publish_up = JFactory::getDate()->toSql();
+        }
+
+        if ($table->state == 1 && intval($table->publish_down) == 0)
+        {
+            $table->publish_down = $db->getNullDate();
+        }
 
         if (empty($table->id)) {
 

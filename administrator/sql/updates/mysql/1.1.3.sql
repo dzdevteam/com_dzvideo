@@ -1,0 +1,3 @@
+UPDATE `#__content_types` SET `field_mappings`='{"common":[{"core_content_item_id":"id","core_title":"title","core_state":"state","core_alias":"alias","core_body":"description","core_created_time":"created","core_modified_time":"modified", "core_images":"images", "core_catid":"catid", "core_params":"params", "core_metadata":"metadata", "core_ordering":"ordering", "core_metakey":"metakey", "core_metadesc":"metadesc","core_publish_up":"publish_up","core_publish_down":"publish_down","asset_id":"asset_id"}]}' WHERE `type_alias`='com_dzvideo.video';
+ 
+UPDATE `#__dzvideo_videos` SET `publish_up` = `created` WHERE `publish_up` = '0000-00-00 00:00:00'
