@@ -201,15 +201,7 @@ $thumb_width    = $videoparams->get('thumb_width');
                 </td>
             <?php endif; ?>
             <td>
-                <?php 
-                if (isset($item->videoid)) { 
-                ?>
-                    <a class="modal " href="http://www.youtube-nocookie.com/embed/<?php echo $item->videoid;?>" rel="{handler: 'iframe', size: {x: <?php echo $video_width; ?> , y: <?php echo $video_height; ?>}} " &tmpl=component />
-                    <img height="<?php echo $thumb_height; ?>" width="<?php echo $thumb_width; ?>" src="<?php echo $display_image; ?>" alt="<?php echo $item->title; ?>" title="<?php echo $item->title; ?>" />
-                    </a>
-                <?php } else { ?>
-                    <img height="<?php echo $thumb_height; ?>" width="<?php echo $thumb_width; ?>" src="<?php echo $display_image; ?>" alt="<?php echo $item->title; ?>" title="<?php echo $item->title; ?>" />
-                <?php } ?>
+                <img height="<?php echo $thumb_height; ?>" width="<?php echo $thumb_width; ?>" src="<?php echo $display_image; ?>" alt="<?php echo $item->title; ?>" title="<?php echo $item->title; ?>" />
             </td>
             <td>
                 <?php if (isset($item->checked_out) && $item->checked_out) : ?>
