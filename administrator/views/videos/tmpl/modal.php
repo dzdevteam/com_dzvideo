@@ -221,10 +221,6 @@ $thumb_width    = $videoparams->get('thumb_width');
             </td>
             <td>
                 <?php echo JTEXT::_('COM_DZVIDEO_VIDEOS_DURATION').': '.str_pad(floor($item->length/60),2,'0',STR_PAD_LEFT).':'.str_pad(floor($item->length%60),2,'0',STR_PAD_LEFT); ?>
-                <br/>
-                <?php echo JTEXT::_('COM_DZVIDEO_VIDEOS_DIMENSION').': '.$item->width.'x'.$item->height; ?>
-                <br/>
-                <?php echo JTEXT::_('COM_DZVIDEO_VIDEOS_AUTHOR').': '.$item->author; ?>
             </td>
 
             <?php if (isset($this->items[0]->id)): ?>
