@@ -58,10 +58,10 @@ if (!empty($this->extra_sidebar)) {
 <?php 
 
 $videoparams    = JComponentHelper::getParams('com_dzvideo');
-$video_height   = $videoparams->get('video_height');  
-$video_width    = $videoparams->get('video_width');
-$thumb_height   = $videoparams->get('thumb_height');  
-$thumb_width    = $videoparams->get('thumb_width');
+$video_height   = $videoparams->get('video_height', 450);  
+$video_width    = $videoparams->get('video_width', 600);
+$thumb_height   = $videoparams->get('thumb_height', 120);  
+$thumb_width    = $videoparams->get('thumb_width', 160);
 
 ?>
 
@@ -222,7 +222,7 @@ $thumb_width    = $videoparams->get('thumb_width');
                     <?php 
                     if (isset($item->videoid)) { 
                     ?>
-                        <a class="modal " href="http://www.youtube-nocookie.com/embed/<?php echo $item->videoid;?>" rel="{handler: 'iframe', size: {x: <?php echo $video_width; ?> , y: <?php echo $video_height; ?>}} " &tmpl=component />
+                        <a class="modal " href="http://www.youtube-nocookie.com/embed/<?php echo $item->videoid;?>" rel="{handler: 'iframe', size: {x: <?php echo $video_width; ?> , y: <?php echo $video_height; ?>}}">
                         <img height="<?php echo $thumb_height; ?>" width="<?php echo $thumb_width; ?>" src="<?php echo $display_image; ?>" alt="<?php echo $item->title; ?>" title="<?php echo $item->title; ?>" />
                         </a>
                     <?php } else { ?>
@@ -243,7 +243,7 @@ $thumb_width    = $videoparams->get('thumb_width');
                     <?php 
                         if (isset($item->videoid)) { 
                     ?>
-                        <a class="modal " href="http://www.youtube-nocookie.com/embed/<?php echo $item->videoid;?>" rel="{handler: 'iframe', size: {x: <?php echo $video_width; ?> , y: <?php echo $video_height; ?>}} " &tmpl=component />
+                        <a class="modal " href="http://www.youtube-nocookie.com/embed/<?php echo $item->videoid;?>" rel="{handler: 'iframe', size: {x: <?php echo $video_width; ?> , y: <?php echo $video_height; ?>}} ">
                         <?php echo $item->link; ?>
                         </a>
                         <?php } else {
