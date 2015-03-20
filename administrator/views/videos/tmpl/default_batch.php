@@ -24,6 +24,17 @@ $published = $this->state->get('filter.published');
                     <?php echo JHtml::_('batch.tag'); ?>
                 </div>
             </div>
+            <?php if ($published >= 0) : ?>
+                <div class="control-group span6">
+                    <div class="controls">
+                        <?php echo JHtml::_('batch.item', 'com_dzvideo'); ?>
+                    </div>
+                    <script type="text/javascript">
+                        jQuery("#batch-move-copy label:first-child").addClass('disabled');
+                        jQuery("#batch-move-copy label:first-child input").attr('disabled', 'disabled');
+                    </script>
+                </div>
+            <?php endif; ?>
         </div>
     </div>
     <div class="modal-footer">

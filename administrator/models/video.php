@@ -329,4 +329,108 @@ class DzvideoModelvideo extends JModelAdmin
         return true;
     }
 
+    /**
+     * Batch copy items to a new category or current.
+     * Actually we don't allow copy because of no video reupload
+     * Leave this function here to get meaningful error, not duplicating alias error
+     *
+     * @param   integer  $value     The new category.
+     * @param   array    $pks       An array of row IDs.
+     * @param   array    $contexts  An array of item contexts.
+     *
+     * @return  mixed  An array of new IDs on success, boolean false on failure.
+     *
+     * @since   11.1
+     */
+    protected function batchCopy($value, $pks, $contexts)
+    {
+        $categoryId = (int) $value;
+        
+
+        $newIds = array();
+
+        if (!parent::checkCategoryId($categoryId))
+        {
+            return false;
+        }
+
+        // Parent exists so we let's proceed
+        while (!empty($pks))
+        {
+            // Pop the first ID off the stack
+            $pk = array_shift($pks);
+
+            $this->table->reset();
+
+            // Check that the row actually exists
+            if (!$this->table->load($pk))
+            {
+                if ($error = $this->table->getError())
+                {
+                    // Fatal error
+                    $this->setError($error);
+
+                    return false;
+                }
+                else
+                {
+                    // Not fatal error
+                    $this->setError(JText::sprintf('JLIB_APPLICATION_ERROR_BATCH_MOVE_ROW_NOT_FOUND', $pk));
+                    continue;
+                }
+            }
+
+            // Alter the title & alias
+            $table = $this->getTable();
+            while ($table->load(array('alias' => $this->table->alias))) {
+                $this->table->title = JString::increment($this->table->title);
+                $this->table->alias = JString::increment($this->table->alias, 'dash');
+            }
+
+            // Reset the ID because we are making a copy
+            $this->table->id = 0;
+
+            // Reset hits because we are making a copy
+            $this->table->hits = 0;
+
+            // Unpublish because we are making a copy
+            $this->table->state = 0;
+
+            // New category ID
+            $this->table->catid = $categoryId;
+
+            // TODO: Deal with ordering?
+            // $table->ordering	= 1;
+
+            // Get the featured state
+            $featured = $this->table->featured;
+
+            // Check the row.
+            if (!$this->table->check())
+            {
+                $this->setError($this->table->getError());
+                return false;
+            }
+
+            parent::createTagsHelper($this->tagsObserver, $this->type, $pk, $this->typeAlias, $this->table);
+
+            // Store the row.
+            if (!$this->table->store())
+            {
+                $this->setError($this->table->getError());
+                return false;
+            }
+
+            // Get the new item ID
+            $newId = $this->table->get('id');
+
+            // Add the new ID to the array
+            $newIds[$pk] = $newId;
+        }
+
+        // Clean the cache
+        $this->cleanCache();
+
+        return $newIds;
+    }
 }
