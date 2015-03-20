@@ -91,6 +91,20 @@ class DzvideoViewVideos extends JViewLegacy
             }
         }
         
+        // Add a batch button
+        if ($canDo->get('core.create') && $canDo->get('core.edit') && $canDo->get('core.edit.state'))
+        {
+            JHtml::_('bootstrap.modal', 'collapseModal');
+            $title = JText::_('JTOOLBAR_BATCH');
+
+            // Instantiate a new JLayoutFile instance and render the batch button
+            $layout = new JLayoutFile('joomla.toolbar.batch');
+
+            $dhtml = $layout->render(array('title' => $title));
+            $bar = JToolBar::getInstance('toolbar');
+            $bar->appendButton('Custom', $dhtml, 'batch');
+        }
+        
         //Show trash and delete for components that uses the state field
         if (isset($this->items[0]->state)) {
             if ($state->get('filter.state') == -2 && $canDo->get('core.delete')) {
