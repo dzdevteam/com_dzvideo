@@ -46,7 +46,7 @@
         <menu img="components/com_dzvideo/assets/images/s_com_dzvideo.png" >COM_DZVIDEO</menu>
         <submenu>
             
-            <menu link="option=com_dzvideo&amp;view=videos" view="videos" img="components/com_dzvideo/assets/images/s_videos.png" alt="Dzvideo/Videos">COM_DZVIDEO_TITLE_VIDEOS</menu>
+            <menu link="option=com_dzvideo&amp;view=video&amp;layout=edit" view="video" img="components/com_dzvideo/assets/images/s_videos.png" alt="Dzvideo/Videos">COM_DZVIDEO_TITLE_ADD_VIDEO</menu>
 
             <menu link="option=com_categories&amp;extension=com_dzvideo" view="categories" img="components/com_dzvideo/assets/images/s_videos.png" alt="Dzvideo/Categories">COM_DZVIDEO_TITLE_CATEGORIES</menu>
 
