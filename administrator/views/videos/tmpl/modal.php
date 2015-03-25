@@ -125,7 +125,7 @@ $thumb_width    = $videoparams->get('thumb_width');
             <th class='left'>
             <?php echo JText::_('COM_DZVIDEO_VIDEOS_INFORMATION'); ?>
             </th>
-            <th>
+            <th width="80">
             </th>
             </tr>
         </thead>
@@ -184,7 +184,9 @@ $thumb_width    = $videoparams->get('thumb_width');
                 <?php echo JTEXT::_('COM_DZVIDEO_VIDEOS_DURATION').': '.str_pad(floor($item->length/60),2,'0',STR_PAD_LEFT).':'.str_pad(floor($item->length%60),2,'0',STR_PAD_LEFT); ?>
             </td>
             <td>
-                <a href="#" data-id="<?php echo $item->id ?>" class="add-video hasTooltip btn btn-success" title="Add"><i class="icon-plus"></i></a>
+                <a href="#" data-id="<?php echo $item->id ?>" class="add-video btn btn-success">
+                    <i class="icon-plus"></i> <?php echo JText::_('COM_DZVIDEO_INSERT'); ?>
+                </a>
             </td>
             </tr>
             <?php endforeach; ?>
