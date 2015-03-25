@@ -21,7 +21,7 @@ JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/');
 JHtml::_('bootstrap.tooltip');
 JHtml::_('behavior.multiselect');
 JHtml::_('formbehavior.chosen', 'select');
-JHTML::_('behavior.modal()'); 
+JHTML::_('behavior.modal()');
 
 // Import CSS
 $document = JFactory::getDocument();
@@ -54,7 +54,7 @@ $sortFields = $this->getSortFields();
         }
         Joomla.tableOrdering(order, dirn, '');
     }
- 
+
 </script>
 
 <?php
@@ -64,17 +64,17 @@ if (!empty($this->extra_sidebar)) {
 }
 ?>
 
-<?php 
+<?php
 
 $videoparams    = JComponentHelper::getParams('com_dzvideo');
-$video_height   = $videoparams->get('video_height');  
+$video_height   = $videoparams->get('video_height');
 $video_width    = $videoparams->get('video_width');
-$thumb_height   = $videoparams->get('thumb_height');  
+$thumb_height   = $videoparams->get('thumb_height');
 $thumb_width    = $videoparams->get('thumb_width');
 
 ?>
 
-<form action="<?php echo JRoute::_('index.php?option=com_dzvideo&view=videos&layout=modal&tmpl=component&function='.$function.'&'.JSession::getFormToken().'=1&form='.$form); ?>'); ?>" method="post" name="adminForm" id="adminForm">  
+<form action="<?php echo JRoute::_('index.php?option=com_dzvideo&view=videos&layout=modal&tmpl=component&function='.$function.'&'.JSession::getFormToken().'=1&form='.$form); ?>'); ?>" method="post" name="adminForm" id="adminForm">
     <div id="filter-bar" class="btn-toolbar">
         <div class="filter-search btn-group pull-left">
             <label for="filter_search" class="element-invisible"><?php echo JText::_('JSEARCH_FILTER');?></label>
@@ -116,35 +116,21 @@ $thumb_width    = $videoparams->get('thumb_width');
     <table class="table table-striped" id="videoList">
         <thead>
             <tr>
-            <?php if (isset($this->items[0]->ordering)): ?>
-                <th width="1%" class="nowrap center hidden-phone">
-                    <?php echo JHtml::_('grid.sort', '<i class="icon-menu-2"></i>', 'a.ordering', $listDirn, $listOrder, null, 'asc', 'JGRID_HEADING_ORDERING'); ?>
-                </th>
-            <?php endif; ?>
-            <?php if (isset($this->items[0]->state)): ?>
-                <th width="1%" class="nowrap center">
-                    <?php echo JHtml::_('grid.sort', 'JSTATUS', 'a.state', $listDirn, $listOrder); ?>
-                </th>
-            <?php endif; ?>
-            
             <th class='left'>
             <?php echo JHtml::_('grid.sort',  'COM_DZVIDEO_VIDEOS_TITLE', 'a.title', $listDirn, $listOrder); ?>
-            </th>    
+            </th>
             <th class='left'>
             <?php echo JHtml::_('grid.sort',  'COM_DZVIDEO_VIDEOS_CATID', 'a.catid', $listDirn, $listOrder); ?>
             </th>
             <th class='left'>
             <?php echo JText::_('COM_DZVIDEO_VIDEOS_INFORMATION'); ?>
             </th>
-            <?php if (isset($this->items[0]->id)): ?>
-                <th width="1%" class="nowrap center hidden-phone">
-                    <?php echo JHtml::_('grid.sort', 'JGRID_HEADING_ID', 'a.id', $listDirn, $listOrder); ?>
-                </th>
-            <?php endif; ?>
+            <th>
+            </th>
             </tr>
         </thead>
         <tfoot>
-            <?php 
+            <?php
             if(isset($this->items[0])){
                 $colspan = count(get_object_vars($this->items[0]));
             }
@@ -165,53 +151,28 @@ $thumb_width    = $videoparams->get('thumb_width');
             $canEdit    = $user->authorise('core.edit',         'com_dzvideo');
             $canCheckin = $user->authorise('core.manage',       'com_dzvideo');
             $canChange  = $user->authorise('core.edit.state',   'com_dzvideo');
-            
+
             $image          = array();
             $image        = $item->images;
-            
+
             $display_image  = JUri::root().'images/dzvideo/120x80.gif';
             if (isset($image['custom']) && !empty($image['custom']) && JFile::exists(JPATH_ROOT.'/'.$image['custom'])) {
                 $display_image = JUri::root().$image['custom'];
             } elseif (isset($image['thumb']) && !empty($image['thumb']) && JFile::exists(JPATH_ROOT.'/'.$image['thumb'])) {
-                $display_image = JUri::root().$image['thumb']; 
+                $display_image = JUri::root().$image['thumb'];
             }
-            
-            
+
+
             ?>
             <tr class="row<?php echo $i % 2; ?>">
-                
-            <?php if (isset($this->items[0]->ordering)): ?>
-                <td class="order nowrap center hidden-phone">
-                <?php if ($canChange) :
-                    $disableClassName = '';
-                    $disabledLabel    = '';
-                    if (!$saveOrder) :
-                        $disabledLabel    = JText::_('JORDERINGDISABLED');
-                        $disableClassName = 'inactive tip-top';
-                    endif; ?>
-                    <span class="sortable-handler hasTooltip <?php echo $disableClassName?>" title="<?php echo $disabledLabel?>">
-                        <i class="icon-menu"></i>
-                    </span>
-                    <input type="text" style="display:none" name="order[]" size="5" value="<?php echo $item->ordering;?>" class="width-20 text-area-order " />
-                <?php else : ?>
-                    <span class="sortable-handler inactive" >
-                        <i class="icon-menu"></i>
-                    </span>
-                <?php endif; ?>
-                </td>
-            <?php endif; ?>
-            <?php if (isset($this->items[0]->state)): ?>
-                <td class="center">
-                    <?php echo JHtml::_('jgrid.published', $item->state, $i, 'videos.', $canChange, 'cb'); ?>
-                </td>
-            <?php endif; ?>
             <td>
                 <?php if (isset($item->checked_out) && $item->checked_out) : ?>
                     <?php echo JHtml::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'videos.', $canCheckin); ?>
                 <?php endif; ?>
                 <?php if ($canEdit) : ?>
-                    <a href="#" data-id="<?php echo $item->id ?>" class="add-video">
-                    <?php echo $this->escape($item->title); ?></a>
+                    <a href="<?php echo JRoute::_('index.php?option=com_dzvideo&task=video.edit&id='.(int) $item->id); ?>" title="<?php echo JText::_('JACTION_EDIT'); ?>" target="_blank">
+                        <?php echo $this->escape($item->title); ?>&nbsp;<i class="icon-out"></i>
+                    </a>
                 <?php else : ?>
                     <?php echo $this->escape($item->title); ?>
                 <?php endif; ?>
@@ -222,12 +183,9 @@ $thumb_width    = $videoparams->get('thumb_width');
             <td>
                 <?php echo JTEXT::_('COM_DZVIDEO_VIDEOS_DURATION').': '.str_pad(floor($item->length/60),2,'0',STR_PAD_LEFT).':'.str_pad(floor($item->length%60),2,'0',STR_PAD_LEFT); ?>
             </td>
-
-            <?php if (isset($this->items[0]->id)): ?>
-                <td class="center hidden-phone">
-                    <?php echo (int) $item->id; ?>
-                </td>
-            <?php endif; ?>
+            <td>
+                <a href="#" data-id="<?php echo $item->id ?>" class="add-video hasTooltip btn btn-success" title="Add"><i class="icon-plus"></i></a>
+            </td>
             </tr>
             <?php endforeach; ?>
         </tbody>
@@ -238,7 +196,7 @@ $thumb_width    = $videoparams->get('thumb_width');
     <input type="hidden" name="filter_order" value="<?php echo $listOrder; ?>" />
     <input type="hidden" name="filter_order_Dir" value="<?php echo $listDirn; ?>" />
     <?php echo JHtml::_('form.token'); ?>
-</form>        
+</form>
 <script type="text/javascript">
 jQuery('a.add-video').on('click', function() {
     console.log('clicked');
