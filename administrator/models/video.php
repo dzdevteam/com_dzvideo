@@ -57,6 +57,28 @@ class DzvideoModelvideo extends JModelAdmin
         if (empty($form)) {
             return false;
         }
+        
+        $user = JFactory::getUser();
+
+        // Check for existing article.
+        // Modify the form based on Edit State access controls.
+        $id = JFactory::getApplication()->input->get('id', 0);
+        if ($id != 0 && (!$user->authorise('core.edit.state', 'com_dzvideo.video.' . (int) $id))
+            || ($id == 0 && !$user->authorise('core.edit.state', 'com_dzvideo')))
+        {
+            // Disable fields for display.
+            $form->setFieldAttribute('featured', 'disabled', 'true');
+            $form->setFieldAttribute('publish_up', 'disabled', 'true');
+            $form->setFieldAttribute('publish_down', 'disabled', 'true');
+            $form->setFieldAttribute('state', 'disabled', 'true');
+
+            // Disable fields while saving.
+            // The controller has already verified this is an article you can edit.
+            $form->setFieldAttribute('featured', 'filter', 'unset');
+            $form->setFieldAttribute('publish_up', 'filter', 'unset');
+            $form->setFieldAttribute('publish_down', 'filter', 'unset');
+            $form->setFieldAttribute('state', 'filter', 'unset');
+        }
 
         return $form;
     }
@@ -173,7 +195,7 @@ class DzvideoModelvideo extends JModelAdmin
                 $table->load($pk);
                 $isNew = false;
             }
-            $form = $input->getVar('jform'); 
+            $form = $input->getVar('jform');
   
             if ($form['getinfo'] == 1) {
 
@@ -181,12 +203,12 @@ class DzvideoModelvideo extends JModelAdmin
                 if (isset($form['images']) && is_array($form['images'])) {
                     $images     = $form['images'];
                     if (isset($images['mqdefault'])) {
-                        //clone new thumb & medium to hosting 
+                        //clone new thumb & medium to hosting
                         $links = DzvideoHelper::generateThumbs($images['mqdefault'],$form['videoid']);
                         $data['images']['thumb'] = $links['thumb'];
                         $data['images']['medium'] = $links['medium'];
                     }
-                } 
+                }
             }
             // Bind the data.
             if (!$table->bind($data))
@@ -400,7 +422,7 @@ class DzvideoModelvideo extends JModelAdmin
             $this->table->catid = $categoryId;
 
             // TODO: Deal with ordering?
-            // $table->ordering	= 1;
+            // $table->ordering    = 1;
 
             // Get the featured state
             $featured = $this->table->featured;
