@@ -3,20 +3,20 @@
     <fieldset>
         <field name="id" type="text" default="0" label="COM_DZVIDEO_FORM_LBL_VIDEO_ID"
             readonly="true" class="readonly"
-            description="JGLOBAL_FIELD_ID_DESC" /> 
+            description="JGLOBAL_FIELD_ID_DESC" />
 
-        <field name="created" type="timecreated" default="" 
+        <field name="created" type="timecreated" default=""
             label="COM_DZVIDEO_FORM_LBL_VIDEO_CREATED"
-            description="COM_DZVIDEO_FORM_DESC_VIDEO_CREATED"  /> 
+            description="COM_DZVIDEO_FORM_DESC_VIDEO_CREATED"  />
 
-        <field name="created_by" type="createdby" default="" 
+        <field name="created_by" type="createdby" default=""
             label="COM_DZVIDEO_FORM_LBL_VIDEO_CREATED_BY"
-            description="COM_DZVIDEO_FORM_DESC_VIDEO_CREATED_BY"  /> 
+            description="COM_DZVIDEO_FORM_DESC_VIDEO_CREATED_BY"  />
 
         <field name="created_by_alias" type="text"
             label="COM_DZVIDEO_FORM_LBL_VIDEO_CREATED_BY_ALIAS" description="COM_DZVIDEO_FORM_DESC_VIDEO_CREATED_BY_ALIAS"
             class="inputbox" size="20" />
-        
+
         <field name="modified" type="calendar" class="readonly"
             label="JGLOBAL_FIELD_MODIFIED_LABEL" description="COM_DZVIDEO_FORM_DESC_VIDEO_MODIFIED"
             size="22" readonly="true" format="%Y-%m-%d %H:%M:%S" filter="user_utc" />
@@ -30,76 +30,76 @@
             class="inputbox" format="%Y-%m-%d %H:%M:%S" size="22"
             filter="user_utc" />
 
-        <field name="title" type="text"            
+        <field name="title" type="text"
             label="COM_DZVIDEO_FORM_LBL_VIDEO_TITLE"
-            description="COM_DZVIDEO_FORM_DESC_VIDEO_TITLE" 
-            required="true" 
+            description="COM_DZVIDEO_FORM_DESC_VIDEO_TITLE"
+            required="true"
             size = "60"
             class = "input-xxlarge"
-            filter="string" /> 
+            filter="string" />
 
         <field name="alias" type="text"
             label="COM_DZVIDEO_FORM_LBL_VIDEO_ALIAS"
-            description="COM_DZVIDEO_FORM_DESC_VIDEO_ALIAS" 
+            description="COM_DZVIDEO_FORM_DESC_VIDEO_ALIAS"
             size = "60"
             class = "input-xxlarge"
-            filter="string" /> 
-            
-        <field name="link" type="text"           
+            filter="string" />
+
+        <field name="link" type="text"
             label="COM_DZVIDEO_FORM_LBL_VIDEO_LINK"
-            description="COM_DZVIDEO_FORM_DESC_VIDEO_LINK"   
+            description="COM_DZVIDEO_FORM_DESC_VIDEO_LINK"
             size = "60"
             class = "input-xxlarge"
-            filter="url" /> 
-                
-        <field name="videoid" type="text" readonly = "true"         
+            filter="url" />
+
+        <field name="videoid" type="text" readonly = "true"
             label="COM_DZVIDEO_FORM_LBL_VIDEOID"
-            description="COM_DZVIDEO_FORM_DESC_VIDEOID"  /> 
-    
+            description="COM_DZVIDEO_FORM_DESC_VIDEOID"  />
+
         <field name="featured" type="list" class="span12 small"
             default="0"
             label="COM_DZVIDEO_FORM_LBL_VIDEO_FEATURED"
             description="COM_DZVIDEO_FORM_DESC_VIDEO_FEATURED">
                 <option value="0">JNO</option>
                 <option value="1">JYES</option>
-        </field> 
+        </field>
 
- 
+
         <field name="filter_featured" type="list" onchange="this.form.submit();">
             <option value="">COM_DZVIDEO_VIDEOS_FEATURED_FILTER</option>
             <option value="0">JNO</option>
             <option value="1">JYES</option>
-        </field> 
-        
+        </field>
+
         <field name="length" type="text" readonly="true"
             label="COM_DZVIDEO_FORM_LBL_VIDEO_LENGTH"
             description="COM_DZVIDEO_FORM_DESC_VIDEO_LENGTH"
         />
-        
+
         <field name="shortdesc" type="textarea"
             class="span12"
             label="COM_DZVIDEO_FORM_LBL_VIDEO_SHORTDESC"
-            description="COM_DZVIDEO_FORM_DESC_VIDEO_SHORTDESC" 
-            filter="safehtml" /> 
-            
-        <field name="description" type="textarea"  
+            description="COM_DZVIDEO_FORM_DESC_VIDEO_SHORTDESC"
+            filter="safehtml" />
+
+        <field name="description" type="textarea"
             class="span12"
             label="COM_DZVIDEO_FORM_LBL_VIDEO_DESCRIPTION"
-            description="COM_DZVIDEO_FORM_DESC_VIDEO_DESCRIPTION" 
+            description="COM_DZVIDEO_FORM_DESC_VIDEO_DESCRIPTION"
             filter="safehtml" />
-            
-        <field name="author" type="text"          
-            label="COM_DZVIDEO_FORM_LBL_VIDEO_AUTHOR"
-            description="COM_DZVIDEO_FORM_DESC_VIDEO_AUTHOR"/> 
 
-        <field name="catid" type="category"            
+        <field name="author" type="text"
+            label="COM_DZVIDEO_FORM_LBL_VIDEO_AUTHOR"
+            description="COM_DZVIDEO_FORM_DESC_VIDEO_AUTHOR"/>
+
+        <field name="catid" type="category"
             label="COM_DZVIDEO_FORM_LBL_VIDEO_CATID"
-            description="COM_DZVIDEO_FORM_DESC_VIDEO_CATID" 
+            description="COM_DZVIDEO_FORM_DESC_VIDEO_CATID"
             extension="com_dzvideo"
             filter="int">
             <option value="">COM_DZVIDEO_OPTION_SELECT_CATEGORY</option>
         </field>
-            
+
         <field name="hits"
             type="text"
             class="readonly"
@@ -107,21 +107,21 @@
             description="JGLOBAL_HITS"
             readonly="true"
             filter="unset" />
-   
-        <fields name="images"> 
+
+        <fields name="images">
             <field
                 name="thumb"
-                type="hidden" 
+                type="hidden"
                 label="COM_DZVIDEO_FORM_LBL_IMAGE_LINKS_THUMBNAIL"
                 description="COM_DZVIDEO_FORM_DESC_IMAGE_LINKS_THUMBNAIL" />
             <field
                 name="medium"
-                type="hidden" 
+                type="hidden"
                 label="COM_DZVIDEO_FORM_LBL_IMAGE_LINKS_MEDIUM"
                 description="COM_DZVIDEO_FORM_DESC_IMAGE_LINKS_MEDIUM" />
             <field
                 name="mqdefault"
-                type="text" 
+                type="text"
                 readonly = "true"
                 label="COM_DZVIDEO_FORM_LBL_IMAGE_LINKS_MQDEFAULT"
                 description="COM_DZVIDEO_FORM_DESC_IMAGE_LINKS_MQDEFAULT"
@@ -134,23 +134,23 @@
                 label="COM_DZVIDEO_FORM_LBL_CUSTOM_IMAGE_FULL"
                 description="COM_DZVIDEO_FORM_DESC_CUSTOM_IMAGE_FULL" />
         </fields>
-    
+
         <field
             name="width"
-            type="text" 
+            type="text"
             default="500"
             class="span5"
             label="COM_DZVIDEO_FORM_LBL_IMAGE_LINKS_WIDTH"
             description="COM_DZVIDEO_FORM_DESC_IMAGE_LINKS_WIDTH" />
         <field
             name="height"
-            type="text" 
+            type="text"
             default="300"
             class="span5"
             label="COM_DZVIDEO_FORM_LBL_IMAGE_LINKS_HEIGHT"
             description="COM_DZVIDEO_FORM_DESC_IMAGE_LINKS_HEIGHT" />
-                
-        <field 
+
+        <field
             name="tags"
             type="tag"
             label="JTAG"
@@ -158,24 +158,24 @@
             class="inputbox span12"
             multiple="true">
         </field>
-                
-        <field name="metakey" type="textarea"          
+
+        <field name="metakey" type="textarea"
             label="COM_DZVIDEO_FORM_LBL_VIDEO_METAKEY"
-            description="COM_DZVIDEO_FORM_DESC_VIDEO_METAKEY" 
+            description="COM_DZVIDEO_FORM_DESC_VIDEO_METAKEY"
             cols="100"
             rows="4"
-            filter="string" /> 
+            filter="string" />
 
-        <field name="metadesc" type="textarea"          
+        <field name="metadesc" type="textarea"
             label="COM_DZVIDEO_FORM_LBL_VIDEO_METADESC"
-            description="COM_DZVIDEO_FORM_DESC_VIDEO_METADESC" 
+            description="COM_DZVIDEO_FORM_DESC_VIDEO_METADESC"
             cols="200"
             rows="10"
-            filter="string" /> 
+            filter="string" />
 
         <fields name="metadata">
             <fieldset name="jmetadata"
-                label="JGLOBAL_FIELDSET_METADATA_OPTIONS">  
+                label="JGLOBAL_FIELDSET_METADATA_OPTIONS">
                 <field name="robots"
                     type="list"
                     label="JFIELD_METADATA_ROBOTS_LABEL"
@@ -186,26 +186,26 @@
                     <option value="noindex, follow">JGLOBAL_NOINDEX_FOLLOW</option>
                     <option value="index, nofollow">JGLOBAL_INDEX_NOFOLLOW</option>
                     <option value="noindex, nofollow">JGLOBAL_NOINDEX_NOFOLLOW</option>
-                </field>                            
+                </field>
             </fieldset>
-        </fields> 
-    
+        </fields>
+
         <field name="params" type="textarea"
             label="COM_DZVIDEO_FORM_LBL_VIDEO_PARAMS"
-            description="COM_DZVIDEO_FORM_DESC_VIDEO_PARAMS" 
+            description="COM_DZVIDEO_FORM_DESC_VIDEO_PARAMS"
             cols="100"
             rows="4"
-            filter="raw" /> 
+            filter="raw" />
 
-        <field name="language" type="contentlanguage"          
+        <field name="language" type="contentlanguage"
             label="COM_DZVIDEO_FORM_LBL_VIDEO_LANGUAGE"
-            description="COM_DZVIDEO_FORM_DESC_VIDEO_LANGUAGE"> 
+            description="COM_DZVIDEO_FORM_DESC_VIDEO_LANGUAGE">
             <option value="*">JALL</option>
         </field>
 
-        <field name="embed" type="textarea"            
+        <field name="embed" type="textarea"
             label="COM_DZVIDEO_FORM_LBL_VIDEO_EMBED"
-            description="COM_DZVIDEO_FORM_DESC_VIDEO_EMBED" 
+            description="COM_DZVIDEO_FORM_DESC_VIDEO_EMBED"
             filter="html" />
 
         <field
@@ -221,9 +221,9 @@
         </field>
         <field name="checked_out" type="hidden" filter="unset" />
         <field name="checked_out_time" type="hidden" filter="unset" />
-    </fieldset> 
+    </fieldset>
 
-    <fieldset 
+    <fieldset
         name="accesscontrol">
         <field name="asset_id" type="hidden" filter="unset" />
         <field name="rules"

@@ -14,7 +14,7 @@ JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/');
 JHtml::_('bootstrap.tooltip');
 JHtml::_('behavior.multiselect');
 JHtml::_('formbehavior.chosen', 'select');
-JHTML::_('behavior.modal()'); 
+JHTML::_('behavior.modal()');
 
 // Import CSS
 $document = JFactory::getDocument();
@@ -55,12 +55,12 @@ if (!empty($this->extra_sidebar)) {
 }
 ?>
 
-<?php 
+<?php
 
 $videoparams    = JComponentHelper::getParams('com_dzvideo');
-$video_height   = $videoparams->get('video_height', 450);  
+$video_height   = $videoparams->get('video_height', 450);
 $video_width    = $videoparams->get('video_width', 600);
-$thumb_height   = $videoparams->get('thumb_height', 120);  
+$thumb_height   = $videoparams->get('thumb_height', 120);
 $thumb_width    = $videoparams->get('thumb_width', 160);
 
 ?>
@@ -127,7 +127,7 @@ $thumb_width    = $videoparams->get('thumb_width', 160);
                 </th>
                 <th class='left'>
                 <?php echo JHtml::_('grid.sort',  'COM_DZVIDEO_VIDEOS_TITLE', 'a.title', $listDirn, $listOrder); ?>
-                </th>    
+                </th>
                 <th class='left'>
                 <?php echo JHtml::_('grid.sort',  'COM_DZVIDEO_VIDEOS_CATID', 'a.catid', $listDirn, $listOrder); ?>
                 </th>
@@ -135,7 +135,7 @@ $thumb_width    = $videoparams->get('thumb_width', 160);
                 <?php echo JText::_('COM_DZVIDEO_VIDEOS_INFORMATION'); ?>
                 </th>
                 <th class='left'>
-                <?php echo JHtml::_('grid.sort',  'COM_DZVIDEO_VIDEOS_CREATED_BY', 'a.created_by', $listDirn, $listOrder); ?>
+                <?php echo JHtml::_('grid.sort',  'COM_DZVIDEO_VIDEOS_CREATED_BY', 'created_by_name', $listDirn, $listOrder); ?>
                 </th>
                 <th class='left'>
                 <?php echo JHtml::_('grid.sort',  'COM_DZVIDEO_VIDEOS_CREATED', 'a.created', $listDirn, $listOrder); ?>
@@ -154,7 +154,7 @@ $thumb_width    = $videoparams->get('thumb_width', 160);
                 </tr>
             </thead>
             <tfoot>
-                <?php 
+                <?php
                 if(isset($this->items[0])){
                     $colspan = count(get_object_vars($this->items[0]));
                 }
@@ -172,9 +172,10 @@ $thumb_width    = $videoparams->get('thumb_width', 160);
             <?php foreach ($this->items as $i => $item) :
                 $ordering   = ($listOrder == 'a.ordering');
                 $canCreate  = $user->authorise('core.create',       'com_dzvideo');
-                $canEdit    = $user->authorise('core.edit',         'com_dzvideo');
+                $canEdit    = $user->authorise('core.edit',         'com_dzvideo.video.' . $item->id);
+                $canEditOwn = $user->authorise('core.edit.own',     'com_dzvideo.video.' . $item->id) && $item->created_by == $userId;
                 $canCheckin = $user->authorise('core.manage',       'com_dzvideo');
-                $canChange  = $user->authorise('core.edit.state',   'com_dzvideo');
+                $canChange  = $user->authorise('core.edit.state',   'com_dzvideo.video.' . $item->id);
                 
                 $image          = array();
                 $image        = $item->images;
@@ -183,7 +184,7 @@ $thumb_width    = $videoparams->get('thumb_width', 160);
                 if (isset($image['custom']) && !empty($image['custom']) && JFile::exists(JPATH_ROOT.'/'.$image['custom'])) {
                    $display_image = JUri::root().$image['custom'];
                 } elseif (isset($image['thumb']) && !empty($image['thumb']) && JFile::exists(JPATH_ROOT.'/'.$image['thumb'])) {
-                    $display_image = JUri::root().$image['thumb']; 
+                    $display_image = JUri::root().$image['thumb'];
                 }
                 
                 
@@ -219,8 +220,8 @@ $thumb_width    = $videoparams->get('thumb_width', 160);
                     </td>
                 <?php endif; ?>
                 <td>
-                    <?php 
-                    if (isset($item->videoid)) { 
+                    <?php
+                    if (isset($item->videoid)) {
                     ?>
                         <a class="modal " href="http://www.youtube-nocookie.com/embed/<?php echo $item->videoid;?>" rel="{handler: 'iframe', size: {x: <?php echo $video_width; ?> , y: <?php echo $video_height; ?>}}">
                         <img height="<?php echo $thumb_height; ?>" width="<?php echo $thumb_width; ?>" src="<?php echo $display_image; ?>" alt="<?php echo $item->title; ?>" title="<?php echo $item->title; ?>" />
@@ -233,21 +234,21 @@ $thumb_width    = $videoparams->get('thumb_width', 160);
                     <?php if (isset($item->checked_out) && $item->checked_out) : ?>
                         <?php echo JHtml::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'videos.', $canCheckin); ?>
                     <?php endif; ?>
-                    <?php if ($canEdit) : ?>
+                    <?php if ($canEdit || $canEditOwn) : ?>
                         <a href="<?php echo JRoute::_('index.php?option=com_dzvideo&task=video.edit&id='.(int) $item->id); ?>">
                         <?php echo $this->escape($item->title); ?></a>
                     <?php else : ?>
                         <?php echo $this->escape($item->title); ?>
                     <?php endif; ?>
                     <br />
-                    <?php 
-                        if (isset($item->videoid)) { 
+                    <?php
+                        if (isset($item->videoid)) {
                     ?>
                         <a class="modal " href="http://www.youtube-nocookie.com/embed/<?php echo $item->videoid;?>" rel="{handler: 'iframe', size: {x: <?php echo $video_width; ?> , y: <?php echo $video_height; ?>}} ">
                         <?php echo $item->link; ?>
                         </a>
                         <?php } else {
-                            echo $item->link;     
+                            echo $item->link;
                         }
                     ?>
                 </td>
@@ -262,7 +263,7 @@ $thumb_width    = $videoparams->get('thumb_width', 160);
                     <?php echo JTEXT::_('COM_DZVIDEO_VIDEOS_AUTHOR').': '.$item->author; ?>
                 </td>
                 <td>
-                    <?php echo $item->created_by; ?>
+                    <?php echo $item->created_by_name; ?>
                 </td>
                 <td>
                     <?php echo $item->created; ?>
@@ -293,6 +294,6 @@ $thumb_width    = $videoparams->get('thumb_width', 160);
         <input type="hidden" name="filter_order_Dir" value="<?php echo $listDirn; ?>" />
         <?php echo JHtml::_('form.token'); ?>
     </div>
-</form>        
+</form>
 
         

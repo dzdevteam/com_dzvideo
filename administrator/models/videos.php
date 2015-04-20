@@ -30,7 +30,7 @@ class DzvideoModelvideos extends JModelList {
                 'ordering', 'a.ordering',
                 'state', 'a.state',
                 'created', 'a.created',
-                'created_by', 'a.created_by',
+                'created_by', 'a.created_by', 'created_by_name',
                 'modified', 'a.modified',
                 'title', 'a.title',
                 'alias', 'a.alias',
@@ -127,7 +127,7 @@ class DzvideoModelvideos extends JModelList {
         $query->join('LEFT', '#__users AS uc ON uc.id=a.checked_out');
     
         // Join over the user field 'created_by'
-        $query->select('created_by.name AS created_by');
+        $query->select('created_by.name AS created_by_name');
         $query->join('LEFT', '#__users AS created_by ON created_by.id = a.created_by');
         // Join over the category 'catid'
         $query->select('catid.title AS catid');
