@@ -128,7 +128,7 @@ $video_height   = $params->get('video_height');
                     <object width="<?php echo $video_width; ?>" height="<?php echo $video_height; ?>">
                     <param value="<?php echo $this->item->link; ?>" name="movie">
                     <param value="true" name="allowFullScreen" >
-                    <embed width="<?php echo $video_width; ?>" height="<?php echo $video_height; ?>" allowfullscreen="true" type="application/x-shockwave-flash" src="http://www.youtube.com/v/<?php echo $this->item->videoid; ?>"></object>
+                    <embed width="<?php echo $video_width; ?>" height="<?php echo $video_height; ?>" allowfullscreen="true" type="application/x-shockwave-flash" src="https://www.youtube.com/v/<?php echo $this->item->videoid; ?>"></object>
                 </div> 
                 <?php } else { ?>
                 <div id="video-play" class="controls" style="display: none;">
