@@ -53,7 +53,7 @@ $video_height   = $params->get('video_height');
       js('#youtube-play').show();
       
       js("object param").attr("value",link);
-      js("object embed").attr("src","http://www.youtube.com/v/"+videoid);
+      js("object embed").attr("src","https://www.youtube.com/v/"+videoid);
       js('#video-play').show();
     }
 
