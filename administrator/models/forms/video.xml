@@ -129,7 +129,6 @@
                 name="custom"
                 type="media"
                 directory="/"
-                class = "input-xlarge"
                 label="COM_DZVIDEO_FORM_LBL_CUSTOM_IMAGE_FULL"
                 description="COM_DZVIDEO_FORM_DESC_CUSTOM_IMAGE_FULL" />
         </fields>

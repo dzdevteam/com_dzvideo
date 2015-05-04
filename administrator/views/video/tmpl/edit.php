@@ -138,23 +138,6 @@ $video_height   = $params->get('video_height');
                 </div>
                 <?php } ?>
                 <div class="control-group">
-                    <div class="control-label"><?php echo $this->form->getLabel('mqdefault', 'images'); ?></div>
-                    <div class="controls"><?php echo $this->form->getInput('mqdefault', 'images'); ?> </div>
-                </div>
-                <div class="control-group">
-                    <div id="mqthumb" class="controls">
-                        <?php if (isset($this->item->images['medium'])) { ?>
-                            <img src="<?php echo JURI::root().$this->item->images['medium'] ?>" />
-                        <?php } ?>
-                        <?php echo $this->form->getInput('medium', 'images'); ?>
-                        <?php echo $this->form->getInput('thumb', 'images'); ?>
-                    </div>
-                </div>
-                <div class="control-group">
-                    <div class="control-label"><?php echo $this->form->getLabel('custom', 'images'); ?></div>
-                    <div class="controls"><?php echo $this->form->getInput('custom', 'images'); ?></div>
-                </div>
-                <div class="control-group">
                     <div class="control-label"><?php echo $this->form->getLabel('description'); ?></div>
                     <div class="controls"><?php echo $this->form->getInput('description'); ?></div>
                 </div>
@@ -184,6 +167,23 @@ $video_height   = $params->get('video_height');
                         </div>
                     </div>
                     <div class="span6">
+                        <div class="control-group">
+                            <div class="control-label"><?php echo $this->form->getLabel('custom', 'images'); ?></div>
+                            <div class="controls"><?php echo $this->form->getInput('custom', 'images'); ?></div>
+                        </div>
+                        <div class="control-group">
+                            <div class="control-label"><?php echo $this->form->getLabel('mqdefault', 'images'); ?></div>
+                            <div class="controls"><?php echo $this->form->getInput('mqdefault', 'images'); ?> </div>
+                        </div>
+                        <div class="control-group">
+                            <div id="mqthumb" class="controls">
+                                <?php if (isset($this->item->images['medium'])) { ?>
+                                    <img src="<?php echo JURI::root().$this->item->images['medium'] ?>" />
+                                <?php } ?>
+                                <?php echo $this->form->getInput('medium', 'images'); ?>
+                                <?php echo $this->form->getInput('thumb', 'images'); ?>
+                            </div>
+                        </div>
                         <div class="control-group">
                             <div class="control-label"><?php echo $this->form->getLabel('shortdesc'); ?></div>
                             <div class="controls"><?php echo $this->form->getInput('shortdesc'); ?></div>
