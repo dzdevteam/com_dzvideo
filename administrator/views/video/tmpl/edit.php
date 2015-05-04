@@ -23,14 +23,14 @@ JLoader::register('JFilterOutput',JPATH_PLUGINS.'/system/vinaora_vietalias/outpu
 
 $params = JComponentHelper::getParams('com_dzvideo');
 $video_width    = $params->get('video_width');
-$video_height   = $params->get('video_height'); 
+$video_height   = $params->get('video_height');
 
 ?>
 <script type="text/javascript">
     js = jQuery.noConflict();
    
-    //add data to form fields            
-    function youtubeDataCallback(data) {  
+    //add data to form fields
+    function youtubeDataCallback(data) {
       var link = js('#jform_link').val();
       var videoid = js('#jform_videoid').val();
       js('#jform_images_mqdefault').val(data.entry.media$group.media$thumbnail[1].url);
@@ -40,8 +40,8 @@ $video_height   = $params->get('video_height');
       var sec    = second % 60;
       var min   = Math.floor(second/60);
        
-      if (min.toString().length == 1) min = '0'+min.toString();else min = min.toString(); 
-      if (sec.toString().length == 1) sec = '0'+sec.toString();else sec = sec.toString(); 
+      if (min.toString().length == 1) min = '0'+min.toString();else min = min.toString();
+      if (sec.toString().length == 1) sec = '0'+sec.toString();else sec = sec.toString();
       
       var duration = min + ':' + sec;
     
@@ -79,11 +79,11 @@ $video_height   = $params->get('video_height');
         setTimeout( function() {
                 callyoutube();
             }, 100);
-      });   
+      });
         
       //get data from youtube after button click
       js('#video-button').click(function() {
-        callyoutube();  
+        callyoutube();
       });
     });
     
@@ -93,7 +93,7 @@ $video_height   = $params->get('video_height');
             Joomla.submitform(task, document.getElementById('video-form'));
         }
         else{
-            if (task != 'video.cancel' && document.formvalidator.isValid(document.id('video-form'))) {                
+            if (task != 'video.cancel' && document.formvalidator.isValid(document.id('video-form'))) {
                 Joomla.submitform(task, document.getElementById('video-form'));
             }
             else {
@@ -115,21 +115,20 @@ $video_height   = $params->get('video_height');
                  <div class="control-group">
                     <div class="control-label"><?php echo $this->form->getLabel('link'); ?></div>
                     <div class="controls">
-                        <?php echo $this->form->getInput('link'); ?> 
+                        <?php echo $this->form->getInput('link'); ?>
                         <input class="btn btn-primary" type="button" name="button" id="video-button" value="<?php echo JText::_('COM_DZVIDEO_YOUTUBE_INFO', true) ?>" />
                     </div>
                 </div>
                 
                 <div id="video-error"></div>
                 
-                <hr />
                 <?php if (isset($this->item->videoid) && isset($this->item->link)) { ?>
                 <div id="video-play" class="controls" >
                     <object width="<?php echo $video_width; ?>" height="<?php echo $video_height; ?>">
                     <param value="<?php echo $this->item->link; ?>" name="movie">
                     <param value="true" name="allowFullScreen" >
                     <embed width="<?php echo $video_width; ?>" height="<?php echo $video_height; ?>" allowfullscreen="true" type="application/x-shockwave-flash" src="https://www.youtube.com/v/<?php echo $this->item->videoid; ?>"></object>
-                </div> 
+                </div>
                 <?php } else { ?>
                 <div id="video-play" class="controls" style="display: none;">
                     <object width="<?php echo $video_width; ?>" height="<?php echo $video_height; ?>">
@@ -149,11 +148,15 @@ $video_height   = $params->get('video_height');
                         <?php } ?>
                         <?php echo $this->form->getInput('medium', 'images'); ?>
                         <?php echo $this->form->getInput('thumb', 'images'); ?>
-                    </div> 
+                    </div>
                 </div>
                 <div class="control-group">
                     <div class="control-label"><?php echo $this->form->getLabel('custom', 'images'); ?></div>
                     <div class="controls"><?php echo $this->form->getInput('custom', 'images'); ?></div>
+                </div>
+                <div class="control-group">
+                    <div class="control-label"><?php echo $this->form->getLabel('description'); ?></div>
+                    <div class="controls"><?php echo $this->form->getInput('description'); ?></div>
                 </div>
                 <input type="hidden" name="jform[getinfo]" id="jform_getinfo" value="0" />
                 <hr />
@@ -185,12 +188,8 @@ $video_height   = $params->get('video_height');
                             <div class="control-label"><?php echo $this->form->getLabel('shortdesc'); ?></div>
                             <div class="controls"><?php echo $this->form->getInput('shortdesc'); ?></div>
                         </div>
-                        <div class="control-group">
-                            <div class="control-label"><?php echo $this->form->getLabel('description'); ?></div>
-                            <div class="controls"><?php echo $this->form->getInput('description'); ?></div>
-                        </div>   
                     </div>
-                </div> 
+                </div>
             </div>
             <div class="span3">
                 <!-- Begin Sidebar -->
@@ -214,7 +213,7 @@ $video_height   = $params->get('video_height');
             <?php echo JHtml::_('bootstrap.endTab'); ?>
             
             <?php if (JFactory::getUser()->authorise('core.admin','dzvideo')): ?>
-                <?php echo JHtml::_('bootstrap.addTab', 'videoTab', 'permissions', JText::_('COM_DZVIDEO_RULES', true)); ?>    
+                <?php echo JHtml::_('bootstrap.addTab', 'videoTab', 'permissions', JText::_('COM_DZVIDEO_RULES', true)); ?>
                 <div class="fltlft" style="width:86%;">
                     <fieldset class="panelform">
                         <?php echo JHtml::_('sliders.start', 'permissions-sliders-'.$this->item->id, array('useCookie'=>1)); ?>

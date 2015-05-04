@@ -56,7 +56,7 @@
             label="COM_DZVIDEO_FORM_LBL_VIDEOID"
             description="COM_DZVIDEO_FORM_DESC_VIDEOID"  />
 
-        <field name="featured" type="list" class="span12 small"
+        <field name="featured" type="list" class=""
             default="0"
             label="COM_DZVIDEO_FORM_LBL_VIDEO_FEATURED"
             description="COM_DZVIDEO_FORM_DESC_VIDEO_FEATURED">
@@ -82,8 +82,7 @@
             description="COM_DZVIDEO_FORM_DESC_VIDEO_SHORTDESC"
             filter="safehtml" />
 
-        <field name="description" type="textarea"
-            class="span12"
+        <field name="description" type="editor"
             label="COM_DZVIDEO_FORM_LBL_VIDEO_DESCRIPTION"
             description="COM_DZVIDEO_FORM_DESC_VIDEO_DESCRIPTION"
             filter="safehtml" />
@@ -155,7 +154,7 @@
             type="tag"
             label="JTAG"
             description="JTAG_DESC"
-            class="inputbox span12"
+            class=""
             multiple="true">
         </field>
 
