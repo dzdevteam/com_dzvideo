@@ -37,6 +37,10 @@ class DzvideoViewVideo extends JViewLegacy {
         if (count($errors = $this->get('Errors'))) {
             throw new Exception(implode("\n", $errors));
         }
+        
+        if (!$this->item) {
+            JError::raiseError(404, 'Not Found');
+        }
 
         $this->item->catid_title = ($this->item->catid) ? $this->getModel()->getCategoryName($this->item->catid)->title : '';
 
