@@ -28,34 +28,6 @@ $video_height   = $params->get('video_height');
 ?>
 <script type="text/javascript">
     js = jQuery.noConflict();
-   
-    //add data to form fields
-    function youtubeDataCallback(data) {
-      var link = js('#jform_link').val();
-      var videoid = js('#jform_videoid').val();
-      js('#jform_images_mqdefault').val(data.entry.media$group.media$thumbnail[1].url);
-      js('#jform_title').val(data.entry.title.$t);
-      js('#jform_author').val(data.entry.author[0].name.$t);
-      var second = data.entry.media$group.yt$duration.seconds;
-      var sec    = second % 60;
-      var min   = Math.floor(second/60);
-       
-      if (min.toString().length == 1) min = '0'+min.toString();else min = min.toString();
-      if (sec.toString().length == 1) sec = '0'+sec.toString();else sec = sec.toString();
-      
-      var duration = min + ':' + sec;
-    
-      js('#duration').html(duration);
-      js('#jform_length').val(data.entry.media$group.yt$duration.seconds);
-      js('#jform_shortdesc').val(data.entry.media$group.media$description.$t);
-      js('#mqthumb').html("<img src="+js('#jform_images_mqdefault').val()+" />");
-      js('#jform_getinfo').val(1);
-      js('#youtube-play').show();
-      
-      js("object param").attr("value",link);
-      js("object embed").attr("src","https://www.youtube.com/v/"+videoid);
-      js('#video-play').show();
-    }
 
     function callyoutube() {
         var videoid = js('#jform_link').val();
@@ -70,7 +42,55 @@ $video_height   = $params->get('video_height');
           js('#video-error').html("");
         }
         js('#jform_videoid').val(videoid);
-        js.getScript('https://gdata.youtube.com/feeds/api/videos/' + encodeURIComponent(videoid) + '?v=2&alt=json-in-script&callback=youtubeDataCallback');
+        js.get('https://www.googleapis.com/youtube/v3/videos', {
+            part: 'id,player,snippet,contentDetails',
+            id: videoid,
+            key: 'AIzaSyAdiOHztingwOktlXHONKiZYdXo5aeRSdQ'
+        }, function(data) {
+            if (data.items.length == 1) {
+                var link = js('#jform_link').val();
+                var videoid = js('#jform_videoid').val();
+                var item = data.items[0];
+                js('#jform_images_mqdefault').val(item.snippet.thumbnails.medium.url);
+                js('#jform_title').val(item.snippet.title);
+                js('#jform_author').val(item.snippet.channelTitle);
+                
+                // Duration
+                var iso_length = item.contentDetails.duration;
+                var parts = iso_length.match(/[0-9]+.?/g);
+                var length = 0;
+                for (var i = 0; i < parts.length; i++) {
+                    switch (parts[i].slice(-1)) {
+                        case 'S':
+                            length += parseInt(parts[i]);
+                            break;
+                        case 'M':
+                            length += parseInt(parts[i]) * 60;
+                            break;
+                        case 'H':
+                            length += parseInt(parts[i]) * 60 * 60;
+                            break;
+                        case 'D':
+                            length += parseInt(parts[i]) * 60 * 60 * 24;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                js('#duration').html(iso_length); // TODO
+                js('#jform_length').val(length);
+                js('#jform_shortdesc').val(item.snippet.description);
+                js('#mqthumb').html("<img src="+js('#jform_images_mqdefault').val()+" />");
+                js('#jform_getinfo').val(1);
+                js('#youtube-play').show();
+                js('#jform_embed').val(item.player.embedHtml)
+                
+                js("#video-play iframe").attr("src","https://www.youtube.com/embed/"+videoid);
+                js('#video-play').show();
+            } else {
+                js('#video-error').html('<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert">&times;</button><?php echo JText::_("COM_DZVIDEO_VIDEO_NOT_FOUND"); ?></div>');
+            }
+        })
     }
         
     js(document).ready(function() {
@@ -122,21 +142,22 @@ $video_height   = $params->get('video_height');
                 
                 <div id="video-error"></div>
                 
-                <?php if (isset($this->item->videoid) && isset($this->item->link)) { ?>
+                <?php if (isset($this->item->videoid) && isset($this->item->link)) : ?>
                 <div id="video-play" class="controls" >
-                    <object width="<?php echo $video_width; ?>" height="<?php echo $video_height; ?>">
-                    <param value="<?php echo $this->item->link; ?>" name="movie">
-                    <param value="true" name="allowFullScreen" >
-                    <embed width="<?php echo $video_width; ?>" height="<?php echo $video_height; ?>" allowfullscreen="true" type="application/x-shockwave-flash" src="https://www.youtube.com/v/<?php echo $this->item->videoid; ?>"></object>
+                    <iframe
+                        type="text/html"
+                        src="https://www.youtube.com/embed/<?= $this->item->videoid; ?>"
+                        frameborder="0" width="<?= $video_width; ?>" height="<?= $video_height; ?>">
+                    </iframe>
                 </div>
-                <?php } else { ?>
+                <?php else : ?>
                 <div id="video-play" class="controls" style="display: none;">
-                    <object width="<?php echo $video_width; ?>" height="<?php echo $video_height; ?>">
-                    <param value="" name="movie">
-                    <param value="true" name="allowFullScreen" >
-                    <embed width="<?php echo $video_width; ?>" height="<?php echo $video_height; ?>" allowfullscreen="true" type="application/x-shockwave-flash" src=""></object>
+                    <iframe
+                        type="text/html"
+                        frameborder="0" width="<?= $video_width; ?>" height="<?= $video_height; ?>">
+                    </iframe>
                 </div>
-                <?php } ?>
+                <?php endif; ?>
                 <div class="control-group">
                     <div class="control-label"><?php echo $this->form->getLabel('description'); ?></div>
                     <div class="controls"><?php echo $this->form->getInput('description'); ?></div>
@@ -155,7 +176,8 @@ $video_height   = $params->get('video_height');
                         </div>
                         <div class="control-group">
                             <div class="control-label"><?php echo $this->form->getLabel('length'); ?></div>
-                            <div class="controls"><?php echo $this->form->getInput('length'); ?><div class="controls" id="duration"></div></div>
+                            <div class="controls"><?php echo $this->form->getInput('length'); ?></div>
+                            <div class="controls" id="duration"></div>
                         </div>
                         <div class="control-group">
                             <div class="control-label"><?php echo $this->form->getLabel('author'); ?></div>
