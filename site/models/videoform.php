@@ -114,10 +114,10 @@ else{
     }
     
     public function getTable($type = 'Video', $prefix = 'DzvideoTable', $config = array())
-    {   
+    {
         $this->addTablePath(JPATH_COMPONENT_ADMINISTRATOR.'/tables');
         return JTable::getInstance($type, $prefix, $config);
-    }     
+    }
 
     
     /**
@@ -179,13 +179,13 @@ else{
         }
 
         return true;
-    }    
+    }
     
     /**
      * Method to get the profile form.
      *
-     * The base form is loaded from XML 
-     * 
+     * The base form is loaded from XML
+     *
      * @param   array   $data       An optional array of data for the form to interogate.
      * @param   boolean $loadData   True if the form is to load its own data (default case), false if not.
      * @return  JForm   A JForm object on success, false on failure
@@ -260,6 +260,7 @@ else{
         if ($table->save($data) === true) {
             return $id;
         } else {
+            $this->setError($table->getError());
             return false;
         }
         

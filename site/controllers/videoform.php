@@ -112,7 +112,7 @@ class DzvideoControllerVideoForm extends DzvideoController
 
             // Redirect back to the edit screen.
             $id = (int)$app->getUserState('com_dzvideo.edit.video.id');
-            $this->setMessage(JText::sprintf('Save failed', $model->getError()), 'warning');
+            $this->setMessage(JText::sprintf('Không gửi được video: %s', $model->getError()), 'error');
             $this->setRedirect(JRoute::_('index.php?option=com_dzvideo&view=videoform&layout=edit&id='.$id, false));
             return false;
         }
