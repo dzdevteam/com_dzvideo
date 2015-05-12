@@ -22,7 +22,7 @@ jQuery(document).ready(function() {
         var video_id = matches[1];
         notice();
         jQuery.get(
-            'https://www.googleapis.com/youtube/v3/videos', 
+            'https://www.googleapis.com/youtube/v3/videos',
             {
                 part: 'id,snippet,player,contentDetails',
                 id: video_id,
@@ -40,8 +40,18 @@ jQuery(document).ready(function() {
                     jQuery('#embed').html(video.player.embedHtml);
                     jQuery('#jform_videoid').val(video.id);
                     jQuery('#jform_images_mqdefault').val(video.snippet.thumbnails.medium.url);
-                    time_parts = video.contentDetails.duration.match(/^PT(\d*)M(\d*)S/);
-                    jQuery('#jform_length').val(parseInt(time_parts[1]) * 60 + parseInt(time_parts[2]));
+                    time_parts = video.contentDetails.duration.match(/^PT(\d*H)?(\d*M)?(\d*S)?/);
+                    length = 0;
+                    if (time_parts[1]) {
+                        length += parseInt(time_parts[1]) * 60 * 60;
+                    }
+                    if (time_parts[2]) {
+                        length += parseInt(time_parts[2]) * 60;
+                    }
+                    if (time_parts[3]) {
+                        length += parseInt(time_parts[3]);
+                    }
+                    jQuery('#jform_length').val(length);
                 }
             }
         );
