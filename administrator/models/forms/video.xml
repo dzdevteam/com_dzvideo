@@ -82,7 +82,7 @@
             description="COM_DZVIDEO_FORM_DESC_VIDEO_SHORTDESC"
             filter="safehtml" />
 
-        <field name="description" type="editor"
+        <field name="description" type="editor" buttons="true"
             label="COM_DZVIDEO_FORM_LBL_VIDEO_DESCRIPTION"
             description="COM_DZVIDEO_FORM_DESC_VIDEO_DESCRIPTION"
             filter="safehtml" />
