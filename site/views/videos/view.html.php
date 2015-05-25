@@ -26,9 +26,10 @@ class DzvideoViewVideos extends JViewLegacy
 
     public function display($tpl = null)
     {
-        $state            = $this->get('State'); 
+        $state            = $this->get('State');
         $items            = $this->get('Items');
         $pagination       = $this->get('Pagination');
+        $dispatcher = JEventDispatcher::getInstance();
 
         // Check for errors.
         if (count($errors = $this->get('Errors')))
@@ -54,6 +55,12 @@ class DzvideoViewVideos extends JViewLegacy
         $this->state = &$state;
         
         $this->items  = &$items;
+        
+        // Process dz plugin
+        JPluginHelper::importPlugin('dz');
+        foreach ($this->items as &$item) {
+            $dispatcher->trigger('onTextPrepare', array ('com_dzvideo.video.description', &$item->description));
+        }
         
         $this->pagination  = &$pagination;
         

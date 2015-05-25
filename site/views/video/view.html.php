@@ -28,6 +28,7 @@ class DzvideoViewVideo extends JViewLegacy {
 
         $app    = JFactory::getApplication();
         $user       = JFactory::getUser();
+        $dispatcher = JEventDispatcher::getInstance();
 
         $this->state = $this->get('State');
         $this->item = $this->get('Data');
@@ -52,6 +53,9 @@ class DzvideoViewVideo extends JViewLegacy {
                 throw new Exception(JText::_('JERROR_ALERTNOAUTHOR'));
             }
         }
+        
+        JPluginHelper::importPlugin('dz');
+        $dispatcher->trigger('onTextPrepare', array ('com_dzvideo.video.description', &$this->item->description));
 
         // Increase hit counter
         $this->getModel()->hit();
@@ -117,7 +121,7 @@ class DzvideoViewVideo extends JViewLegacy {
         $this->document->addCustomTag("<meta property='og:title' content='{$this->item->title}' />");
         $this->document->addCustomTag("<meta property='og:url' content='" . JUri::current() . "' />");
         $this->document->addCustomTag("<meta property=\"og:image\" content=\"" . JUri::root() . $this->item->images['medium'] . "\" />");
-        $this->document->addCustomTag("<meta property=\"og:description\" content=\"" . (empty($this->item->description) ? str_replace(array('<br />', '"'), array("\n", '&quot;'), $this->item->shortdesc) : $this->item->description) . "\" />");
+        $this->document->addCustomTag("<meta property=\"og:description\" content=\"" . str_replace(array('<br />', '"'), array("\n", '&quot;'), (empty($this->item->description) ? $this->item->shortdesc : $this->item->description)) . "\" />");
         $this->document->addCustomTag("<meta property=\"og:type\" content=\"video.other\" />");
     }
 
