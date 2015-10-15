@@ -77,6 +77,8 @@ class DzvideoViewVideos extends JViewLegacy
                 JToolBarHelper::divider();
                 JToolBarHelper::custom('videos.publish', 'publish.png', 'publish_f2.png','JTOOLBAR_PUBLISH', true);
                 JToolBarHelper::custom('videos.unpublish', 'unpublish.png', 'unpublish_f2.png', 'JTOOLBAR_UNPUBLISH', true);
+                JToolbarHelper::custom('videos.featured', 'featured.png', 'featured_f2.png', 'JFEATURE', true);
+                JToolbarHelper::custom('videos.unfeatured', 'unfeatured.png', 'featured_f2.png', 'JUNFEATURE', true);
             } else if (isset($this->items[0])) {
                 //If this component does not use state then show a direct delete button as we can not trash
                 JToolBarHelper::deleteList('', 'videos.delete','JTOOLBAR_DELETE');

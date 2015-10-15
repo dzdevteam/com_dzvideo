@@ -11,6 +11,7 @@
 defined('_JEXEC') or die;
 
 JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/');
+JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
 JHtml::_('bootstrap.tooltip');
 JHtml::_('behavior.multiselect');
 JHtml::_('formbehavior.chosen', 'select');
@@ -132,9 +133,6 @@ $thumb_width    = $videoparams->get('thumb_width', 160);
                 <?php echo JHtml::_('grid.sort',  'COM_DZVIDEO_VIDEOS_CATID', 'a.catid', $listDirn, $listOrder); ?>
                 </th>
                 <th class='left'>
-                <?php echo JText::_('COM_DZVIDEO_VIDEOS_INFORMATION'); ?>
-                </th>
-                <th class='left'>
                 <?php echo JHtml::_('grid.sort',  'COM_DZVIDEO_VIDEOS_CREATED_BY', 'created_by_name', $listDirn, $listOrder); ?>
                 </th>
                 <th class='left'>
@@ -142,9 +140,6 @@ $thumb_width    = $videoparams->get('thumb_width', 160);
                 </th>
                 <th class='left'>
                 <?php echo JHtml::_('grid.sort',  'JGLOBAL_HITS', 'a.hits', $listDirn, $listOrder); ?>
-                </th>
-                <th class='left'>
-                <?php echo JHtml::_('grid.sort',  'JGRID_HEADING_LANGUAGE', 'a.language', $listDirn, $listOrder); ?>
                 </th>
                 <?php if (isset($this->items[0]->id)): ?>
                     <th width="1%" class="nowrap center hidden-phone">
@@ -216,7 +211,10 @@ $thumb_width    = $videoparams->get('thumb_width', 160);
                     </td>
                 <?php if (isset($this->items[0]->state)): ?>
                     <td class="center">
-                        <?php echo JHtml::_('jgrid.published', $item->state, $i, 'videos.', $canChange, 'cb'); ?>
+                        <div class="btn-group">
+                            <?php echo JHtml::_('jgrid.published', $item->state, $i, 'videos.', $canChange, 'cb'); ?>
+                            <?php echo JHtml::_('contentadministrator.featured', $item->featured, $i, $canChange); ?>
+                        </div>
                     </td>
                 <?php endif; ?>
                 <td>
@@ -256,13 +254,6 @@ $thumb_width    = $videoparams->get('thumb_width', 160);
                     <?php echo $item->catid; ?>
                 </td>
                 <td>
-                    <?php echo JTEXT::_('COM_DZVIDEO_VIDEOS_DURATION').': '.str_pad(floor($item->length/60),2,'0',STR_PAD_LEFT).':'.str_pad(floor($item->length%60),2,'0',STR_PAD_LEFT); ?>
-                    <br/>
-                    <?php echo JTEXT::_('COM_DZVIDEO_VIDEOS_DIMENSION').': '.$item->width.'x'.$item->height; ?>
-                    <br/>
-                    <?php echo JTEXT::_('COM_DZVIDEO_VIDEOS_AUTHOR').': '.$item->author; ?>
-                </td>
-                <td>
                     <?php echo $item->created_by_name; ?>
                 </td>
                 <td>
@@ -270,9 +261,6 @@ $thumb_width    = $videoparams->get('thumb_width', 160);
                 </td>
                 <td>
                     <?php echo $item->hits; ?>
-                </td>
-                <td>
-                    <?php echo $item->language; ?>
                 </td>
 
                 <?php if (isset($this->items[0]->id)): ?>
