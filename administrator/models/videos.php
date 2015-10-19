@@ -47,7 +47,7 @@ class DzvideoModelvideos extends JModelList {
                 'language', 'a.language',
                 'embed', 'a.embed',
                 'tag', 'a.tag',
-
+                'level'
             );
         }
 
@@ -72,6 +72,9 @@ class DzvideoModelvideos extends JModelList {
         
         $categoryId = $this->getUserStateFromRequest($this->context . '.filter.category_id', 'filter_category_id');
         $this->setState('filter.category_id', $categoryId);
+
+        $level = $this->getUserStateFromRequest($this->context . '.filter.level', 'filter_level');
+        $this->setState('filter.level', $level);
 
         // Load the parameters.
         $params = JComponentHelper::getParams('com_dzvideo');
@@ -158,6 +161,11 @@ class DzvideoModelvideos extends JModelList {
             JArrayHelper::toInteger($categoryId);
             $categoryId = implode(',', $categoryId);
             $query->where('a.catid IN (' . $categoryId . ')');
+        }
+        // Filter on the level.
+        if ($level = $this->getState('filter.level'))
+        {
+            $query->where('catid.level <= ' . ((int) $level + (int) $baselevel - 1));
         }
     
         // Filter by search in title
